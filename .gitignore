@@ -1,0 +1,12 @@
+*/CMakeFiles/
+cmake_install.cmake
+*/build/
+*/bin/
+*/lib/
+
+qtcreator-build/
+*.user
+*.creator
+*.files
+*.config
+*~

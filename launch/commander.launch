@@ -1,0 +1,11 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="js_pub" >
+      <remap from="joint_states" to="/joint_commands" />
+      <param name="rate" value="5"/>
+    </node>
+
+    <node pkg="akrobat" type="commander" name="commander"/>
+  </launch>
+
+
