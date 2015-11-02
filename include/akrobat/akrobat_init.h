@@ -88,7 +88,10 @@
 #define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
 
 #include <ros/ros.h>
-
+#include <iostream>
+#include <sensor_msgs/Joy.h>
+#include <std_msgs/Float64.h>
+#include <dynamixel_msgs/MotorStateList.h>
 #include <tf/transform_datatypes.h>
 #include <tf/tf.h>
 
