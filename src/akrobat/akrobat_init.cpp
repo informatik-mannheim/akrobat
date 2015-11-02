@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <akrobat/akrobat_init.h>
+#include <akrobat/Globals.h>
 
 int mode = 0; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
 int gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)

@@ -14,6 +14,7 @@
 #include <sensor_msgs/JointState.h>
 
 #include <akrobat/akrobat_init.h>
+#include <akrobat/Globals.h>
 
 using namespace std;
 using namespace tf;
