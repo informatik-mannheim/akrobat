@@ -121,146 +121,146 @@ extern float rotOfCoxa[numberOfLegs]; //rotates abot coxa for angle 45° init
 
 //--------------------BODY CONSTANT
 //body constant initialization
-float bdConstX[numberOfLegs] =    {    -51,     51,     -51,     51,    -51,     51 };//[mm] half hight of body
-float bdConstY[numberOfLegs] =    {    217,    217, 	  0,	 0,    -217,   -217 };//[mm] half width of body
-float bdConstZ[numberOfLegs] = 	  {      0,      0,       0,     0,       0,      0 };//[mm] half length of body
+extern float bdConstX[numberOfLegs];//[mm] half hight of body
+extern float bdConstY[numberOfLegs];//[mm] half width of body
+extern float bdConstZ[numberOfLegs];//[mm] half length of body
 
 //joint angle initialization
-float jointInitA[numberOfLegs] =  {    160,     20,     180,      0,   -160,    -20  };//[°] (coxa joint) alpha angle init
-float jointInitB[numberOfLegs] =  {  	10,  	10,      10,     10,     10,     10  };//[°] (femur joint) beta angle init
-float jointInitC[numberOfLegs] =  {    -90,    -90,     -90,    -90,    -90,    -90  };//[°] (tibia joint) gamma angle init
+extern float jointInitA[numberOfLegs];//[°] (coxa joint) alpha angle init
+extern float jointInitB[numberOfLegs];//[°] (femur joint) beta angle init
+extern float jointInitC[numberOfLegs];//[°] (tibia joint) gamma angle init
 
 //min limit of coxa joint initialization
-float minCoxa[numberOfLegs] =	  {    -26,    -71,    -51,    -51,    -71,    -23  };//[°] (coxa joint) alpha angle min limit
-float minFemur[numberOfLegs] =	  {    -99,    -99,    -99,    -99,    -99,   -107  };//[°] (femur joint) beta angle min limit
-float minTibia[numberOfLegs] =	  {   -135,   -135,   -135,   -135,   -135,   -135  };//[°] (tibia joint) gamma angle min limit
+extern float minCoxa[numberOfLegs];//[°] (coxa joint) alpha angle min limit
+extern float minFemur[numberOfLegs];//[°] (femur joint) beta angle min limit
+extern float minTibia[numberOfLegs];//[°] (tibia joint) gamma angle min limit
 
 //max limit of coxa jointinitialization
-float maxCoxa[numberOfLegs] = 	  {     65,     28,     48,     48,     30,     75  };//[°] (coxa joint) alpha angle max limit
-float maxFemur[numberOfLegs] =	  {     96,     96,     96,     96,     96,     96  };//[°] (femur joint) beta angle max limit
-float maxTibia[numberOfLegs] =	  {    135,    135,    135,    135,    135,    135  };//[°] (tibia joint) gamma angle max limit
+extern float maxCoxa[numberOfLegs];//[°] (coxa joint) alpha angle max limit
+extern float maxFemur[numberOfLegs];//[°] (femur joint) beta angle max limit
+extern float maxTibia[numberOfLegs];//[°] (tibia joint) gamma angle max limit
 
 
 //---------------------------STRUCT
 //joypad
-struct rumblePad2Struct{
+struct rumblePad2Struct {
 	Vector3 speed; // forward/backward/sideward movement
 	Vector3 bdR;   // body rotation
 	Vector3 bdT;   // body translation
 };
 extern rumblePad2Struct rumblePad2;
 //trajectory data
-struct trajectoryStruct{
+struct trajectoryStruct {
 	int   caseStep[numberOfLegs];	//leg up/leg down
-    int   tick;                     //present tick
-    float initAmpX;                 //x init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-    float initAmpY;                 //y init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-    float initAmpZ;                 //z init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-    float ampX[numberOfLegs];       //x axis amplitude of leg trajectory
-    float ampY[numberOfLegs];       //y axis amplitude of leg trajectory
-    float ampZ[numberOfLegs];       //z axis amplitude of leg trajectory
+	int   tick;                     //present tick
+	float initAmpX;                 //x init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
+	float initAmpY;                 //y init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
+	float initAmpZ;                 //z init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
+	float ampX[numberOfLegs];       //x axis amplitude of leg trajectory
+	float ampY[numberOfLegs];       //y axis amplitude of leg trajectory
+	float ampZ[numberOfLegs];       //z axis amplitude of leg trajectory
 };
 extern trajectoryStruct traData;
 // motor data
-struct motorStateStruct{
+struct motorStateStruct {
 	float timestamp; 	// time stamp
-    int   id;           // motor id
-    int   goal;         // position value of destination
+	int   id;           // motor id
+	int   goal;         // position value of destination
 	int   position;		// present positon
 	int   error;		// error of present positon
 	int   speed;		// speed to goal positon
-    float load;         // currently applied load
+	float load;         // currently applied load
 	float voltage;		// size of current voltage supplied
 	float temperature;	// internal temperature in celsius
 	bool  moving;		// goal position execution completed(0)/in progress(1)
 };
 extern motorStateStruct motorSates[numberOfLegs];
 //angles of joint
-struct floatJointStruct{
+struct floatJointStruct {
 	float alpha;
 	float beta;
 	float gamma;
 };
 //leg position
-struct legStruct{
-    Vector3 footPresPos;            //present position
-    Vector3 footInitPos;            //init position
-    Vector3 footGlobPos;            //globale position
-    Vector3 trajectoryPresPos;      //trajectory present positon
+struct legStruct {
+	Vector3 footPresPos;            //present position
+	Vector3 footInitPos;            //init position
+	Vector3 footGlobPos;            //globale position
+	Vector3 trajectoryPresPos;      //trajectory present positon
 	floatJointStruct jointAngles;	//joint angles
 };
 //coordinate system
-struct coordinateSystemStruct{
+struct coordinateSystemStruct {
 	legStruct leg[numberOfLegs];	//array of legs
 };
 
 
 //----------------------------CLASS
-class Akrobat{
+class Akrobat {
 
-  private:
-    NodeHandle n;
-    Subscriber subJoy;          //subscriber of joy topic
-    Publisher jointPub;         //publisher (rviz)
-   
-    //LEG1
-    Publisher  pubLeg1Joint1;	//publicher for jointX of legX
-    Publisher  pubLeg1Joint2;	// .....
-    Publisher  pubLeg1Joint3;
-    //LEG2
-    Publisher  pubLeg2Joint1;
-    Publisher  pubLeg2Joint2;
-    Publisher  pubLeg2Joint3;
-    //LEG3
-    Publisher  pubLeg3Joint1;
-    Publisher  pubLeg3Joint2;
-    Publisher  pubLeg3Joint3;
-    //LEG4
-    Publisher  pubLeg4Joint1;
-    Publisher  pubLeg4Joint2;
-    Publisher  pubLeg4Joint3;
-    //LEG5
-    Publisher  pubLeg5Joint1;
-    Publisher  pubLeg5Joint2;
-    Publisher  pubLeg5Joint3;
-    //LEG6
-    Publisher  pubLeg6Joint1;
-    Publisher  pubLeg6Joint2;
-    Publisher  pubLeg6Joint3;   // .....
+private:
+	NodeHandle n;
+	Subscriber subJoy;          //subscriber of joy topic
+	Publisher jointPub;         //publisher (rviz)
 
-  public:
-    //constructor
-    Akrobat();
+	//LEG1
+	Publisher  pubLeg1Joint1;	//publicher for jointX of legX
+	Publisher  pubLeg1Joint2;	// .....
+	Publisher  pubLeg1Joint3;
+	//LEG2
+	Publisher  pubLeg2Joint1;
+	Publisher  pubLeg2Joint2;
+	Publisher  pubLeg2Joint3;
+	//LEG3
+	Publisher  pubLeg3Joint1;
+	Publisher  pubLeg3Joint2;
+	Publisher  pubLeg3Joint3;
+	//LEG4
+	Publisher  pubLeg4Joint1;
+	Publisher  pubLeg4Joint2;
+	Publisher  pubLeg4Joint3;
+	//LEG5
+	Publisher  pubLeg5Joint1;
+	Publisher  pubLeg5Joint2;
+	Publisher  pubLeg5Joint3;
+	//LEG6
+	Publisher  pubLeg6Joint1;
+	Publisher  pubLeg6Joint2;
+	Publisher  pubLeg6Joint3;   // .....
 
-    //initialize akrobat leg position
-    void initAkrobat();
+public:
+	//constructor
+	Akrobat();
 
-    //execute important fuction to run the hexapod
-    void runAkrobat();
+	//initialize akrobat leg position
+	void initAkrobat();
 
-    //create tripod gait
-    void tripodGait(trajectoryStruct *tS, int legNum);
-    
-    //create wave gait
-    void waveGait(trajectoryStruct *tS, int legNum);
-    
-    //create ripple gait
-    void rippleGait(trajectoryStruct *tS, int legNum);
+	//execute important fuction to run the hexapod
+	void runAkrobat();
 
-    //transformate the coordinate systems
-    void coordinateTransformation(int legNum);
+	//create tripod gait
+	void tripodGait(trajectoryStruct *tS, int legNum);
 
-    //calculate the inverse kinematics for each leg
-    void inverseKinematics(double x, double y, double z, int legNum);
+	//create wave gait
+	void waveGait(trajectoryStruct *tS, int legNum);
 
-    //move the leg to target position
-    int moveLeg(float alpha, float beta, float gamma, int legNum);
+	//create ripple gait
+	void rippleGait(trajectoryStruct *tS, int legNum);
 
-    //transformate source coordinate system to target coordinate system
-    Transform transformCS(string sourceCS, string targetCS, Vector3 rot, Vector3 trans);
- 
-    //call the motor state list back
-    void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
+	//transformate the coordinate systems
+	void coordinateTransformation(int legNum);
+
+	//calculate the inverse kinematics for each leg
+	void inverseKinematics(double x, double y, double z, int legNum);
+
+	//move the leg to target position
+	int moveLeg(float alpha, float beta, float gamma, int legNum);
+
+	//transformate source coordinate system to target coordinate system
+	Transform transformCS(string sourceCS, string targetCS, Vector3 rot, Vector3 trans);
+
+	//call the motor state list back
+	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
 };
 
 
