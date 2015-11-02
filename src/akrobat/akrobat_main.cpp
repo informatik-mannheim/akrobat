@@ -8,10 +8,12 @@ using namespace ros;
 int main(int argc, char** argv)
 {
 	init(argc, argv, "akrobat_main");
-	Rate r_schleife(20);
 
 	Akrobat akrobat;
 	akrobat.initAkrobat();
+
+	// needs to be called after akrobat creation (requires a ros::NodeHandle)
+	Rate r_schleife(20);
 
 	// ros main loop
 	while (ok() && ON) {
