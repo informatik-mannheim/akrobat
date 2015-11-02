@@ -6,7 +6,6 @@
 #include <ros/ros.h>
 #include <std_msgs/Float64.h>
 #include <sensor_msgs/Joy.h>
-//#include <dynamixel_msgs/MotorStateList.h>
 #include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 #include <angles/angles.h>
@@ -89,7 +88,7 @@ void Akrobat::initAkrobat()
 		//ROS_INFO("%d", legNum);
 		Transform iT; //[TRANSFORMATION DATA TYP] -- create a transform
 
-					  //[LCS] -- definition of leg coordinate system
+		//[LCS] -- definition of leg coordinate system
 		iT = Akrobat::transformCS("TIBIA", "ENDEFFCTR", Vector3(0, 0, 0), Vector3(LENGTH_TIBIA, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
 		iT = Akrobat::transformCS("TIBIA", "TIBIA", Vector3(0, 0, -jointInitC[legNum]), Vector3(0, 0, 0));
