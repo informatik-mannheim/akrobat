@@ -742,6 +742,7 @@ Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 tran
 void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 	if (joy->buttons[LB] && joy->buttons[RB]) {
 		cout << "SHUTTING DOWN!" << endl;
+		ros::shutdown();
 		ON = 0;
 	}
 	else {
