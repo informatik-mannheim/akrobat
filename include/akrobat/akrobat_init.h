@@ -2,13 +2,15 @@
 #define AKROBAT_INIT_H
 
 //--------------------------INCLUDE
-#include <ros/ros.h>
 #include <iostream>
+#include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+#include <sensor_msgs/JointState.h>
 #include <std_msgs/Float64.h>
 #include <dynamixel_msgs/MotorStateList.h>
 #include <tf/transform_datatypes.h>
 #include <tf/tf.h>
+
 
 //-------------------------NAMESPACE
 using namespace std;
