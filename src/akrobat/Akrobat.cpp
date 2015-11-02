@@ -809,7 +809,7 @@ Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 tran
  ********************************************************************************************************/
 void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 {
-	if(joy->buttons[LB] && joy->buttons[RB])
+	if(joy->buttons[LB_BUTTON] && joy->buttons[RB_BUTTON])
 	{
 		cout << "SHUTTING DOWN!" << endl;
 		ros::shutdown();
@@ -817,22 +817,22 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 	}
 	else
 	{
-		if(joy->buttons[RB] && !(joy->buttons[LB]))
+		if(joy->buttons[RB_BUTTON] && !(joy->buttons[LB_BUTTON]))
 		{
 			mode = 0; cout << "[OPERATION]: Normal" << endl; gait = 0;
 		}
 
-		if(joy->buttons[RT] && !joy->buttons[B])
+		if(joy->buttons[RT_BUTTON] && !joy->buttons[B_BUTTON])
 		{
 			mode = 1; cout << "[OPERATION]: Translation" << endl; gait = 0;
 		}
 
-		if(joy->buttons[R3])
+		if(joy->buttons[R3_BUTTON])
 		{
 			mode = 2; cout << "[OPERATION]: Rotation" << endl; gait = 0;
 		}
 
-		if(joy->buttons[START])
+		if(joy->buttons[START_BUTTON])
 		{ //rollOver=1;  cout<<"rollover: "<< rollOver <<endl;
 			js.header.stamp = ros::Time::now();
 			if(rollOver == 0)
@@ -882,7 +882,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			jointPub.publish(js);
 		}
 
-		if(joy->buttons[LB] && !(joy->buttons[RB]) && mode == 0)
+		if(joy->buttons[LB_BUTTON] && !(joy->buttons[RB_BUTTON]) && mode == 0)
 		{
 			gait = 1; cout << "[  GAIT   ]: Tripod" << endl;
 			traData.caseStep[LEFT_FRONT] = 2;
@@ -897,7 +897,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			traData.tick = 0;
 		}
 
-		if(joy->buttons[LT] && mode == 0)
+		if(joy->buttons[LT_BUTTON] && mode == 0)
 		{
 			gait = 2; cout << "[  GAIT   ]: Wave" << endl;
 			traData.caseStep[LEFT_FRONT] = 1;   //.....
@@ -912,7 +912,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			traData.tick = 0;
 		}
 
-		if(joy->buttons[L3] && mode == 0)
+		if(joy->buttons[L3_BUTTON] && mode == 0)
 		{
 			gait = 3; cout << "[  GAIT   ]: Ripple" << endl;
 			traData.caseStep[LEFT_FRONT] = 5;   //[LEG MOVING] -- up/forward first half stride

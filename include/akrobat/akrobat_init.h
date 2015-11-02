@@ -46,18 +46,18 @@
 #define LR_cross_key    4
 #define UD_cross_key    5
 
-#define X               0
-#define A               1
-#define B               2
-#define Y     	        3
-#define LB    	        4
-#define RB  	        5
-#define LT              6
-#define RT              7
-#define BACK            8
-#define START           9
-#define L3              10
-#define R3              11
+#define X_BUTTON               0
+#define A_BUTTON               1
+#define B_BUTTON               2
+#define Y_BUTTON     	        3
+#define LB_BUTTON    	        4
+#define RB_BUTTON  	        5
+#define LT_BUTTON              6
+#define RT_BUTTON              7
+#define BACK_BUTTON            8
+#define START_BUTTON           9
+#define L3_BUTTON              10
+#define R3_BUTTON              11
 
 //joystick sticks scale factor
 #define scaleFacTrans  50
