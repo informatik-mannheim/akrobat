@@ -16,6 +16,7 @@
 using namespace std;
 using namespace tf;
 using namespace ros;
+using namespace angle;
 
 /*********************************************************************************************************
 * Function---:  Akrobat::Akrobat()
