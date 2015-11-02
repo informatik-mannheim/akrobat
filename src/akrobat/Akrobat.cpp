@@ -12,6 +12,10 @@
 #include <akrobat/akrobat_init.h>
 #include <sensor_msgs/JointState.h>
 
+using namespace std;
+using namespace tf;
+using namespace ros;
+
 /*********************************************************************************************************
 * Function---:  Akrobat::Akrobat()
 *
