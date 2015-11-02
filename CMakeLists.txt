@@ -86,9 +86,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES akrobat
-#  CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf
+   INCLUDE_DIRS include
+#  LIBRARIES $(PROJECT_NAME)
+   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf
 #  DEPENDS system_lib
 )
 
@@ -105,11 +105,11 @@ include_directories(
 )
 
 #//--------------------AKROBAT------------------------// 
-add_library(akrobat_init src/akrobat_init.cpp) 
-add_executable(commander src/commander.cpp) 
-add_executable(akrobat src/akrobat_main.cpp) 
-target_link_libraries(akrobat akrobat_init)
-target_link_libraries(commander ${catkin_LIBRARIES})
+#add_library(akrobat_init src/akrobat/akrobat_init.cpp) 
+#add_executable(commander src/akrobat/commander.cpp) 
+add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/akrobat_init.cpp) 
+#target_link_libraries(akrobat akrobat_init)
+#target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})
 
 ## Declare a cpp library
