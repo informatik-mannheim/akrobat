@@ -14,8 +14,6 @@
 
 //-------------------------NAMESPACE
 using namespace std;
-using namespace ros;
-
 
 //---------------------OUTPUT MACRO 
 #define  F1DEBUG 	0 //initAkrobat()  
