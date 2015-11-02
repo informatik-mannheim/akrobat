@@ -1,16 +1,19 @@
 #include <akrobat/Akrobat.h>
-#include <akrobat/akrobat_init.h>
+
 #include <cmath>
 #include <fstream>
 #include <iostream>
+
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
-#include <sensor_msgs/Joy.h>
+#include <angles/angles.h>
 #include <tf/tf.h>
 #include <tf/transform_datatypes.h>
-#include <angles/angles.h>
-#include <akrobat/akrobat_init.h>
+
+#include <std_msgs/Float64.h>
+#include <sensor_msgs/Joy.h>
 #include <sensor_msgs/JointState.h>
+
+#include <akrobat/akrobat_init.h>
 
 using namespace std;
 using namespace tf;
