@@ -1,6 +1,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#include <sensor_msgs/JointState.h>
+
 #include <akrobat/akrobat_init.h>
 #include <akrobat/RumblePad2Struct.h>
 #include <akrobat/TrajectoryStruct.h>
