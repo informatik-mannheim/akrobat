@@ -122,7 +122,7 @@ Akrobat::Akrobat() {
  ********************************************************************************************************/
 void Akrobat::initAkrobat() {
 
-	for (int legNum = 0; legNum<numberOfLegs; legNum++) {
+	for (int legNum = 0; legNum < numberOfLegs; legNum++) {
 
 		//ROS_INFO("%d", legNum);
 		Transform iT; //[TRANSFORMATION DATA TYP] -- create a transform
@@ -201,7 +201,7 @@ void Akrobat::runAkrobat() {
 	if (MOVING || TRANSLATION || ROTATION) {
 		//cout<<"runAkr"<<endl;
 		js.header.stamp = ros::Time::now();
-		for (int legNum = 0; legNum<numberOfLegs; legNum++) {
+		for (int legNum = 0; legNum < numberOfLegs; legNum++) {
 			if (gait == 1) { Akrobat::tripodGait(&traData, legNum); }
 			if (gait == 2) { Akrobat::waveGait(&traData, legNum); }
 			if (gait == 3) { Akrobat::rippleGait(&traData, legNum); }
@@ -800,7 +800,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				rollOv[RIGHT_MIDDLE] = 0; 	     		 //translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 2 * bdConstY[LEFT_REAR];  //translation offset for leg coordinate system (Leg 5)
 				rollOv[RIGHT_REAR] = 2 * bdConstY[RIGHT_REAR]; //translation offset for leg coordinate system (Leg 6)
-				for (int legNum = 0; legNum<numberOfLegs; legNum++) {
+				for (int legNum = 0; legNum < numberOfLegs; legNum++) {
 					Akrobat::coordinateTransformation(legNum);
 					Akrobat::inverseKinematics(LCS.leg[legNum].footPresPos.x(), LCS.leg[legNum].footPresPos.y(), LCS.leg[legNum].footPresPos.z(), legNum);
 					Akrobat::moveLeg(LCS.leg[legNum].jointAngles.alpha, LCS.leg[legNum].jointAngles.beta, LCS.leg[legNum].jointAngles.gamma, legNum);
@@ -820,7 +820,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				rollOv[RIGHT_MIDDLE] = 0;	  //translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 0;	  //translation offset for leg coordinate system (Leg 5)
 				rollOv[RIGHT_REAR] = 0;	  //translation offset for leg coordinate system (Leg 6)
-				for (int legNum = 0; legNum<numberOfLegs; legNum++) {
+				for (int legNum = 0; legNum < numberOfLegs; legNum++) {
 					Akrobat::coordinateTransformation(legNum);
 					Akrobat::inverseKinematics(LCS.leg[legNum].footPresPos.x(), LCS.leg[legNum].footPresPos.y(), LCS.leg[legNum].footPresPos.z(), legNum);
 					Akrobat::moveLeg(LCS.leg[legNum].jointAngles.alpha, LCS.leg[legNum].jointAngles.beta, LCS.leg[legNum].jointAngles.gamma, legNum);
@@ -900,15 +900,15 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			pad.bdR.setX(0);
 			pad.bdR.setY(0);
 			pad.bdR.setZ(0);
-			if ((joy->axes[LR_stick_left]>0.3) || (joy->axes[LR_stick_left]<-0.3)) {   // sideward movement
+			if ((joy->axes[LR_stick_left] > 0.3) || (joy->axes[LR_stick_left] < -0.3)) {   // sideward movement
 				pad.speed.setX(-(joy->axes[LR_stick_left]) / abs(joy->axes[LR_stick_left]));
 			}
 			else { pad.speed.setX(0); }
-			if ((joy->axes[UD_stick_left]>0.3) || (joy->axes[UD_stick_left]<-0.3)) {   // forward/backward movement
+			if ((joy->axes[UD_stick_left] > 0.3) || (joy->axes[UD_stick_left] < -0.3)) {   // forward/backward movement
 				pad.speed.setY(joy->axes[UD_stick_left] / abs(joy->axes[UD_stick_left]));
 			}
 			else { pad.speed.setY(0); }
-			if ((joy->axes[LR_stick_right]>0.3) || (joy->axes[LR_stick_right]<-0.3)) { // rotational movement
+			if ((joy->axes[LR_stick_right] > 0.3) || (joy->axes[LR_stick_right] < -0.3)) { // rotational movement
 				pad.speed.setZ((joy->axes[LR_stick_right] / abs(joy->axes[LR_stick_right])));
 			}
 			else { pad.speed.setZ(0); }
