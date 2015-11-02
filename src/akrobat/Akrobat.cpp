@@ -6,8 +6,9 @@
 
 #include <ros/ros.h>
 #include <angles/angles.h>
-#include <tf/tf.h>
+
 #include <tf/transform_datatypes.h>
+#include <tf/tf.h>
 
 #include <std_msgs/Float64.h>
 #include <sensor_msgs/Joy.h>
