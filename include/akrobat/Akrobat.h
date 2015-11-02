@@ -1,18 +1,13 @@
 #ifndef AKROBAT_H
 #define AKROBAT_H
 
-#include <cmath>
-#include <fstream>
-#include <iostream>
+#include <string>
+
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
 #include <sensor_msgs/Joy.h>
-//#include <dynamixel_msgs/MotorStateList.h>
-#include <tf/tf.h>
 #include <tf/transform_datatypes.h>
-#include <angles/angles.h>
+
 #include <akrobat/akrobat_init.h>
-#include <sensor_msgs/JointState.h>
 
 class Akrobat
 {
@@ -21,7 +16,7 @@ private:
 	ros::Subscriber subJoy;          //subscriber of joy topic
 	ros::Publisher jointPub;         //publisher (rviz)
 
-								//LEG1
+	//LEG1
 	ros::Publisher  pubLeg1Joint1;	//publicher for jointX of legX
 	ros::Publisher  pubLeg1Joint2;	// .....
 	ros::Publisher  pubLeg1Joint3;
