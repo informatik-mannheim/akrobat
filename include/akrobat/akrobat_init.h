@@ -145,9 +145,9 @@ extern float maxTibia[numberOfLegs];//[°] (tibia joint) gamma angle max limit
 //---------------------------STRUCT
 //joypad
 struct rumblePad2Struct {
-	Vector3 speed; // forward/backward/sideward movement
-	Vector3 bdR;   // body rotation
-	Vector3 bdT;   // body translation
+	tf::Vector3 speed; // forward/backward/sideward movement
+	tf::Vector3 bdR;   // body rotation
+	tf::Vector3 bdT;   // body translation
 };
 extern rumblePad2Struct rumblePad2;
 //trajectory data
@@ -184,10 +184,10 @@ struct floatJointStruct {
 };
 //leg position
 struct legStruct {
-	Vector3 footPresPos;            //present position
-	Vector3 footInitPos;            //init position
-	Vector3 footGlobPos;            //globale position
-	Vector3 trajectoryPresPos;      //trajectory present positon
+	tf::Vector3 footPresPos;            //present position
+	tf::Vector3 footInitPos;            //init position
+	tf::Vector3 footGlobPos;            //globale position
+	tf::Vector3 trajectoryPresPos;      //trajectory present positon
 	floatJointStruct jointAngles;	//joint angles
 };
 //coordinate system
