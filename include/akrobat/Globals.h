@@ -2,6 +2,10 @@
 #define GLOBALS_H
 
 #include <akrobat/akrobat_init.h>
+#include <akrobat/RumblePad2Struct.h>
+#include <akrobat/TrajectoryStruct.h>
+#include <akrobat/MotorStateStruct.h>
+#include <akrobat/CoordinateSystemStruct.h>
 
 // ----------------GLOBABEL VARIBALE
 extern int mode; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
