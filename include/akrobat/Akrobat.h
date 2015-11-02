@@ -5,6 +5,8 @@
 
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+
+#include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 
 #include <akrobat/akrobat_init.h>

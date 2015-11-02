@@ -1,6 +1,7 @@
 #ifndef RUMBLEPAD2STRUCT_H
 #define RUMBLEPAD2STRUCT_H
 
+#include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 
 //joypad

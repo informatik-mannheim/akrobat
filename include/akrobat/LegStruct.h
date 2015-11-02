@@ -1,6 +1,7 @@
 #ifndef LEGSTRUCT_H
 #define LEGSTRUCT_H
 
+#include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 #include <akrobat/FloatJointStruct.h>
 
