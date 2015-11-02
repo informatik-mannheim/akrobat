@@ -11,10 +11,6 @@
 #include <tf/transform_datatypes.h>
 #include <tf/tf.h>
 
-
-//-------------------------NAMESPACE
-using namespace std;
-
 //---------------------OUTPUT MACRO 
 #define  F1DEBUG 	0 //initAkrobat()  
 #define  F2DEBUG 	0 //runAkrobat()
