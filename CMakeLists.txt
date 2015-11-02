@@ -107,7 +107,7 @@ include_directories(
 #//--------------------AKROBAT------------------------// 
 #add_library(akrobat_init src/akrobat/akrobat_init.cpp) 
 #add_executable(commander src/akrobat/commander.cpp) 
-add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/akrobat_init.cpp) 
+add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/akrobat_init.cpp src/akrobat/Akrobat.cpp) 
 #target_link_libraries(akrobat akrobat_init)
 #target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})
