@@ -22,10 +22,10 @@ float jointInitC[numberOfLegs] = { -90, -90, -90, -90, -90, -90 }; // [°] (tibia
 																				  // min limit of coxa joint initialization
 float minCoxa[numberOfLegs] = { -26, -71, -51, -51, -71, -23 }; // [°] (coxa joint) alpha angle min limit
 float minFemur[numberOfLegs] = { -99, -99, -99, -99, -99, -107 }; // [°] (femur joint) beta angle min limit
-float minTibia[numberOfLegs] = { -135,   -135,   -135, -135, -135, -135 }; // [°] (tibia joint) gamma angle min limit
+float minTibia[numberOfLegs] = { -135, -135, -135, -135, -135, -135 }; // [°] (tibia joint) gamma angle min limit
 																				// max limit of coxa jointinitialization
-float maxCoxa[numberOfLegs] = { 65,  28,  48,  48,  30,  75 }; // [°] (coxa joint) alpha angle max limit
-float maxFemur[numberOfLegs] = { 96,  96,  96,  96,  96,  96 }; // [°] (femur joint) beta angle max limit
+float maxCoxa[numberOfLegs] = { 65, 28, 48, 48, 30, 75 }; // [°] (coxa joint) alpha angle max limit
+float maxFemur[numberOfLegs] = { 96, 96, 96, 96, 96, 96 }; // [°] (femur joint) beta angle max limit
 float maxTibia[numberOfLegs] = { 135, 135, 135, 135, 135, 135 }; // [°] (tibia joint) gamma angle max limit
 
 rumblePad2Struct pad; // [	PAD   ] -- joypad object
