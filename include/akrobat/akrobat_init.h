@@ -109,13 +109,13 @@ using namespace ros;
 
 
 //----------------GLOBABEL VARIBALE
-extern int mode = 0;               //[   MODE   ] -- normal(0)/translation(1)/rotation(2)
-extern int gait = 0;               //[   gait   ] -- tripod(1)/wave(2)/ripple(3)
-extern int rotBody = 0;            //[ rotBody  ] -- angle of body rotation (0/180)
-extern int rollOver = 0;           //[ rollOver ] -- if body roll over (0/1)
-extern int ON = 1;                 //[     ON   ] -- if null akrobat shutting down
+extern int mode;               //[   MODE   ] -- normal(0)/translation(1)/rotation(2)
+extern int gait;               //[   gait   ] -- tripod(1)/wave(2)/ripple(3)
+extern int rotBody;            //[ rotBody  ] -- angle of body rotation (0/180)
+extern int rollOver;           //[ rollOver ] -- if body roll over (0/1)
+extern int ON;                 //[     ON   ] -- if null akrobat shutting down
 extern float rollOv[numberOfLegs]; //LCS translational correction after body roll over
-extern float rotOfCoxa[numberOfLegs] =   {  -160,    -20,    180,	0,    160,     20 }; //rotates abot coxa for angle 45° init
+extern float rotOfCoxa[numberOfLegs]; //rotates abot coxa for angle 45° init
 
 
 
