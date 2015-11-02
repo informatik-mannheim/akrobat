@@ -314,3 +314,6 @@ CATKIN_IGNORE
 *.out
 *.app
 
+/*.sln
+/*.vcxproj
+/*.filters
