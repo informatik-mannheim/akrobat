@@ -52,6 +52,9 @@ using namespace ros;
 
 
 //-------------------JOYSTICK MACRO
+// definitions for F710 in "direct input mode" (switch on 
+// back side in "D" position), recognized as Logitech Cordless Rumblepad 2 
+
 //sticks 
 #define LR_stick_left   0
 #define UD_stick_left   1
