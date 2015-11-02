@@ -15,6 +15,7 @@
 
 #include <akrobat/akrobat_init.h>
 #include <akrobat/Globals.h>
+#include <akrobat/TrajectoryStruct.h>
 
 using namespace std;
 using namespace tf;

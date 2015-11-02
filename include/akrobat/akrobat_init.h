@@ -1,16 +1,6 @@
 #ifndef AKROBAT_INIT_H
 #define AKROBAT_INIT_H
 
-//--------------------------INCLUDE
-#include <iostream>
-#include <ros/ros.h>
-#include <sensor_msgs/Joy.h>
-#include <sensor_msgs/JointState.h>
-#include <std_msgs/Float64.h>
-#include <dynamixel_msgs/MotorStateList.h>
-#include <tf/transform_datatypes.h>
-#include <tf/tf.h>
-
 //---------------------OUTPUT MACRO
 #define  F1DEBUG 	0 //initAkrobat()
 #define  F2DEBUG 	0 //runAkrobat()
@@ -96,61 +86,5 @@
 #define CoxaJointLimit  ((LCS.leg[legNum].jointAngles.alpha<=maxCoxa [legNum])&&(LCS.leg[legNum].jointAngles.alpha>=minCoxa [legNum]))
 #define FemurJointLimit ((LCS.leg[legNum].jointAngles.beta <=maxFemur[legNum])&&(LCS.leg[legNum].jointAngles.beta >=minFemur[legNum]))
 #define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
-
-//---------------------------STRUCT
-//joypad
-struct rumblePad2Struct
-{
-	tf::Vector3 speed; // forward/backward/sideward movement
-	tf::Vector3 bdR;   // body rotation
-	tf::Vector3 bdT;   // body translation
-};
-//trajectory data
-struct trajectoryStruct
-{
-	int   caseStep[numberOfLegs];	//leg up/leg down
-	int   tick;                     //present tick
-	float initAmpX;                 //x init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-	float initAmpY;                 //y init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-	float initAmpZ;                 //z init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
-	float ampX[numberOfLegs];       //x axis amplitude of leg trajectory
-	float ampY[numberOfLegs];       //y axis amplitude of leg trajectory
-	float ampZ[numberOfLegs];       //z axis amplitude of leg trajectory
-};
-// motor data
-struct motorStateStruct
-{
-	float timestamp; 	// time stamp
-	int   id;           // motor id
-	int   goal;         // position value of destination
-	int   position;		// present positon
-	int   error;		// error of present positon
-	int   speed;		// speed to goal positon
-	float load;         // currently applied load
-	float voltage;		// size of current voltage supplied
-	float temperature;	// internal temperature in celsius
-	bool  moving;		// goal position execution completed(0)/in progress(1)
-};
-//angles of joint
-struct floatJointStruct
-{
-	float alpha;
-	float beta;
-	float gamma;
-};
-//leg position
-struct legStruct
-{
-	tf::Vector3 footPresPos;            //present position
-	tf::Vector3 footInitPos;            //init position
-	tf::Vector3 footGlobPos;            //globale position
-	tf::Vector3 trajectoryPresPos;      //trajectory present positon
-	floatJointStruct jointAngles;	//joint angles
-};
-//coordinate system
-struct coordinateSystemStruct
-{
-	legStruct leg[numberOfLegs];	//array of legs
-};
 
 #endif

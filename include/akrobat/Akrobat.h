@@ -8,6 +8,7 @@
 #include <tf/transform_datatypes.h>
 
 #include <akrobat/akrobat_init.h>
+#include <akrobat/TrajectoryStruct.h>
 
 class Akrobat
 {
