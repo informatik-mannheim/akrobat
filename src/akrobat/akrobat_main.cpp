@@ -5,27 +5,18 @@
 using namespace std;
 using namespace ros;
 
-//---------------------------------MAIN-----------------------------------//
 int main(int argc, char** argv)
-{ 
-  init(argc, argv, "akrobat_main");
-  Akrobat akrobat;
-  akrobat.initAkrobat();
+{
+	init(argc, argv, "akrobat_main");
+	Rate r_schleife(20);
 
-  Rate r_schleife(20);
-  //WHILE-LOOP
-  while(ok() && ON ){
-	akrobat.runAkrobat();
-	spinOnce();
-	r_schleife.sleep();
-  }//END WHILE
-}//-----------------------------END Main---------------------------------//
+	Akrobat akrobat;
+	akrobat.initAkrobat();
 
-
-  
-
-
-
-
-    
-
+	// ros main loop
+	while (ok() && ON) {
+		akrobat.runAkrobat();
+		spinOnce();
+		r_schleife.sleep();
+	}
+}
