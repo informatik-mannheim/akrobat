@@ -11,10 +11,10 @@
 #include <tf/transform_datatypes.h>
 #include <tf/tf.h>
 
-//---------------------OUTPUT MACRO 
-#define  F1DEBUG 	0 //initAkrobat()  
+//---------------------OUTPUT MACRO
+#define  F1DEBUG 	0 //initAkrobat()
 #define  F2DEBUG 	0 //runAkrobat()
-#define  F3DEBUG 	0 //tripodGait() 
+#define  F3DEBUG 	0 //tripodGait()
 #define  F4DEBUG 	0 //waveGait()
 #define  F5DEBUG 	0 //rippleGait()
 #define  F6DEBUG 	0 //coordinateTransformation()
@@ -23,12 +23,10 @@
 #define  F9DEBUG 	0 //transformCS()
 #define  F10DEBUG 	0 //callRumblePad2Back()
 
-
 //-----------------------BODY MACRO
 #define halfBodyHight  	0     //[mm] half hight of body
 #define halfBodyWidth  	51    //[mm] half width of body
 #define halfBodyLength 	217   //[mm] half length of body
-
 
 //------------------------LEG MACRO
 #define LEFT_FRONT    	0 //[ID'S] COXA: 11 / FEMUR: 12 / TIBIA: 13
@@ -45,12 +43,11 @@
 #define LENGTH_FEMUR    92  //[mm] distance femur - tabia !!!!!!!!!!!!!!!!!!!!!!!
 #define LENGTH_TIBIA    162 //[mm] distance tabia - end effector !!!!!!!!!!!!!!!!!!!!!!!
 
-
 //-------------------JOYSTICK MACRO
-// definitions for F710 in "direct input mode" (switch on 
-// back side in "D" position), recognized as Logitech Cordless Rumblepad 2 
+// definitions for F710 in "direct input mode" (switch on
+// back side in "D" position), recognized as Logitech Cordless Rumblepad 2
 
-//sticks 
+//sticks
 #define LR_stick_left   0
 #define UD_stick_left   1
 #define LR_stick_right  2
@@ -76,11 +73,10 @@
 #define scaleFacTrans  50
 #define scaleFacRot    10
 
-
 //----------------------GAIT  MACRO
 //TRIPOD
-#define tripodAmpWidth 	40 //[mm] amplitude width of leg trajectory for tripod gait 
-#define tripodAmpHight	40 //[mm] amplitude hight of leg trajectory for tripod gait	
+#define tripodAmpWidth 	40 //[mm] amplitude width of leg trajectory for tripod gait
+#define tripodAmpHight	40 //[mm] amplitude hight of leg trajectory for tripod gait
 #define tNumTick        15 //number of trajectory points
 //WAVE
 #define waveAmpWidth 	40 //[mm] amplitude width of leg trajectory for wave gait
@@ -91,9 +87,8 @@
 #define rippleAmpHight	40 //[mm] amplitude hight of leg trajectory for ripple gait
 #define rNumTick        15 //number of trajectory points
 
-
 //-------------IF EXPRESSION  MACRO
-//jostick activity 
+//jostick activity
 #define MOVING ((pad.speed.x()>0.3)||(pad.speed.x()<-0.3)||(pad.speed.y()>0.3)||(pad.speed.y()<-0.3)||(pad.speed.z()>0.3)||(pad.speed.z()<-0.3))
 #define TRANSLATION ((pad.bdT.x()>0.3)||(pad.bdT.x()<-0.3)||(pad.bdT.y()>0.3)||(pad.bdT.y()<-0.3)||(pad.bdT.z()>0.3)||(pad.bdT.z()<-0.3))
 #define ROTATION ((pad.bdR.x()>0.3)||(pad.bdR.x()<-0.3)||(pad.bdR.y()>0.3)||(pad.bdR.y()<-0.3)||(pad.bdR.z()>0.3)||(pad.bdR.z()<-0.3))
@@ -101,7 +96,6 @@
 #define CoxaJointLimit  ((LCS.leg[legNum].jointAngles.alpha<=maxCoxa [legNum])&&(LCS.leg[legNum].jointAngles.alpha>=minCoxa [legNum]))
 #define FemurJointLimit ((LCS.leg[legNum].jointAngles.beta <=maxFemur[legNum])&&(LCS.leg[legNum].jointAngles.beta >=minFemur[legNum]))
 #define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
-
 
 //----------------GLOBABEL VARIBALE
 extern int mode;               //[   MODE   ] -- normal(0)/translation(1)/rotation(2)
@@ -111,8 +105,6 @@ extern int rollOver;           //[ rollOver ] -- if body roll over (0/1)
 extern int ON;                 //[     ON   ] -- if null akrobat shutting down
 extern float rollOv[numberOfLegs]; //LCS translational correction after body roll over
 extern float rotOfCoxa[numberOfLegs]; //rotates abot coxa for angle 45° init
-
-
 
 //--------------------BODY CONSTANT
 //body constant initialization
@@ -135,17 +127,18 @@ extern float maxCoxa[numberOfLegs];//[°] (coxa joint) alpha angle max limit
 extern float maxFemur[numberOfLegs];//[°] (femur joint) beta angle max limit
 extern float maxTibia[numberOfLegs];//[°] (tibia joint) gamma angle max limit
 
-
 //---------------------------STRUCT
 //joypad
-struct rumblePad2Struct {
+struct rumblePad2Struct
+{
 	tf::Vector3 speed; // forward/backward/sideward movement
 	tf::Vector3 bdR;   // body rotation
 	tf::Vector3 bdT;   // body translation
 };
 extern rumblePad2Struct rumblePad2;
 //trajectory data
-struct trajectoryStruct {
+struct trajectoryStruct
+{
 	int   caseStep[numberOfLegs];	//leg up/leg down
 	int   tick;                     //present tick
 	float initAmpX;                 //x init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
@@ -157,7 +150,8 @@ struct trajectoryStruct {
 };
 extern trajectoryStruct traData;
 // motor data
-struct motorStateStruct {
+struct motorStateStruct
+{
 	float timestamp; 	// time stamp
 	int   id;           // motor id
 	int   goal;         // position value of destination
@@ -171,13 +165,15 @@ struct motorStateStruct {
 };
 extern motorStateStruct motorSates[numberOfLegs];
 //angles of joint
-struct floatJointStruct {
+struct floatJointStruct
+{
 	float alpha;
 	float beta;
 	float gamma;
 };
 //leg position
-struct legStruct {
+struct legStruct
+{
 	tf::Vector3 footPresPos;            //present position
 	tf::Vector3 footInitPos;            //init position
 	tf::Vector3 footGlobPos;            //globale position
@@ -185,7 +181,8 @@ struct legStruct {
 	floatJointStruct jointAngles;	//joint angles
 };
 //coordinate system
-struct coordinateSystemStruct {
+struct coordinateSystemStruct
+{
 	legStruct leg[numberOfLegs];	//array of legs
 };
 

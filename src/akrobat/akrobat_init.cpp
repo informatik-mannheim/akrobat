@@ -47,7 +47,6 @@ float maxCoxa[numberOfLegs] = { 65,     28,     48,     48,     30,     75 };//[
 float maxFemur[numberOfLegs] = { 96,     96,     96,     96,     96,     96 };//[°] (femur joint) beta angle max limit
 float maxTibia[numberOfLegs] = { 135,    135,    135,    135,    135,    135 };//[°] (tibia joint) gamma angle max limit
 
-
 																			   //-------------------STRUCT OBJECTS
 rumblePad2Struct pad;                           //[	PAD   ] -- joypad object
 trajectoryStruct traData;                       //[	..    ] --

@@ -29,8 +29,8 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat() {
-
+Akrobat::Akrobat()
+{
 	//[SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	//		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
@@ -67,9 +67,7 @@ Akrobat::Akrobat() {
 	js.position.resize(18);
 	js.velocity.resize(18);
 	js.effort.resize(18);
-
 }//Akrobat::Akrobat()
-
 
  /*********************************************************************************************************
  * Function---:  Akrobat::initAkrobat()
@@ -84,10 +82,10 @@ Akrobat::Akrobat() {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::initAkrobat() {
-
-	for (int legNum = 0; legNum < numberOfLegs; legNum++) {
-
+void Akrobat::initAkrobat()
+{
+	for(int legNum = 0; legNum < numberOfLegs; legNum++)
+	{
 		//ROS_INFO("%d", legNum);
 		Transform iT; //[TRANSFORMATION DATA TYP] -- create a transform
 
@@ -105,11 +103,11 @@ void Akrobat::initAkrobat() {
 		iT = Akrobat::transformCS("COXA", "COXA", Vector3(-90, 0, jointInitA[legNum]), Vector3(0, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
 
-		//[BCS] -- definition of body coordinate system 
+		//[BCS] -- definition of body coordinate system
 		iT = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(bdConstX[legNum], bdConstY[legNum], bdConstZ[legNum]));
 		BCS.leg[legNum].footGlobPos = iT*LCS.leg[legNum].footInitPos;
 
-		//[MCS] -- definition of main coordinate system 
+		//[MCS] -- definition of main coordinate system
 		iT = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
 		MCS.leg[legNum].footGlobPos = iT*BCS.leg[legNum].footGlobPos;
 
@@ -147,7 +145,6 @@ void Akrobat::initAkrobat() {
 	}//FOR (legNum)
 }//Akrobat::initAkrobat()
 
-
  /*********************************************************************************************************
  * Function---:  Akrobat::runAkrobat()
  *
@@ -161,14 +158,26 @@ void Akrobat::initAkrobat() {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::runAkrobat() {
-	if (MOVING || TRANSLATION || ROTATION) {
+void Akrobat::runAkrobat()
+{
+	if(MOVING || TRANSLATION || ROTATION)
+	{
 		//cout<<"runAkr"<<endl;
 		js.header.stamp = ros::Time::now();
-		for (int legNum = 0; legNum < numberOfLegs; legNum++) {
-			if (gait == 1) { Akrobat::tripodGait(&traData, legNum); }
-			if (gait == 2) { Akrobat::waveGait(&traData, legNum); }
-			if (gait == 3) { Akrobat::rippleGait(&traData, legNum); }
+		for(int legNum = 0; legNum < numberOfLegs; legNum++)
+		{
+			if(gait == 1)
+			{
+				Akrobat::tripodGait(&traData, legNum);
+			}
+			if(gait == 2)
+			{
+				Akrobat::waveGait(&traData, legNum);
+			}
+			if(gait == 3)
+			{
+				Akrobat::rippleGait(&traData, legNum);
+			}
 			Akrobat::coordinateTransformation(legNum);
 			Akrobat::inverseKinematics(LCS.leg[legNum].footPresPos.x(), LCS.leg[legNum].footPresPos.y(), LCS.leg[legNum].footPresPos.z(), legNum);
 			Akrobat::moveLeg(LCS.leg[legNum].jointAngles.alpha, LCS.leg[legNum].jointAngles.beta, LCS.leg[legNum].jointAngles.gamma, legNum);
@@ -176,7 +185,6 @@ void Akrobat::runAkrobat() {
 	}//MOVING
 	jointPub.publish(js);
 }//Akrobat::runAkrobat()
-
 
  /*********************************************************************************************************
  * Function---:  Akrobat::tripodGait()
@@ -192,27 +200,31 @@ void Akrobat::runAkrobat() {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::tripodGait(trajectoryStruct *tS, int legNum) {
-
-	if (MOVING) { // [MOVING] -- one of joypad sticks was actived
-		switch ((*tS).caseStep[legNum]) {
-
+void Akrobat::tripodGait(trajectoryStruct *tS, int legNum)
+{
+	if(MOVING)
+	{ // [MOVING] -- one of joypad sticks was actived
+		switch((*tS).caseStep[legNum])
+		{
 		case 1: //[LEG MOVING] -- up/forward
 			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*(*tS).tick / tNumTick));
 			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*(*tS).tick / tNumTick));
 			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*(*tS).tick / tNumTick));
-			if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 2; break;
+			if((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 2; break;
 
 		case 2: //[LEG MOVING] -- down/backward
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] - 2.0*(*tS).ampX[legNum] * (*tS).tick / tNumTick);
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] - 2.0*(*tS).ampY[legNum] * (*tS).tick / tNumTick);
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 1; break;
-
+			if((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 1; break;
 		}// SWITCH ((*tS).caseStep[legNum])
-		if (legNum == numberOfLegs - 1) {
+		if(legNum == numberOfLegs - 1)
+		{
 			(*tS).tick++;
-			if ((*tS).tick > tNumTick - 1) { (*tS).tick = 0; }
+			if((*tS).tick > tNumTick - 1)
+			{
+				(*tS).tick = 0;
+			}
 		}
 
 		//[OUTPUT] -- console
@@ -237,7 +249,6 @@ void Akrobat::tripodGait(trajectoryStruct *tS, int legNum) {
 	}//IF (MOVING)
 }//Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
 
-
  /*********************************************************************************************************
  * Function---:  Akrobat::waveGait()
  *
@@ -252,51 +263,55 @@ void Akrobat::tripodGait(trajectoryStruct *tS, int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::waveGait(trajectoryStruct *tS, int legNum) {
-
-	if (MOVING) { // [MOVING] -- one of joypad sticks was actived
-		switch ((*tS).caseStep[legNum]) {
-
+void Akrobat::waveGait(trajectoryStruct *tS, int legNum)
+{
+	if(MOVING)
+	{ // [MOVING] -- one of joypad sticks was actived
+		switch((*tS).caseStep[legNum])
+		{
 		case 1: //[LEG MOVING] -- up/forward
 			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*(*tS).tick / wNumTick));
 			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*(*tS).tick / wNumTick));
 			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*(*tS).tick / wNumTick));
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 2; break;
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 2; break;
 
 		case 2: //[LEG MOVING] -- down/backward (1 segment of 5)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(*tS).tick / (5.0*wNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(*tS).tick / (5.0*wNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 3; break;
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 3; break;
 
 		case 3: //[LEG MOVING] -- down/backward (2 segments of 5)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 4; break;
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 4; break;
 
 		case 4: //[LEG MOVING] -- down/backward (3 segments of 5)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 5; break;
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 5; break;
 
 		case 5: //[LEG MOVING] -- down/backward (4 segments of 5)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 6; break;
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 6; break;
 
 		case 6: //[LEG MOVING] -- down/backward (5 segments of 5)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 4.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 4.0*wNumTick) / (5.0*wNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 1; break;
-
+			if((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 1; break;
 		}// SWITCH ((*tS).caseStep[legNum])
-		if (legNum == numberOfLegs - 1) {
+		if(legNum == numberOfLegs - 1)
+		{
 			(*tS).tick++;
-			if ((*tS).tick > wNumTick - 1) { (*tS).tick = 0; }
+			if((*tS).tick > wNumTick - 1)
+			{
+				(*tS).tick = 0;
+			}
 		}
 		//[OUTPUT] -- console
 #if F4DEBUG == 1 //-----> [SET MARCO] -- akrobat_init.h
@@ -320,7 +335,6 @@ void Akrobat::waveGait(trajectoryStruct *tS, int legNum) {
 	}//IF (MOVING)
 }//Akrobat::waveGait(trajectoryStruct *tS,int legNum)
 
-
  /*********************************************************************************************************
  * Function---:  Akrobat::rippleGait()
  *
@@ -335,50 +349,55 @@ void Akrobat::waveGait(trajectoryStruct *tS, int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::rippleGait(trajectoryStruct *tS, int legNum) {
-	if (MOVING) { // [MOVING] -- one of joypad sticks was actived
-		switch ((*tS).caseStep[legNum]) {
-
+void Akrobat::rippleGait(trajectoryStruct *tS, int legNum)
+{
+	if(MOVING)
+	{ // [MOVING] -- one of joypad sticks was actived
+		switch((*tS).caseStep[legNum])
+		{
 		case 1: //[LEG MOVING] -- up/forward first half stride
 			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*(*tS).tick / (2.0*rNumTick)));
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2; break;
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2; break;
 
 		case 2: //[LEG MOVING] -- up/forward second half stride
 			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
 			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3; break;
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3; break;
 
 		case 3: //[LEG MOVING] -- down/backward (1 segment of 4)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4; break;
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4; break;
 
 		case 4: //[LEG MOVING] -- down/backward (2 segments of 4)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5; break;
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5; break;
 
 		case 5: //[LEG MOVING] -- down/backward (2 segments of 4)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6; break;
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6; break;
 
 		case 6: //[LEG MOVING] -- down/backward (2 segments of 4)
 			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
 			FCS.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1; break;
-
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1; break;
 		}// SWITCH ((*tS).caseStep[legNum])
-		if (legNum == numberOfLegs - 1) {
+		if(legNum == numberOfLegs - 1)
+		{
 			(*tS).tick++;
-			if ((*tS).tick > rNumTick - 1) { (*tS).tick = 0; }
+			if((*tS).tick > rNumTick - 1)
+			{
+				(*tS).tick = 0;
+			}
 		}
 		//[OUTPUT] -- console
 #if F5DEBUG == 1 //-----> [SET MARCO] -- akrobat_init.h
@@ -403,7 +422,6 @@ void Akrobat::rippleGait(trajectoryStruct *tS, int legNum) {
 	 //FCS.leg[legNum].trajectoryPresPos.setZ(0);
 }//Akrobat::rippleGait(int legNum)
 
-
  /*********************************************************************************************************
  * Function---:  Akrobat::coordinateTransformation()
  *
@@ -417,8 +435,8 @@ void Akrobat::rippleGait(trajectoryStruct *tS, int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::coordinateTransformation(int legNum) {
-
+void Akrobat::coordinateTransformation(int legNum)
+{
 	Transform T; //[TRANSFORMATION DATA TYP] -- create a transform
 
 	T = Akrobat::transformCS("FCS", "LCS", Vector3(0, 0, 0), LCS.leg[legNum].footInitPos);
@@ -468,8 +486,8 @@ void Akrobat::coordinateTransformation(int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::inverseKinematics(double x, double y, double z, int legNum) {
-
+void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
+{
 	float R, L, ALPHA, BETA1, BETA2, BETA, GAMMA;
 
 	R = sqrt(pow(y, 2) + pow(x, 2));
@@ -478,13 +496,14 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum) {
 	BETA1 = atan2(z, (R - LENGTH_COXA));
 	BETA2 = acos(0.5 * (pow(LENGTH_FEMUR, 2) + pow(L, 2) - pow(LENGTH_TIBIA, 2)) / (L*LENGTH_FEMUR));
 
-
 	GAMMA = acos(0.5*(pow(LENGTH_TIBIA, 2) + pow(LENGTH_FEMUR, 2) - pow(L, 2)) / (LENGTH_FEMUR*LENGTH_TIBIA));
-	if (!rollOver) {
+	if(!rollOver)
+	{
 		BETA = BETA1 + BETA2;
 		GAMMA = GAMMA - from_degrees(180);
 	}
-	else {
+	else
+	{
 		BETA = BETA1 - BETA2;
 		GAMMA = from_degrees(180) - GAMMA;
 	}
@@ -506,7 +525,6 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum) {
 #endif
 }//Akrobat::inverseKinematics(int legNum)
 
-
  /*********************************************************************************************************
  * Function---:  Akrobat::moveLeg()
  *
@@ -524,16 +542,19 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum) {
-
-	if (CoxaJointLimit) {		//[COXA  JOINT LIMITS] -- control the joint max and min limits
-		if (FemurJointLimit) {	//[FEMUR JOINT LIMITS] -- control the joint max and min limits
-			if (TibiaJointLimit) {	//[TIBIA JOINT LIMITS] -- control the joint max and min limits
-
+int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
+{
+	if(CoxaJointLimit)
+	{		//[COXA  JOINT LIMITS] -- control the joint max and min limits
+		if(FemurJointLimit)
+		{	//[FEMUR JOINT LIMITS] -- control the joint max and min limits
+			if(TibiaJointLimit)
+			{	//[TIBIA JOINT LIMITS] -- control the joint max and min limits
 				std_msgs::Float64 aux; //[STANDARD MESSAGE TYPE] -- publishing data type
-									   //[...publish(..)] -- function to publish data	
-				switch (legNum) {
-				case 0: //[LEG 1] -- set angle values and publish 
+									   //[...publish(..)] -- function to publish data
+				switch(legNum)
+				{
+				case 0: //[LEG 1] -- set angle values and publish
 					aux.data = from_degrees(alpha);
 					pubLeg1Joint1.publish(aux);
 					js.name[0] = "m11";
@@ -556,7 +577,7 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum) {
 					js.effort[2] = 0.0;
 					break;
 
-				case 1:	//[LEG 2] -- set angle values and publish 
+				case 1:	//[LEG 2] -- set angle values and publish
 					aux.data = from_degrees(alpha);
 					pubLeg2Joint1.publish(aux);
 					js.name[3] = "m21";
@@ -579,7 +600,7 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum) {
 					js.effort[5] = 0.0;
 					break;
 
-				case 2: //[LEG 3] -- set angle values and publish 
+				case 2: //[LEG 3] -- set angle values and publish
 					aux.data = from_degrees(alpha);
 					pubLeg3Joint1.publish(aux);
 					js.name[6] = "m31";
@@ -671,18 +692,27 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum) {
 					js.effort[17] = 0.0;
 					break;
 				}
+
 				return 1;
 
 				//[OUTPUT WARNING] -- range warnings of joint (limit valu's: akrobat_init.h)
 			}
-			else { cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia joint is exceeded " << endl; }
+			else
+			{
+				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia joint is exceeded " << endl;
+			}
 		}
-		else { cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur joint is exceeded " << endl; }
+		else
+		{
+			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur joint is exceeded " << endl;
+		}
 	}
-	else { cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa joint is exceeded " << endl; }
+	else
+	{
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa joint is exceeded " << endl;
+	}
 	return 0;
 }//int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
-
 
  /*********************************************************************************************************
  * Function---:  Akrobat::transformCS()
@@ -700,31 +730,64 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum) {
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans) {
-
-
+Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
+{
 	Transform TCS; //[TRANSFORMATION DATA TYP] -- create a transform
-	Vector3 transVec(trans.x(), trans.y(), trans.z()); //[TRANSLATON] -- create and define vector	
-	TCS.setOrigin(transVec); //[.setOrigin] -- set translational element of transform	
-	Quaternion rotQuat; //[ROTATION] -- create quaternion					
-	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z()));  //[.setRPY] -- define quaternion 
-	TCS.setRotation(rotQuat);  //[.setRotaion] -- set rotational element of transform	
+	Vector3 transVec(trans.x(), trans.y(), trans.z()); //[TRANSLATON] -- create and define vector
+	TCS.setOrigin(transVec); //[.setOrigin] -- set translational element of transform
+	Quaternion rotQuat; //[ROTATION] -- create quaternion
+	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z()));  //[.setRPY] -- define quaternion
+	TCS.setRotation(rotQuat);  //[.setRotaion] -- set rotational element of transform
 
-	if ((sCS == "LCS") && (tCS == "FCS")) { return TCS.inverse(); }
-	if ((sCS == "BCS") && (tCS == "LCS")) { return TCS.inverse(); }
-	if ((sCS == "MCS") && (tCS == "BCS")) { return TCS.inverse(); }
-	if ((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS"))) { return TCS; }
-	if ((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS"))) { return TCS; }
-	if ((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS"))) { return TCS; }
-	if ((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA"))) { return TCS; }
-	if ((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR"))) { return TCS; }
-	if ((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA"))) { return TCS; }
+	if((sCS == "LCS") && (tCS == "FCS"))
+	{
+		return TCS.inverse();
+	}
+
+	if((sCS == "BCS") && (tCS == "LCS"))
+	{
+		return TCS.inverse();
+	}
+
+	if((sCS == "MCS") && (tCS == "BCS"))
+	{
+		return TCS.inverse();
+	}
+
+	if((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS")))
+	{
+		return TCS;
+	}
+
+	if((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS")))
+	{
+		return TCS;
+	}
+
+	if((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS")))
+	{
+		return TCS;
+	}
+
+	if((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA")))
+	{
+		return TCS;
+	}
+
+	if((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR")))
+	{
+		return TCS;
+	}
+
+	if((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA")))
+	{
+		return TCS;
+	}
 
 	//[ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
 	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
 	return TCS;
 }//Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
-
 
  /*********************************************************************************************************
  * Function---:  Akrobat::callRumblePad2Back()
@@ -739,19 +802,36 @@ Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 tran
  *
  * Note-------:	 None.
  ********************************************************************************************************/
-void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
-	if (joy->buttons[LB] && joy->buttons[RB]) {
+void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
+{
+	if(joy->buttons[LB] && joy->buttons[RB])
+	{
 		cout << "SHUTTING DOWN!" << endl;
 		ros::shutdown();
 		ON = 0;
 	}
-	else {
-		if (joy->buttons[RB] && !(joy->buttons[LB])) { mode = 0; cout << "[OPERATION]: Normal" << endl; gait = 0; }
-		if (joy->buttons[RT] && !joy->buttons[B]) { mode = 1; cout << "[OPERATION]: Translation" << endl; gait = 0; }
-		if (joy->buttons[R3]) { mode = 2; cout << "[OPERATION]: Rotation" << endl; gait = 0; }
-		if (joy->buttons[START]) { //rollOver=1;  cout<<"rollover: "<< rollOver <<endl;
+	else
+	{
+		if(joy->buttons[RB] && !(joy->buttons[LB]))
+		{
+			mode = 0; cout << "[OPERATION]: Normal" << endl; gait = 0;
+		}
+
+		if(joy->buttons[RT] && !joy->buttons[B])
+		{
+			mode = 1; cout << "[OPERATION]: Translation" << endl; gait = 0;
+		}
+
+		if(joy->buttons[R3])
+		{
+			mode = 2; cout << "[OPERATION]: Rotation" << endl; gait = 0;
+		}
+
+		if(joy->buttons[START])
+		{ //rollOver=1;  cout<<"rollover: "<< rollOver <<endl;
 			js.header.stamp = ros::Time::now();
-			if (rollOver == 0) {
+			if(rollOver == 0)
+			{
 				rollOver = 1; rotBody = 180;
 				rotOfCoxa[LEFT_FRONT] = 160; //rotation of leg coordinate system (Leg 1)
 				rotOfCoxa[RIGHT_FRONT] = 20;  //rotation of leg coordinate system (Leg 2)
@@ -765,13 +845,15 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				rollOv[RIGHT_MIDDLE] = 0; 	     		 //translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 2 * bdConstY[LEFT_REAR];  //translation offset for leg coordinate system (Leg 5)
 				rollOv[RIGHT_REAR] = 2 * bdConstY[RIGHT_REAR]; //translation offset for leg coordinate system (Leg 6)
-				for (int legNum = 0; legNum < numberOfLegs; legNum++) {
+				for(int legNum = 0; legNum < numberOfLegs; legNum++)
+				{
 					Akrobat::coordinateTransformation(legNum);
 					Akrobat::inverseKinematics(LCS.leg[legNum].footPresPos.x(), LCS.leg[legNum].footPresPos.y(), LCS.leg[legNum].footPresPos.z(), legNum);
 					Akrobat::moveLeg(LCS.leg[legNum].jointAngles.alpha, LCS.leg[legNum].jointAngles.beta, LCS.leg[legNum].jointAngles.gamma, legNum);
 				}
 			}
-			else if (rollOver == 1) {
+			else if(rollOver == 1)
+			{
 				rollOver = 0; rotBody = 0;
 				rotOfCoxa[LEFT_FRONT] = -160; //rotation of leg coordinate system (Leg 1)
 				rotOfCoxa[RIGHT_FRONT] = -20;  //rotation of leg coordinate system (Leg 2)
@@ -785,7 +867,8 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				rollOv[RIGHT_MIDDLE] = 0;	  //translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 0;	  //translation offset for leg coordinate system (Leg 5)
 				rollOv[RIGHT_REAR] = 0;	  //translation offset for leg coordinate system (Leg 6)
-				for (int legNum = 0; legNum < numberOfLegs; legNum++) {
+				for(int legNum = 0; legNum < numberOfLegs; legNum++)
+				{
 					Akrobat::coordinateTransformation(legNum);
 					Akrobat::inverseKinematics(LCS.leg[legNum].footPresPos.x(), LCS.leg[legNum].footPresPos.y(), LCS.leg[legNum].footPresPos.z(), legNum);
 					Akrobat::moveLeg(LCS.leg[legNum].jointAngles.alpha, LCS.leg[legNum].jointAngles.beta, LCS.leg[legNum].jointAngles.gamma, legNum);
@@ -793,7 +876,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			}
 			jointPub.publish(js);
 		}
-		if (joy->buttons[LB] && !(joy->buttons[RB]) && mode == 0) {
+
+		if(joy->buttons[LB] && !(joy->buttons[RB]) && mode == 0)
+		{
 			gait = 1; cout << "[  GAIT   ]: Tripod" << endl;
 			traData.caseStep[LEFT_FRONT] = 2;
 			traData.caseStep[RIGHT_FRONT] = 1;
@@ -805,9 +890,10 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			traData.initAmpY = tripodAmpWidth; //[mm] Y amplitude width of leg trajectory for tripod gait
 			traData.initAmpZ = tripodAmpHight; //[mm] Z amplitude hight of leg trajectory for tripod gait
 			traData.tick = 0;
-
 		}
-		if (joy->buttons[LT] && mode == 0) {
+
+		if(joy->buttons[LT] && mode == 0)
+		{
 			gait = 2; cout << "[  GAIT   ]: Wave" << endl;
 			traData.caseStep[LEFT_FRONT] = 1;   //.....
 			traData.caseStep[RIGHT_FRONT] = 4;
@@ -819,9 +905,10 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			traData.initAmpY = waveAmpWidth;
 			traData.initAmpZ = waveAmpHight;
 			traData.tick = 0;
-
 		}
-		if (joy->buttons[L3] && mode == 0) {
+
+		if(joy->buttons[L3] && mode == 0)
+		{
 			gait = 3; cout << "[  GAIT   ]: Ripple" << endl;
 			traData.caseStep[LEFT_FRONT] = 5;   //[LEG MOVING] -- up/forward first half stride
 			traData.caseStep[RIGHT_FRONT] = 2;   //[LEG MOVING] -- up/forward second half stride
@@ -833,9 +920,10 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			traData.initAmpY = rippleAmpWidth;
 			traData.initAmpZ = rippleAmpHight;
 			traData.tick = 0;
-
 		}
-		if (mode == 1) {//[mode 1][OPERATION] -- Translation
+
+		if(mode == 1)
+		{//[mode 1][OPERATION] -- Translation
 			pad.bdT.setX(joy->axes[LR_stick_left] * scaleFacTrans); //body translation X
 			pad.bdT.setY(joy->axes[UD_stick_left] * scaleFacTrans); //body translation Y
 			pad.bdT.setZ(joy->axes[UD_stick_right] * scaleFacTrans);//body translation Z
@@ -845,9 +933,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			pad.bdR.setX(0);
 			pad.bdR.setY(0);
 			pad.bdR.setZ(0);
-
 		}//IF (mode 1)
-		else if (mode == 2) {//[mode 2][OPERATION] -- Rotation
+		else if(mode == 2)
+		{//[mode 2][OPERATION] -- Rotation
 			pad.bdR.setX(joy->axes[UD_stick_left] * scaleFacRot);  //body rotation X
 			pad.bdR.setY(joy->axes[LR_stick_left] * scaleFacRot);  //body rotation Y
 			pad.bdR.setZ(joy->axes[LR_stick_right] * scaleFacRot); //body rotation Z
@@ -858,27 +946,43 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 			pad.bdT.setY(0);
 			pad.bdT.setZ(0);
 		}//ELSEIF (mode 2)
-		else {//[mode 0][OPERATION] -- Normal	
+		else
+		{//[mode 0][OPERATION] -- Normal
 			pad.bdT.setX(0);
 			pad.bdT.setY(0);
 			pad.bdT.setZ(0);
 			pad.bdR.setX(0);
 			pad.bdR.setY(0);
 			pad.bdR.setZ(0);
-			if ((joy->axes[LR_stick_left] > 0.3) || (joy->axes[LR_stick_left] < -0.3)) {   // sideward movement
+			if((joy->axes[LR_stick_left] > 0.3) || (joy->axes[LR_stick_left] < -0.3))
+			{   // sideward movement
 				pad.speed.setX(-(joy->axes[LR_stick_left]) / abs(joy->axes[LR_stick_left]));
 			}
-			else { pad.speed.setX(0); }
-			if ((joy->axes[UD_stick_left] > 0.3) || (joy->axes[UD_stick_left] < -0.3)) {   // forward/backward movement
+			else
+			{
+				pad.speed.setX(0);
+			}
+
+			if((joy->axes[UD_stick_left] > 0.3) || (joy->axes[UD_stick_left] < -0.3))
+			{   // forward/backward movement
 				pad.speed.setY(joy->axes[UD_stick_left] / abs(joy->axes[UD_stick_left]));
 			}
-			else { pad.speed.setY(0); }
-			if ((joy->axes[LR_stick_right] > 0.3) || (joy->axes[LR_stick_right] < -0.3)) { // rotational movement
+			else
+			{
+				pad.speed.setY(0);
+			}
+
+			if((joy->axes[LR_stick_right] > 0.3) || (joy->axes[LR_stick_right] < -0.3))
+			{ // rotational movement
 				pad.speed.setZ((joy->axes[LR_stick_right] / abs(joy->axes[LR_stick_right])));
 			}
-			else { pad.speed.setZ(0); }
+			else
+			{
+				pad.speed.setZ(0);
+			}
 
-			if (abs(pad.speed.x()) < abs(pad.speed.y())) {
+			if(abs(pad.speed.x()) < abs(pad.speed.y()))
+			{
 				//LEG 1 amplitude					     //LEG 2 amplitude
 				traData.ampX[LEFT_FRONT] = traData.initAmpX*pad.speed.x(); traData.ampX[RIGHT_FRONT] = traData.initAmpX*pad.speed.x();
 				traData.ampY[LEFT_FRONT] = traData.initAmpY*pad.speed.y(); traData.ampY[RIGHT_FRONT] = traData.initAmpY*pad.speed.y();
@@ -891,9 +995,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				traData.ampX[LEFT_REAR] = traData.initAmpX*pad.speed.x(); traData.ampX[RIGHT_REAR] = traData.initAmpX*pad.speed.x();
 				traData.ampY[LEFT_REAR] = traData.initAmpY*pad.speed.y(); traData.ampY[RIGHT_REAR] = traData.initAmpY*pad.speed.y();
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ*pad.speed.y(); traData.ampZ[RIGHT_REAR] = traData.initAmpZ*pad.speed.y();
-
 			}
-			else if (abs(pad.speed.x()) > abs(pad.speed.y())) {
+			else if(abs(pad.speed.x()) > abs(pad.speed.y()))
+			{
 				//LEG 1 amplitude					     //LEG 2 amplitude
 				traData.ampX[LEFT_FRONT] = traData.initAmpX*pad.speed.x(); traData.ampX[RIGHT_FRONT] = traData.initAmpX*pad.speed.x();
 				traData.ampY[LEFT_FRONT] = traData.initAmpY*pad.speed.y(); traData.ampY[RIGHT_FRONT] = traData.initAmpY*pad.speed.y();
@@ -906,9 +1010,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				traData.ampX[LEFT_REAR] = traData.initAmpX*pad.speed.x(); traData.ampX[RIGHT_REAR] = traData.initAmpX*pad.speed.x();
 				traData.ampY[LEFT_REAR] = traData.initAmpY*pad.speed.y(); traData.ampY[RIGHT_REAR] = traData.initAmpY*pad.speed.y();
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ*pad.speed.x(); traData.ampZ[RIGHT_REAR] = traData.initAmpZ*pad.speed.x();
-
 			}
-			else if ((pad.speed.x() == 0) && (pad.speed.y() == 0) && ((pad.speed.z() >= 0) || (pad.speed.z() <= 0))) {
+			else if((pad.speed.x() == 0) && (pad.speed.y() == 0) && ((pad.speed.z() >= 0) || (pad.speed.z() <= 0)))
+			{
 				//LEG 1 amplitude					      //LEG 2 amplitude
 				traData.ampX[LEFT_FRONT] = -traData.initAmpX*pad.speed.z(); traData.ampX[RIGHT_FRONT] = -traData.initAmpX*pad.speed.z();
 				traData.ampY[LEFT_FRONT] = -traData.initAmpY*pad.speed.z(); traData.ampY[RIGHT_FRONT] = traData.initAmpY*pad.speed.z();
@@ -922,7 +1026,6 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy) {
 				traData.ampY[LEFT_REAR] = -traData.initAmpY*pad.speed.z(); traData.ampY[RIGHT_REAR] = traData.initAmpY*pad.speed.z();
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ*pad.speed.z(); traData.ampZ[RIGHT_REAR] = traData.initAmpZ*pad.speed.z();
 			}
-
-		}//ELSE (mode 0)	
-	}//ELSE (shutting down)
-}//Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
+		}
+	}
+}

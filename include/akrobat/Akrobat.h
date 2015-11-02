@@ -14,8 +14,8 @@
 #include <akrobat/akrobat_init.h>
 #include <sensor_msgs/JointState.h>
 
-class Akrobat {
-
+class Akrobat
+{
 private:
 	ros::NodeHandle n;
 	ros::Subscriber subJoy;          //subscriber of joy topic

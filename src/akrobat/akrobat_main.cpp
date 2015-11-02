@@ -16,7 +16,8 @@ int main(int argc, char** argv)
 	Rate r_schleife(20);
 
 	// ros main loop
-	while (ok() && ON) {
+	while(ok() && ON)
+	{
 		akrobat.runAkrobat();
 		spinOnce();
 		r_schleife.sleep();
