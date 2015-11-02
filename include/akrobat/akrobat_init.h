@@ -194,4 +194,8 @@ struct coordinateSystemStruct {
 	legStruct leg[numberOfLegs];	//array of legs
 };
 
+extern rumblePad2Struct pad;                           //[	PAD   ] -- joypad object
+extern trajectoryStruct traData;                       //[	..    ] --
+extern coordinateSystemStruct MCS, BCS, LCS, FCS;      //[	MCS...] -- coordinate system objects
+extern sensor_msgs::JointState js;
 #endif
