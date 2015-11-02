@@ -75,7 +75,7 @@ public:
 	int moveLeg(float alpha, float beta, float gamma, int legNum);
 
 	//transformate source coordinate system to target coordinate system
-	Transform transformCS(string sourceCS, string targetCS, Vector3 rot, Vector3 trans);
+	tf::Transform transformCS(string sourceCS, string targetCS, Vector3 rot, Vector3 trans);
 
 	//call the motor state list back
 	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
