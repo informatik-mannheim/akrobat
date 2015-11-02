@@ -1,4 +1,5 @@
 #include <akrobat/Akrobat.h>
+#include <akrobat/akrobat_init.h>
 #include <cmath>
 #include <fstream>
 #include <iostream>
