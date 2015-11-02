@@ -3,7 +3,6 @@
 
 #include <akrobat/akrobat_init.h>
 
-//trajectory data
 struct trajectoryStruct
 {
 	int caseStep[numberOfLegs];	//leg up/leg down

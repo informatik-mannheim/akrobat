@@ -1,6 +1,8 @@
 #ifndef RUMBLEPAD2STRUCT_H
 #define RUMBLEPAD2STRUCT_H
 
+#include <ros/ros.h>
+
 #include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 
