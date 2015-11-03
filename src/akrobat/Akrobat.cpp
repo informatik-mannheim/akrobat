@@ -134,6 +134,25 @@ Akrobat::Akrobat() : mode(0), ON(1)
 	maxTibia[4] = 135;
 	maxTibia[5] = 135; // [°] (tibia joint) gamma angle max limit
 
+	for(int i = 0; i < numberOfLegs; i++)
+	{
+		MCS.leg[i].jointAngles.alpha = 1.0f;
+		MCS.leg[i].jointAngles.beta = 1.0f;
+		MCS.leg[i].jointAngles.gamma = 1.0f;
+
+		BCS.leg[i].jointAngles.alpha = 1.0f;
+		BCS.leg[i].jointAngles.beta = 1.0f;
+		BCS.leg[i].jointAngles.gamma = 1.0f;
+
+		LCS.leg[i].jointAngles.alpha = 1.0f;
+		LCS.leg[i].jointAngles.beta = 1.0f;
+		LCS.leg[i].jointAngles.gamma = 1.0f;
+
+		FCS.leg[i].jointAngles.alpha = 1.0f;
+		FCS.leg[i].jointAngles.beta = 1.0f;
+		FCS.leg[i].jointAngles.gamma = 1.0f;
+	}
+
 	//[SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	//		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
