@@ -821,17 +821,17 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 			}
 			else
 			{
-				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << minTibia[legNum] << "-" << maxTibia[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.gamma << endl;
+				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << minTibia[legNum] << ":" << maxTibia[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.gamma << endl;
 			}
 		}
 		else
 		{
-			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << minFemur[legNum] << "-" << maxFemur[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.beta << endl;
+			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << minFemur[legNum] << ":" << maxFemur[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.beta << endl;
 		}
 	}
 	else
 	{
-		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << minCoxa[legNum] << "-" << maxCoxa[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.alpha << endl;
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << minCoxa[legNum] << ":" << maxCoxa[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.alpha << endl;
 	}
 	return 0;
 }//int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
@@ -854,61 +854,61 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
  ********************************************************************************************************/
 Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 {
-	Transform TCS; //[TRANSFORMATION DATA TYP] -- create a transform
+	Transform TCS_local; //[TRANSFORMATION DATA TYP] -- create a transform
 	Vector3 transVec(trans.x(), trans.y(), trans.z()); //[TRANSLATON] -- create and define vector
-	TCS.setOrigin(transVec); //[.setOrigin] -- set translational element of transform
+	TCS_local.setOrigin(transVec); //[.setOrigin] -- set translational element of transform
 	Quaternion rotQuat; //[ROTATION] -- create quaternion
 	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z()));  //[.setRPY] -- define quaternion
-	TCS.setRotation(rotQuat);  //[.setRotaion] -- set rotational element of transform
+	TCS_local.setRotation(rotQuat);  //[.setRotaion] -- set rotational element of transform
 
 	if((sCS == "LCS") && (tCS == "FCS"))
 	{
-		return TCS.inverse();
+		return TCS_local.inverse();
 	}
 
 	if((sCS == "BCS") && (tCS == "LCS"))
 	{
-		return TCS.inverse();
+		return TCS_local.inverse();
 	}
 
 	if((sCS == "MCS") && (tCS == "BCS"))
 	{
-		return TCS.inverse();
+		return TCS_local.inverse();
 	}
 
 	if((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	if((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	if((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	if((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	if((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	if((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA")))
 	{
-		return TCS;
+		return TCS_local;
 	}
 
 	//[ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
 	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
-	return TCS;
+	return TCS_local;
 }//Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 
  /*********************************************************************************************************
