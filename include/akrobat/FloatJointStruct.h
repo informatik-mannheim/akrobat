@@ -3,9 +3,9 @@
 
 struct floatJointStruct
 {
-	float alpha = 0.0f;
-	float beta = 0.0f;
-	float gamma = 0.0f;
+	float alpha;
+	float beta;
+	float gamma;
 };
 
 #endif // FLOATJOINTSTRUCT_H

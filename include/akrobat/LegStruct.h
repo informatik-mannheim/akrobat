@@ -7,11 +7,11 @@
 
 struct legStruct
 {
-	tf::Vector3 footPresPos;            //present position
-	tf::Vector3 footInitPos;            //init position
-	tf::Vector3 footGlobPos;            //globale position
-	tf::Vector3 trajectoryPresPos;      //trajectory present positon
-	floatJointStruct jointAngles;	//joint angles
+	tf::Vector3 footPresPos; //present position
+	tf::Vector3 footInitPos; //init position
+	tf::Vector3 footGlobPos; //globale position
+	tf::Vector3 trajectoryPresPos; //trajectory present positon
+	floatJointStruct jointAngles; //joint angles
 };
 
 #endif // LEGSTRUCT_H

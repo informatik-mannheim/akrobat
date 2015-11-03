@@ -15,7 +15,6 @@
 #include <sensor_msgs/JointState.h>
 
 #include <akrobat/akrobat_init.h>
-#include <akrobat/Globals.h>
 #include <akrobat/TrajectoryStruct.h>
 
 using namespace std;
@@ -34,7 +33,7 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat() : mode(0)
+Akrobat::Akrobat() : mode(0), ON(1)
 {
 	gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 	rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
@@ -97,14 +96,14 @@ Akrobat::Akrobat() : mode(0)
 	minCoxa[2] = -51;
 	minCoxa[3] = -51;
 	minCoxa[4] = -71;
-	minCoxa[5] = -23; // [°] (coxa joint) alpha angle min limit
+	minCoxa[5] = -23; // [°] (coxa joint) alpha angle min limit // TODO should this be -26? (symetry)
 
 	minFemur[0] = -99;
 	minFemur[1] = -99;
 	minFemur[2] = -99;
 	minFemur[3] = -99;
 	minFemur[4] = -99;
-	minFemur[5] = -107; // [°] (femur joint) beta angle min limit
+	minFemur[5] = -107; // [°] (femur joint) beta angle min limit //TODO why is this different?
 
 	minTibia[0] = -135;
 	minTibia[1] = -135;
@@ -115,11 +114,11 @@ Akrobat::Akrobat() : mode(0)
 
 	// max limit of coxa jointinitialization
 	maxCoxa[0] = 65;
-	maxCoxa[1] = 28;
+	maxCoxa[1] = 28; // TODO why is this different?
 	maxCoxa[2] = 48;
 	maxCoxa[3] = 48;
-	maxCoxa[4] = 30;
-	maxCoxa[5] = 75; // [°] (coxa joint) alpha angle max limit
+	maxCoxa[4] = 30; // TODO why is this different?
+	maxCoxa[5] = 75; // [°] (coxa joint) alpha angle max limit // TODO why is this different?
 
 	maxFemur[0] = 96;
 	maxFemur[1] = 96;

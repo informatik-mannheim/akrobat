@@ -1,7 +1,6 @@
 #include <ros/ros.h>
 
 #include <akrobat/akrobat_init.h>
-#include <akrobat/Globals.h>
 #include <akrobat/Akrobat.h>
 
 using namespace std;
@@ -18,7 +17,7 @@ int main(int argc, char** argv)
 	Rate r_schleife(20);
 
 	// ros main loop
-	while(ok() && ON)
+	while(ok() && akrobat.ON)
 	{
 		akrobat.runAkrobat();
 		spinOnce();
