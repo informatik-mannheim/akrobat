@@ -821,17 +821,17 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 			}
 			else
 			{
-				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << minTibia << "-" << maxTibia << ") joint is exceeded " << LCS.leg[legNum].jointAngles.gamma << endl;
+				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << minTibia[legNum] << "-" << maxTibia[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.gamma << endl;
 			}
 		}
 		else
 		{
-			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << minFemur << "-" << maxFemur << ") joint is exceeded " << LCS.leg[legNum].jointAngles.beta << endl;
+			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << minFemur[legNum] << "-" << maxFemur[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.beta << endl;
 		}
 	}
 	else
 	{
-		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << minCoxa << "-" << maxCoxa << ") joint is exceeded " << LCS.leg[legNum].jointAngles.alpha << endl;
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << minCoxa[legNum] << "-" << maxCoxa[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.alpha << endl;
 	}
 	return 0;
 }//int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
