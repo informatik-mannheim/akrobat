@@ -9,6 +9,8 @@
 #include <sensor_msgs/Joy.h>
 
 #include <akrobat/TrajectoryStruct.h>
+#include <akrobat/RumblePad2Struct.h>
+#include <akrobat/CoordinateSystemStruct.h>
 
 class Akrobat
 {
