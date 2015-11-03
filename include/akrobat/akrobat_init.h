@@ -87,24 +87,4 @@
 #define FemurJointLimit ((LCS.leg[legNum].jointAngles.beta <=maxFemur[legNum])&&(LCS.leg[legNum].jointAngles.beta >=minFemur[legNum]))
 #define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
 
-#include <ros/ros.h>
-#include <cmath>
-#include <fstream>
-#include <iostream>
-#include <std_msgs/Float64.h>
-#include <sensor_msgs/Joy.h>
-#include <dynamixel_msgs/MotorStateList.h>
-#include <tf/tf.h>
-#include <tf/transform_datatypes.h>
-#include <angles/angles.h>
-#include <akrobat/akrobat_init.h>
-#include <sensor_msgs/JointState.h>
-
-struct rumblePad2Struct
-{
-	tf::Vector3 speed; // forward/backward/sideward movement
-	tf::Vector3 bdR;   // body rotation
-	tf::Vector3 bdT;   // body translation
-};
-
 #endif
