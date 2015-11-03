@@ -7,6 +7,7 @@
 #include <tf/transform_datatypes.h>
 
 #include <sensor_msgs/Joy.h>
+#include <sensor_msgs/JointState.h>
 
 #include <akrobat/TrajectoryStruct.h>
 #include <akrobat/RumblePad2Struct.h>
