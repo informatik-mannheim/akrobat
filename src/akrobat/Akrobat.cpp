@@ -134,25 +134,6 @@ Akrobat::Akrobat() : mode(0), ON(1)
 	maxTibia[4] = 135;
 	maxTibia[5] = 135; // [°] (tibia joint) gamma angle max limit
 
-	for(int i = 0; i < numberOfLegs; i++)
-	{
-		MCS.leg[i].jointAngles.alpha = 1.0f;
-		MCS.leg[i].jointAngles.beta = 1.0f;
-		MCS.leg[i].jointAngles.gamma = 1.0f;
-
-		BCS.leg[i].jointAngles.alpha = 1.0f;
-		BCS.leg[i].jointAngles.beta = 1.0f;
-		BCS.leg[i].jointAngles.gamma = 1.0f;
-
-		LCS.leg[i].jointAngles.alpha = 1.0f;
-		LCS.leg[i].jointAngles.beta = 1.0f;
-		LCS.leg[i].jointAngles.gamma = 1.0f;
-
-		FCS.leg[i].jointAngles.alpha = 1.0f;
-		FCS.leg[i].jointAngles.beta = 1.0f;
-		FCS.leg[i].jointAngles.gamma = 1.0f;
-	}
-
 	//[SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	//		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
@@ -214,14 +195,19 @@ void Akrobat::initAkrobat()
 		//[LCS] -- definition of leg coordinate system
 		iT = Akrobat::transformCS("TIBIA", "ENDEFFCTR", Vector3(0, 0, 0), Vector3(LENGTH_TIBIA, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
+
 		iT = Akrobat::transformCS("TIBIA", "TIBIA", Vector3(0, 0, -jointInitC[legNum]), Vector3(0, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
+
 		iT = Akrobat::transformCS("FEMUR", "TIBIA", Vector3(0, 0, 0), Vector3(LENGTH_FEMUR, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
+
 		iT = Akrobat::transformCS("FEMUR", "FEMUR", Vector3(0, 0, -jointInitB[legNum]), Vector3(0, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
+
 		iT = Akrobat::transformCS("COXA", "FEMUR", Vector3(0, 0, 0), Vector3(LENGTH_COXA, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
+
 		iT = Akrobat::transformCS("COXA", "COXA", Vector3(-90, 0, jointInitA[legNum]), Vector3(0, 0, 0));
 		LCS.leg[legNum].footInitPos = iT*LCS.leg[legNum].footInitPos;
 
@@ -306,22 +292,22 @@ void Akrobat::runAkrobat()
 		}//FOR (legNum)
 	}//MOVING
 	jointPub.publish(js);
-}//Akrobat::runAkrobat()
+	}//Akrobat::runAkrobat()
 
- /*********************************************************************************************************
- * Function---:  Akrobat::tripodGait()
- *
- * Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
- *              -int legNum:            execute function operation for this leg
- *
- * Output-----:	 None.
- *
- * Overview---:	 create tripod gait
- *
- * Console-Out:  F3DEBUG (akrobat_init.h) 1:output 0:no output
- *
- * Note-------:	 None.
- ********************************************************************************************************/
+	 /*********************************************************************************************************
+	 * Function---:  Akrobat::tripodGait()
+	 *
+	 * Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+	 *              -int legNum:            execute function operation for this leg
+	 *
+	 * Output-----:	 None.
+	 *
+	 * Overview---:	 create tripod gait
+	 *
+	 * Console-Out:  F3DEBUG (akrobat_init.h) 1:output 0:no output
+	 *
+	 * Note-------:	 None.
+	 ********************************************************************************************************/
 void Akrobat::tripodGait(trajectoryStruct *tS, int legNum)
 {
 	if(MOVING)
@@ -664,8 +650,31 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
  *
  * Note-------:	 None.
  ********************************************************************************************************/
+ //LEG 0: angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 0 : angle range of femur(-99:96) joint is exceeded 10                                                                                                                                                                            ?········
+ //LEG 0 : angle range of coxa(-26:65) joint is exceeded 1.49412e-14                                                                                                                                                                    ?········
+ //LEG 1 : angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 1 : angle range of femur(-99:96) joint is exceeded 10                                                                                                                                                                            ?········
+ //LEG 1 : angle range of coxa(-71:28) joint is exceeded - 6.40335e-15                                                                                                                                                                   ?········
+ //LEG 2 : angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 2 : angle range of femur(-99:96) joint is exceeded 10                                                                                                                                                                            ?········
+ //LEG 2 : angle range of coxa(-51:48) joint is exceeded - 4.45752e-15                                                                                                                                                                   ?········
+ //LEG 3 : angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 3 : angle range of femur(-99:96) joint is exceeded 10                                                                                                                                                                            ?········
+ //LEG 3 : angle range of coxa(-51:48) joint is exceeded 9.5759e-15                                                                                                                                                                     ?········
+ //LEG 4 : angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 4 : angle range of femur(-99:96) joint is exceeded 10                                                                                                                                                                            ?········
+ //LEG 4 : angle range of coxa(-71:30) joint is exceeded 2.13445e-15                                                                                                                                                                    ?········
+ //LEG 5 : angle range of tibia(-135:135) joint is exceeded - 90                                                                                                                                                                         ?········
+ //LEG 5 : angle range of femur(-107:96) joint is exceeded 10                                                                                                                                                                           ?········
+ //LEG 5 : angle range of coxa(-23:75) joint is exceeded 6.40335e-15
+
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
+	cout << "LEG " << legNum << ": angle range of tibia(" << minTibia[legNum] << ":" << maxTibia[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.gamma << endl;
+	cout << "LEG " << legNum << ": angle range of femur(" << minFemur[legNum] << ":" << maxFemur[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.beta << endl;
+	cout << "LEG " << legNum << ": angle range of coxa(" << minCoxa[legNum] << ":" << maxCoxa[legNum] << ") joint is exceeded " << LCS.leg[legNum].jointAngles.alpha << endl;
+
 	if(CoxaJointLimit)
 	{		//[COXA  JOINT LIMITS] -- control the joint max and min limits
 		if(FemurJointLimit)
