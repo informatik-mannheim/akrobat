@@ -6,6 +6,8 @@
 #include <ros/ros.h>
 #include <tf/transform_datatypes.h>
 
+#include <sensor_msgs/Joy.h>
+
 #include <akrobat/TrajectoryStruct.h>
 
 class Akrobat
