@@ -1,28 +1,11 @@
 #ifndef AKROBAT_H
 #define AKROBAT_H
 
-#include <ros/ros.h>
-#include <cmath>
-#include <fstream>
-#include <iostream>
-#include <std_msgs/Float64.h>
-#include <sensor_msgs/Joy.h>
-#include <dynamixel_msgs/MotorStateList.h>
-#include <tf/tf.h>
-#include <tf/transform_datatypes.h>
-#include <angles/angles.h>
-#include <akrobat/akrobat_init.h>
-#include <sensor_msgs/JointState.h>
-
 #include <string>
 
 #include <ros/ros.h>
-#include <sensor_msgs/Joy.h>
-
-#include <tf/tf.h>
 #include <tf/transform_datatypes.h>
 
-#include <akrobat/akrobat_init.h>
 #include <akrobat/TrajectoryStruct.h>
 
 class Akrobat
