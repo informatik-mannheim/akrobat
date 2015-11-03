@@ -36,6 +36,105 @@ using namespace angles;
 ********************************************************************************************************/
 Akrobat::Akrobat() : mode(0)
 {
+	gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
+	rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
+	rollOver = 0; // [ rollOver ] -- if body roll over (0/1)
+
+	rotOfCoxa[0] = -160;
+	rotOfCoxa[1] = -20;
+	rotOfCoxa[2] = 180;
+	rotOfCoxa[3] = 0;
+	rotOfCoxa[4] = 160;
+	rotOfCoxa[5] = 20; // rotates abot coxa for angle 45° init
+
+	// body constant initialization
+	bdConstX[0] = -51;															   // body constant initialization
+	bdConstX[1] = 51;															   // body constant initialization
+	bdConstX[2] = -51;															   // body constant initialization
+	bdConstX[3] = 51;															   // body constant initialization
+	bdConstX[4] = -51;															   // body constant initialization
+	bdConstX[5] = 51; // [mm] half hight of body
+
+	bdConstY[0] = 217;
+	bdConstY[1] = 217;
+	bdConstY[2] = 0;
+	bdConstY[3] = 0;
+	bdConstY[4] = -217;
+	bdConstY[5] = -217; // [mm] half width of body
+
+	bdConstZ[0] = 0;
+	bdConstZ[1] = 0;
+	bdConstZ[2] = 0;
+	bdConstZ[3] = 0;
+	bdConstZ[4] = 0;
+	bdConstZ[5] = 0; // [mm] half length of body
+
+	// joint angle initialization
+	jointInitA[0] = 160;
+	jointInitA[1] = 20;
+	jointInitA[2] = 180;
+	jointInitA[3] = 0;
+	jointInitA[4] = -160;
+	jointInitA[5] = -20; // [°] (coxa joint) alpha angle init
+
+	jointInitB[0] = 10;
+	jointInitB[1] = 10;
+	jointInitB[2] = 10;
+	jointInitB[3] = 10;
+	jointInitB[4] = 10;
+	jointInitB[5] = 10; // [°] (femur joint) beta angle init
+
+	jointInitC[0] = -90;
+	jointInitC[1] = -90;
+	jointInitC[2] = -90;
+	jointInitC[3] = -90;
+	jointInitC[4] = -90;
+	jointInitC[5] = -90; // [°] (tibia joint) gamma angle init
+
+	// min limit of coxa joint initialization
+	minCoxa[0] = -26;
+	minCoxa[1] = -71;
+	minCoxa[2] = -51;
+	minCoxa[3] = -51;
+	minCoxa[4] = -71;
+	minCoxa[5] = -23; // [°] (coxa joint) alpha angle min limit
+
+	minFemur[0] = -99;
+	minFemur[1] = -99;
+	minFemur[2] = -99;
+	minFemur[3] = -99;
+	minFemur[4] = -99;
+	minFemur[5] = -107; // [°] (femur joint) beta angle min limit
+
+	minTibia[0] = -135;
+	minTibia[1] = -135;
+	minTibia[2] = -135;
+	minTibia[3] = -135;
+	minTibia[4] = -135;
+	minTibia[5] = -135; // [°] (tibia joint) gamma angle min limit
+
+	// max limit of coxa jointinitialization
+	maxCoxa[0] = 65;
+	maxCoxa[1] = 28;
+	maxCoxa[2] = 48;
+	maxCoxa[3] = 48;
+	maxCoxa[4] = 30;
+	maxCoxa[5] = 75; // [°] (coxa joint) alpha angle max limit
+
+	maxFemur[0] = 96;
+	maxFemur[1] = 96;
+	maxFemur[2] = 96;
+	maxFemur[3] = 96;
+	maxFemur[4] = 96;
+	maxFemur[5] = 96; // [°] (femur joint) beta angle max limit
+
+	maxTibia[0] = 135;
+	maxTibia[1] = 135;
+	maxTibia[2] = 135;
+	maxTibia[3] = 135;
+	maxTibia[4] = 135;
+	maxTibia[5] = 135; // [°] (tibia joint) gamma angle max limit
+
 	//[SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	//		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
