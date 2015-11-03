@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	Akrobat akrobat;
 	akrobat.initAkrobat();
 
-	// needs to be called after akrobat creation (requires a ros::NodeHandle)
+	// needs to be called after(below) akrobat creation (requires a ros::NodeHandle)
 	Rate r_schleife(20);
 
 	// ros main loop

@@ -34,7 +34,7 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat()
+Akrobat::Akrobat() : mode(0)
 {
 	//[SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	//		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test

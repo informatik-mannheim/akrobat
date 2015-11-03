@@ -5,7 +5,6 @@
 #include <akrobat/akrobat_init.h>
 #include <akrobat/Globals.h>
 
-int mode = 0; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
 int gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 int rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
 int rollOver = 0; // [ rollOver ] -- if body roll over (0/1)

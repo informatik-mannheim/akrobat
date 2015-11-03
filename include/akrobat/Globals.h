@@ -10,7 +10,6 @@
 #include <akrobat/CoordinateSystemStruct.h>
 
 // ----------------GLOBABEL VARIBALE
-extern int mode; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
 extern int gait; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 extern int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
 extern int rollOver; // [ rollOver ] -- if body roll over (0/1)
