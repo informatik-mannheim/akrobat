@@ -1,6 +1,20 @@
 #ifndef AKROBAT_INIT_H
 #define AKROBAT_INIT_H
 
+/*
+TODO:
+	- Laufmuster wechsel/ eine taste pro muster
+	-
+	[walk_x, walk_y, curve_left, trans_x, trans_y, trans_z, rot_x, rot_y, rot_z]
+	[stop, walk_tripod, walk_wave, walk_ripple, walk_insect, walk_planner, turn_upside_down] // control mode angedacht
+																							 // shitf1, shift2 ändert das remapping
+																							 // auf verschiedne topics aufbrechen [laufen][rotieren][cam]
+
+	[walk_x, walk_y, curve_left, trans_x, trans_y, trans_z, rot_x, rot_y, rot_z]
+	[stop, walk_tripod, walk_wave, walk_ripple, walk_insect, walk_planner, turn_upside_down]
+
+*/
+
 //---------------------OUTPUT MACRO
 #define  F1DEBUG 	0 //initAkrobat()
 #define  F2DEBUG 	0 //runAkrobat()
@@ -45,6 +59,10 @@
 //cross
 #define LR_cross_key    4
 #define UD_cross_key    5
+
+// TODO check joy device
+// mode cannot be detected // mode turns left stick into digital input mode
+// D-X switch can be identified with number of axis available
 
 #define X_BUTTON               0
 #define A_BUTTON               1
