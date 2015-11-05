@@ -461,45 +461,45 @@ void Akrobat::rippleGait(trajectoryStruct *tS, int legNum)
 {
 	if(MOVING)
 	{
-		s[MOVING] --one of joypad sticks was actived
-			switch((*tS).caseStep[legNum])
-			{
-			case 1: // [LEG MOVING] -- up/forward first half stride
-				FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
-				FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
-				FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*(*tS).tick / (2.0*rNumTick)));
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2; break;
+		// [MOVING] --one of joypad sticks was actived
+		switch((*tS).caseStep[legNum])
+		{
+		case 1: // [LEG MOVING] -- up/forward first half stride
+			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
+			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*(*tS).tick / (2.0*rNumTick)));
+			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*(*tS).tick / (2.0*rNumTick)));
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2; break;
 
-			case 2: // [LEG MOVING] -- up/forward second half stride
-				FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
-				FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
-				FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3; break;
+		case 2: // [LEG MOVING] -- up/forward second half stride
+			FCS.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
+			FCS.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
+			FCS.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum])*sin(M_PI*((*tS).tick + rNumTick) / (2.0*rNumTick)));
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3; break;
 
-			case 3: // [LEG MOVING] -- down/backward (1 segment of 4)
-				FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setZ(0);
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4; break;
+		case 3: // [LEG MOVING] -- down/backward (1 segment of 4)
+			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setZ(0);
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4; break;
 
-			case 4: // [LEG MOVING] -- down/backward (2 segments of 4)
-				FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setZ(0);
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5; break;
+		case 4: // [LEG MOVING] -- down/backward (2 segments of 4)
+			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setZ(0);
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5; break;
 
-			case 5: // [LEG MOVING] -- down/backward (2 segments of 4)
-				FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setZ(0);
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6; break;
+		case 5: // [LEG MOVING] -- down/backward (2 segments of 4)
+			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 2.0*rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setZ(0);
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6; break;
 
-			case 6: // [LEG MOVING] -- down/backward (2 segments of 4)
-				FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
-				FCS.leg[legNum].trajectoryPresPos.setZ(0);
-				if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1; break;
-			}// SWITCH ((*tS).caseStep[legNum])
+		case 6: // [LEG MOVING] -- down/backward (2 segments of 4)
+			FCS.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0*(((*tS).tick + 3.0*rNumTick) / (4.0*rNumTick))));
+			FCS.leg[legNum].trajectoryPresPos.setZ(0);
+			if((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1; break;
+		}// SWITCH ((*tS).caseStep[legNum])
 		if(legNum == numberOfLegs - 1)
 		{
 			(*tS).tick++;
