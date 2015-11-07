@@ -234,9 +234,9 @@ void Akrobat::initAkrobat()
 
 		// [OUTPUT] -- output of LCS.leg[legNum].footInitPos vector
 		cout << " LCS.leg[" << legNum << "].footInitPos---: ";
-		cout << setw(12) << LCS.leg[legNum].footInitPos.x();
-		cout << setw(12) << LCS.leg[legNum].footInitPos.y();
-		cout << setw(12) << LCS.leg[legNum].footInitPos.z() << endl;
+		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.x();
+		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.y();
+		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.z() << endl;
 
 		// [OUTPUT] -- output of BCS.leg[legNum].footGlobPos vector
 		cout << " BCS.leg[" << legNum << "].footGlobPos---: ";
@@ -353,9 +353,9 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 
 		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
 		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LCS.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.z()) << endl;
+		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		// cout<<endl;
 #endif
 	}// IF (MOVING)
@@ -446,9 +446,9 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 
 		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
 		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LCS.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.z()) << endl;
+		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
 	}// IF (MOVING)
@@ -540,9 +540,9 @@ void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 
 		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
 		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LCS.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LCS.leg[legNum].footPresPos.z()) << endl;
+		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
+		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
 	}// IF (MOVING)
@@ -600,9 +600,9 @@ void Akrobat::coordinateTransformation(int legNum)
 	cout << setw(12) << BCS.leg[legNum].footGlobPos.z() << endl;
 
 	cout << " LCS.leg[" << legNum << "].footPresPos---: ";
-	cout << setw(12) << LCS.leg[legNum].footPresPos.x();
-	cout << setw(12) << LCS.leg[legNum].footPresPos.y();
-	cout << setw(12) << LCS.leg[legNum].footPresPos.z() << endl;
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.x();
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.y();
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.z() << endl;
 	cout << endl;
 #endif
 }// Akrobat::coordinateTransformation(int legNum)
@@ -652,9 +652,9 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	cout << setw(40) << "CAngl" << setw(12) << "FAngl" << setw(12) << "TAngl" << endl;
 	cout << "LCS.leg[" << legNum << "].jointAngles---: ";
 	cout << "counter : " << cnt++ << "---: ";
-	cout << setw(12) << LCS.leg[legNum].jointAngles.alpha;
-	cout << setw(12) << LCS.leg[legNum].jointAngles.beta;
-	cout << setw(12) << LCS.leg[legNum].jointAngles.gamma;
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.alpha;
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.beta;
+	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.gamma;
 	cout << setw(12) << "Atan" << atan2(0, 160) << endl;
 #endif
 }// Akrobat::inverseKinematics(int legNum)
@@ -679,11 +679,11 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
-	if (CoxaJointLimit)
+	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, minCoxa[legNum], maxCoxa[legNum]))
 	{ // [COXA  JOINT LIMITS] -- control the joint max and min limits
-		if (FemurJointLimit)
+		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, minFemur[legNum], maxFemur[legNum]))
 		{ // [FEMUR JOINT LIMITS] -- control the joint max and min limits
-			if (TibiaJointLimit)
+			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, minTibia[legNum], maxTibia[legNum]))
 			{ // [TIBIA JOINT LIMITS] -- control the joint max and min limits
 				std_msgs::Float64 aux; // [STANDARD MESSAGE TYPE] -- publishing data type
 				// [...publish(..)] -- function to publish data
@@ -1030,9 +1030,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			traData.caseStep[RIGHT_MIDDLE] = 2;
 			traData.caseStep[LEFT_REAR] = 2;
 			traData.caseStep[RIGHT_REAR] = 1;
-			traData.initAmpX = tripodAmpWidth ; // [mm] X amplitude width of leg trajectory for tripod gait
-			traData.initAmpY = tripodAmpWidth ; // [mm] Y amplitude width of leg trajectory for tripod gait
-			traData.initAmpZ = tripodAmpHight ; // [mm] Z amplitude hight of leg trajectory for tripod gait
+			traData.initAmpX = tripodAmpWidth; // [mm] X amplitude width of leg trajectory for tripod gait
+			traData.initAmpY = tripodAmpWidth; // [mm] Y amplitude width of leg trajectory for tripod gait
+			traData.initAmpZ = tripodAmpHight; // [mm] Z amplitude hight of leg trajectory for tripod gait
 			traData.tick = 0;
 		}
 
@@ -1046,9 +1046,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			traData.caseStep[RIGHT_MIDDLE] = 5;
 			traData.caseStep[LEFT_REAR] = 3;
 			traData.caseStep[RIGHT_REAR] = 6;
-			traData.initAmpX = waveAmpWidth ;
-			traData.initAmpY = waveAmpWidth ;
-			traData.initAmpZ = waveAmpHight ;
+			traData.initAmpX = waveAmpWidth;
+			traData.initAmpY = waveAmpWidth;
+			traData.initAmpZ = waveAmpHight;
 			traData.tick = 0;
 		}
 
@@ -1062,9 +1062,9 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			traData.caseStep[RIGHT_MIDDLE] = 6;
 			traData.caseStep[LEFT_REAR] = 1;
 			traData.caseStep[RIGHT_REAR] = 4;
-			traData.initAmpX = rippleAmpWidth ;
-			traData.initAmpY = rippleAmpWidth ;
-			traData.initAmpZ = rippleAmpHight ;
+			traData.initAmpX = rippleAmpWidth;
+			traData.initAmpY = rippleAmpWidth;
+			traData.initAmpZ = rippleAmpHight;
 			traData.tick = 0;
 		}
 
@@ -1203,3 +1203,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 	}
 }
 
+bool Akrobat::IsWithinLimits(const double& value, const double& min, const double& max)
+{
+	return value >= min && value <= max;
+}

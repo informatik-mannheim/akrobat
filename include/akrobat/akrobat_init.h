@@ -100,10 +100,6 @@ TODO:
 #define MOVING ((pad.speed.x()>0.3)||(pad.speed.x()<-0.3)||(pad.speed.y()>0.3)||(pad.speed.y()<-0.3)||(pad.speed.z()>0.3)||(pad.speed.z()<-0.3))
 #define TRANSLATION ((pad.bdT.x()>0.3)||(pad.bdT.x()<-0.3)||(pad.bdT.y()>0.3)||(pad.bdT.y()<-0.3)||(pad.bdT.z()>0.3)||(pad.bdT.z()<-0.3))
 #define ROTATION ((pad.bdR.x()>0.3)||(pad.bdR.x()<-0.3)||(pad.bdR.y()>0.3)||(pad.bdR.y()<-0.3)||(pad.bdR.z()>0.3)||(pad.bdR.z()<-0.3))
-//joint limits
-#define CoxaJointLimit  ((LCS.leg[legNum].jointAngles.alpha<=maxCoxa [legNum])&&(LCS.leg[legNum].jointAngles.alpha>=minCoxa [legNum]))
-#define FemurJointLimit ((LCS.leg[legNum].jointAngles.beta <=maxFemur[legNum])&&(LCS.leg[legNum].jointAngles.beta >=minFemur[legNum]))
-#define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
 
 #endif
 
