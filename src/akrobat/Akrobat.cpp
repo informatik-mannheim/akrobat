@@ -33,7 +33,7 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat() : mode(0), ON(1)
+Akrobat::Akrobat() : mode(0)
 {
 	gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 	rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
@@ -943,7 +943,6 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 	{
 		cout << "SHUTTING DOWN!" << endl;
 		ros::shutdown();
-		ON = 0;
 	}
 	else
 	{

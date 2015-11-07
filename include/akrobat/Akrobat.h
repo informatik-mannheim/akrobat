@@ -20,7 +20,6 @@ public:
 	int gait; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 	int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
 	int rollOver; // [ rollOver ] -- if body roll over (0/1)
-	int ON; // [  ON   ] -- if null akrobat shutting down
 
 	float rollOv[numberOfLegs]; // LCS translational correction after body roll over
 	float rotOfCoxa[numberOfLegs]; // rotates abot coxa for angle 45° init
