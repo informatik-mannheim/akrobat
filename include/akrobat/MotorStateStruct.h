@@ -11,8 +11,10 @@ struct motorStateStruct
 	int speed; // speed to goal positon
 	float load; // currently applied load
 	float voltage; // size of current voltage supplied
-	float temperature;	// internal temperature in celsius
-	bool  moving; // goal position execution completed(0)/in progress(1)
+	float temperature; // internal temperature in celsius
+	bool moving; // goal position execution completed(0)/in progress(1)
 };
 
 #endif // MOTORSTATESTRUCT_H
+
+

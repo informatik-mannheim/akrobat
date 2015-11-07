@@ -47,7 +47,7 @@ public:
 
 	rumblePad2Struct pad; // [	PAD   ] -- joypad object
 	trajectoryStruct traData; // [	.. ] --
-	coordinateSystemStruct MCS, BCS, LCS, FCS; // [	MCS...] -- coordinate system objects
+	coordinateSystemStruct MCS, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MCS...] -- coordinate system objects
 	sensor_msgs::JointState js;
 
 	// constructor
@@ -60,13 +60,13 @@ public:
 	void runAkrobat();
 
 	// create tripod gait
-	void tripodGait(trajectoryStruct *tS, int legNum);
+	void tripodGait(trajectoryStruct* tS, int legNum);
 
 	// create wave gait
-	void waveGait(trajectoryStruct *tS, int legNum);
+	void waveGait(trajectoryStruct* tS, int legNum);
 
 	// create ripple gait
-	void rippleGait(trajectoryStruct *tS, int legNum);
+	void rippleGait(trajectoryStruct* tS, int legNum);
 
 	// transformate the coordinate systems
 	void coordinateTransformation(int legNum);
@@ -85,33 +85,34 @@ public:
 
 private:
 	ros::NodeHandle n;
-	ros::Subscriber subJoy;          // subscriber of joy topic
-	ros::Publisher jointPub;         // publisher (rviz)
+	ros::Subscriber subJoy; // subscriber of joy topic
+	ros::Publisher jointPub; // publisher (rviz)
 
 	// LEG1
-	ros::Publisher  pubLeg1Joint1;	// publicher for jointX of legX
-	ros::Publisher  pubLeg1Joint2;	// .....
-	ros::Publisher  pubLeg1Joint3;
+	ros::Publisher pubLeg1Joint1; // publicher for jointX of legX
+	ros::Publisher pubLeg1Joint2; // .....
+	ros::Publisher pubLeg1Joint3;
 	// LEG2
-	ros::Publisher  pubLeg2Joint1;
-	ros::Publisher  pubLeg2Joint2;
-	ros::Publisher  pubLeg2Joint3;
+	ros::Publisher pubLeg2Joint1;
+	ros::Publisher pubLeg2Joint2;
+	ros::Publisher pubLeg2Joint3;
 	// LEG3
-	ros::Publisher  pubLeg3Joint1;
-	ros::Publisher  pubLeg3Joint2;
-	ros::Publisher  pubLeg3Joint3;
+	ros::Publisher pubLeg3Joint1;
+	ros::Publisher pubLeg3Joint2;
+	ros::Publisher pubLeg3Joint3;
 	// LEG4
-	ros::Publisher  pubLeg4Joint1;
-	ros::Publisher  pubLeg4Joint2;
-	ros::Publisher  pubLeg4Joint3;
+	ros::Publisher pubLeg4Joint1;
+	ros::Publisher pubLeg4Joint2;
+	ros::Publisher pubLeg4Joint3;
 	// LEG5
-	ros::Publisher  pubLeg5Joint1;
-	ros::Publisher  pubLeg5Joint2;
-	ros::Publisher  pubLeg5Joint3;
+	ros::Publisher pubLeg5Joint1;
+	ros::Publisher pubLeg5Joint2;
+	ros::Publisher pubLeg5Joint3;
 	// LEG6
-	ros::Publisher  pubLeg6Joint1;
-	ros::Publisher  pubLeg6Joint2;
-	ros::Publisher  pubLeg6Joint3;   // .....
+	ros::Publisher pubLeg6Joint1;
+	ros::Publisher pubLeg6Joint2;
+	ros::Publisher pubLeg6Joint3; // .....
 };
 
 #endif
+

@@ -106,3 +106,4 @@ TODO:
 #define TibiaJointLimit ((LCS.leg[legNum].jointAngles.gamma<=maxTibia[legNum])&&(LCS.leg[legNum].jointAngles.gamma>=minTibia[legNum]))
 
 #endif
+

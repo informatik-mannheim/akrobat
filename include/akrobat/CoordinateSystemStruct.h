@@ -6,7 +6,9 @@
 
 struct coordinateSystemStruct
 {
-	legStruct leg[numberOfLegs];	//array of legs
+	legStruct leg[numberOfLegs]; //array of legs
 };
 
 #endif // COORDINATESYSTEMSTRUCT_H
+
+

@@ -5,7 +5,7 @@
 
 struct trajectoryStruct
 {
-	int caseStep[numberOfLegs];	//leg up/leg down
+	int caseStep[numberOfLegs]; //leg up/leg down
 	int tick; //present tick
 	float initAmpX; //x init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
 	float initAmpY; //y init amplitude (tripodAmpWidth/waveAmpWidth/rippleAmpWidth)
@@ -16,3 +16,5 @@ struct trajectoryStruct
 };
 
 #endif // TRAJECTORYSTRUCT_H
+
+

@@ -14,10 +14,10 @@ int main(int argc, char** argv)
 	akrobat.initAkrobat();
 
 	// needs to be called after(below) akrobat creation (requires a ros::NodeHandle)
-	Rate r_schleife(25);
+	Rate r_schleife(20);
 
 	// ros main loop
-	while(ok() && akrobat.ON)
+	while (ok() && akrobat.ON)
 	{
 		akrobat.runAkrobat();
 		spinOnce();
