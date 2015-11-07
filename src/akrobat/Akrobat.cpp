@@ -33,11 +33,9 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat() : mode(0)
+Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 {
-	gait = 0; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
-	rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
-	rollOver = 0; // [ rollOver ] -- if body roll over (0/1)
+
 
 	rotOfCoxa[LEFT_FRONT] = -160;
 	rotOfCoxa[RIGHT_FRONT] = -20;
@@ -1202,7 +1200,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 	}
 }
 
-bool Akrobat::IsWithinLimits(const double& value, const double& min, const double& max)
+bool Akrobat::IsWithinLimits(const float& value, const float& min, const float& max)
 {
 	return value >= min && value <= max;
 }

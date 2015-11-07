@@ -91,7 +91,7 @@ public:
 	// transformate source coordinate system to target coordinate system
 	tf::Transform transformCS(std::string sourceCS, std::string targetCS, tf::Vector3 rot, tf::Vector3 trans);
 
-	static bool IsWithinLimits(const double& value, const double& min, const double& max);
+	static bool IsWithinLimits(const float& value, const float& min, const float& max);
 
 	// call the motor state list back
 	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
