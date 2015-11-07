@@ -12,7 +12,17 @@
 #include <akrobat/TrajectoryStruct.h>
 #include <akrobat/RumblePad2Struct.h>
 #include <akrobat/CoordinateSystemStruct.h>
+#include <akrobat/LegSettingStruct.h>
 
+/// The Akrobat class
+/**
+ * \class Akrobat
+ *
+ * \brief The Akrobat class is used to represent the akrobat hexapod.
+ *
+ * The Akrobat class is used to represent the akrobat hexapod.
+ *
+ */
 class Akrobat
 {
 public:
@@ -46,8 +56,10 @@ public:
 
 	rumblePad2Struct pad; // [	PAD   ] -- joypad object
 	trajectoryStruct traData; // [	.. ] --
-	coordinateSystemStruct MCS, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MCS...] -- coordinate system objects
+	coordinateSystemStruct MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState js;
+	LegSettingStruct legSettings[numberOfLegs];
+
 
 	// constructor
 	Akrobat();

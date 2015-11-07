@@ -39,100 +39,100 @@ Akrobat::Akrobat() : mode(0)
 	rotBody = 0; // [ rotBody  ] -- angle of body rotation (0/180)
 	rollOver = 0; // [ rollOver ] -- if body roll over (0/1)
 
-	rotOfCoxa[0] = -160;
-	rotOfCoxa[1] = -20;
-	rotOfCoxa[2] = 180;
-	rotOfCoxa[3] = 0;
-	rotOfCoxa[4] = 160;
-	rotOfCoxa[5] = 20; // rotates abot coxa for angle 45° init
+	rotOfCoxa[LEFT_FRONT] = -160;
+	rotOfCoxa[RIGHT_FRONT] = -20;
+	rotOfCoxa[LEFT_MIDDLE] = 180;
+	rotOfCoxa[RIGHT_MIDDLE] = 0;
+	rotOfCoxa[LEFT_REAR] = 160;
+	rotOfCoxa[RIGHT_REAR] = 20; // rotates abot coxa for angle 45° init
 
 	// body constant initialization
-	bdConstX[0] = -51; // body constant initialization
-	bdConstX[1] = 51; // body constant initialization
-	bdConstX[2] = -51; // body constant initialization
-	bdConstX[3] = 51; // body constant initialization
-	bdConstX[4] = -51; // body constant initialization
-	bdConstX[5] = 51; // [mm] half hight of body
+	bdConstX[LEFT_FRONT] = -51; // body constant initialization
+	bdConstX[RIGHT_FRONT] = 51; // body constant initialization
+	bdConstX[LEFT_MIDDLE] = -51; // body constant initialization
+	bdConstX[RIGHT_MIDDLE] = 51; // body constant initialization
+	bdConstX[LEFT_REAR] = -51; // body constant initialization
+	bdConstX[RIGHT_REAR] = 51; // [mm] half hight of body
 
-	bdConstY[0] = 217;
-	bdConstY[1] = 217;
-	bdConstY[2] = 0;
-	bdConstY[3] = 0;
-	bdConstY[4] = -217;
-	bdConstY[5] = -217; // [mm] half width of body
+	bdConstY[LEFT_FRONT] = 217;
+	bdConstY[RIGHT_FRONT] = 217;
+	bdConstY[LEFT_MIDDLE] = 0;
+	bdConstY[RIGHT_MIDDLE] = 0;
+	bdConstY[LEFT_REAR] = -217;
+	bdConstY[RIGHT_REAR] = -217; // [mm] half width of body
 
-	bdConstZ[0] = 0;
-	bdConstZ[1] = 0;
-	bdConstZ[2] = 0;
-	bdConstZ[3] = 0;
-	bdConstZ[4] = 0;
-	bdConstZ[5] = 0; // [mm] half length of body
+	bdConstZ[LEFT_FRONT] = 0;
+	bdConstZ[RIGHT_FRONT] = 0;
+	bdConstZ[LEFT_MIDDLE] = 0;
+	bdConstZ[RIGHT_MIDDLE] = 0;
+	bdConstZ[LEFT_REAR] = 0;
+	bdConstZ[RIGHT_REAR] = 0; // [mm] half length of body
 
 	// joint angle initialization
-	jointInitA[0] = 160;
-	jointInitA[1] = 20;
-	jointInitA[2] = 180;
-	jointInitA[3] = 0;
-	jointInitA[4] = -160;
-	jointInitA[5] = -20; // [°] (coxa joint) alpha angle init
+	jointInitA[LEFT_FRONT] = 160;
+	jointInitA[RIGHT_FRONT] = 20;
+	jointInitA[LEFT_MIDDLE] = 180;
+	jointInitA[RIGHT_MIDDLE] = 0;
+	jointInitA[LEFT_REAR] = -160;
+	jointInitA[RIGHT_REAR] = -20; // [°] (coxa joint) alpha angle init
 
-	jointInitB[0] = 10;
-	jointInitB[1] = 10;
-	jointInitB[2] = 10;
-	jointInitB[3] = 10;
-	jointInitB[4] = 10;
-	jointInitB[5] = 10; // [°] (femur joint) beta angle init
+	jointInitB[LEFT_FRONT] = 10;
+	jointInitB[RIGHT_FRONT] = 10;
+	jointInitB[LEFT_MIDDLE] = 10;
+	jointInitB[RIGHT_MIDDLE] = 10;
+	jointInitB[LEFT_REAR] = 10;
+	jointInitB[RIGHT_REAR] = 10; // [°] (femur joint) beta angle init
 
-	jointInitC[0] = -90;
-	jointInitC[1] = -90;
-	jointInitC[2] = -90;
-	jointInitC[3] = -90;
-	jointInitC[4] = -90;
-	jointInitC[5] = -90; // [°] (tibia joint) gamma angle init
+	jointInitC[LEFT_FRONT] = -90;
+	jointInitC[RIGHT_FRONT] = -90;
+	jointInitC[LEFT_MIDDLE] = -90;
+	jointInitC[RIGHT_MIDDLE] = -90;
+	jointInitC[LEFT_REAR] = -90;
+	jointInitC[RIGHT_REAR] = -90; // [°] (tibia joint) gamma angle init
 
 	// min limit of coxa joint initialization
-	minCoxa[0] = -26;
-	minCoxa[1] = -71;
-	minCoxa[2] = -51;
-	minCoxa[3] = -51;
-	minCoxa[4] = -71;
-	minCoxa[5] = -23; // [°] (coxa joint) alpha angle min limit // TODO should this be -26? (symetry)
+	minCoxa[LEFT_FRONT] = -26;
+	minCoxa[RIGHT_FRONT] = -71;
+	minCoxa[LEFT_MIDDLE] = -51;
+	minCoxa[RIGHT_MIDDLE] = -51;
+	minCoxa[LEFT_REAR] = -71;
+	minCoxa[RIGHT_REAR] = -23; // [°] (coxa joint) alpha angle min limit // TODO should this be -26? (symetry)
 
-	minFemur[0] = -99;
-	minFemur[1] = -99;
-	minFemur[2] = -99;
-	minFemur[3] = -99;
-	minFemur[4] = -99;
-	minFemur[5] = -107; // [°] (femur joint) beta angle min limit // TODO why is this different?
+	minFemur[LEFT_FRONT] = -99;
+	minFemur[RIGHT_FRONT] = -99;
+	minFemur[LEFT_MIDDLE] = -99;
+	minFemur[RIGHT_MIDDLE] = -99;
+	minFemur[LEFT_REAR] = -99;
+	minFemur[RIGHT_REAR] = -107; // [°] (femur joint) beta angle min limit // TODO why is this different?
 
-	minTibia[0] = -135;
-	minTibia[1] = -135;
-	minTibia[2] = -135;
-	minTibia[3] = -135;
-	minTibia[4] = -135;
-	minTibia[5] = -135; // [°] (tibia joint) gamma angle min limit
+	minTibia[LEFT_FRONT] = -135;
+	minTibia[RIGHT_FRONT] = -135;
+	minTibia[LEFT_MIDDLE] = -135;
+	minTibia[RIGHT_MIDDLE] = -135;
+	minTibia[LEFT_REAR] = -135;
+	minTibia[RIGHT_REAR] = -135; // [°] (tibia joint) gamma angle min limit
 
 	// max limit of coxa jointinitialization
-	maxCoxa[0] = 65;
-	maxCoxa[1] = 28; // TODO why is this different?
-	maxCoxa[2] = 48;
-	maxCoxa[3] = 48;
-	maxCoxa[4] = 30; // TODO why is this different?
-	maxCoxa[5] = 75; // [°] (coxa joint) alpha angle max limit // TODO why is this different?
+	maxCoxa[LEFT_FRONT] = 65;
+	maxCoxa[RIGHT_FRONT] = 28; // TODO why is this different?
+	maxCoxa[LEFT_MIDDLE] = 48;
+	maxCoxa[RIGHT_MIDDLE] = 48;
+	maxCoxa[LEFT_REAR] = 30; // TODO why is this different?
+	maxCoxa[RIGHT_REAR] = 75; // [°] (coxa joint) alpha angle max limit // TODO why is this different?
 
-	maxFemur[0] = 96;
-	maxFemur[1] = 96;
-	maxFemur[2] = 96;
-	maxFemur[3] = 96;
-	maxFemur[4] = 96;
-	maxFemur[5] = 96; // [°] (femur joint) beta angle max limit
+	maxFemur[LEFT_FRONT] = 96;
+	maxFemur[RIGHT_FRONT] = 96;
+	maxFemur[LEFT_MIDDLE] = 96;
+	maxFemur[RIGHT_MIDDLE] = 96;
+	maxFemur[LEFT_REAR] = 96;
+	maxFemur[RIGHT_REAR] = 96; // [°] (femur joint) beta angle max limit
 
-	maxTibia[0] = 135;
-	maxTibia[1] = 135;
-	maxTibia[2] = 135;
-	maxTibia[3] = 135;
-	maxTibia[4] = 135;
-	maxTibia[5] = 135; // [°] (tibia joint) gamma angle max limit
+	maxTibia[LEFT_FRONT] = 135;
+	maxTibia[RIGHT_FRONT] = 135;
+	maxTibia[LEFT_MIDDLE] = 135;
+	maxTibia[RIGHT_MIDDLE] = 135;
+	maxTibia[LEFT_REAR] = 135;
+	maxTibia[RIGHT_REAR] = 135; // [°] (tibia joint) gamma angle max limit
 
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
@@ -215,9 +215,9 @@ void Akrobat::initAkrobat()
 		iT = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(bdConstX[legNum], bdConstY[legNum], bdConstZ[legNum]));
 		BodyCoordinateSystem.leg[legNum].footGlobPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		// [MCS] -- definition of main coordinate system
+		// [MainCoordinateSystem] -- definition of main coordinate system
 		iT = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
-		MCS.leg[legNum].footGlobPos = iT * BodyCoordinateSystem.leg[legNum].footGlobPos;
+		MainCoordinateSystem.leg[legNum].footGlobPos = iT * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
 		// 3D - RVIZ init position
 		js.header.stamp = ros::Time::now();
@@ -244,11 +244,11 @@ void Akrobat::initAkrobat()
 		cout << setw(12) << BCS.leg[legNum].footGlobPos.y();
 		cout << setw(12) << BCS.leg[legNum].footGlobPos.z() << endl;
 
-		// [OUTPUT] -- output of MCS.leg[legNum].footGlobPos vector
-		cout << " MCS.leg[" << legNum << "].footGlobPos---: ";
-		cout << setw(12) << MCS.leg[legNum].footGlobPos.x();
-		cout << setw(12) << MCS.leg[legNum].footGlobPos.y();
-		cout << setw(12) << MCS.leg[legNum].footGlobPos.z() << endl;
+		// [OUTPUT] -- output of MainCoordinateSystem.leg[legNum].footGlobPos vector
+		cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
+		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.x();
+		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.y();
+		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
 		cout << endl;
 #endif
 	}// FOR (legNum)
@@ -573,10 +573,10 @@ void Akrobat::coordinateTransformation(int legNum)
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
 	T = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
-	MCS.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
+	MainCoordinateSystem.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
 	T = Akrobat::transformCS("MCS", "BCS", Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + rollOv[legNum]), pad.bdT.z()));
-	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MCS.leg[legNum].footGlobPos;
+	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 
 	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(bdConstX[legNum], bdConstY[legNum], bdConstZ[legNum]));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
@@ -589,10 +589,10 @@ void Akrobat::coordinateTransformation(int legNum)
 
 	cout << "|-------------------coordinateTransformation()----------------LN: " << legNum << "|" << endl;
 	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
-	cout << " MCS.leg[" << legNum << "].footGlobPos---: ";
-	cout << setw(12) << MCS.leg[legNum].footGlobPos.x();
-	cout << setw(12) << MCS.leg[legNum].footGlobPos.y();
-	cout << setw(12) << MCS.leg[legNum].footGlobPos.z() << endl;
+	cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
+	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.x();
+	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.y();
+	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
 
 	cout << " BCS.leg[" << legNum << "].footGlobPos---: ";
 	cout << setw(12) << BCS.leg[legNum].footGlobPos.x();
@@ -606,6 +606,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	cout << endl;
 #endif
 }// Akrobat::coordinateTransformation(int legNum)
+
 /*********************************************************************************************************
 * Function---:  Akrobat::inverseKinematics()
 *
@@ -676,7 +677,6 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
 	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, minCoxa[legNum], maxCoxa[legNum]))
