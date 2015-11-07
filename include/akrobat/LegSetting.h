@@ -1,8 +1,9 @@
-#ifndef LEGSETTINGSTRUCT_H
-#define LEGSETTINGSTRUCT_H
+#ifndef LEGSETTING_H
+#define LEGSETTING_H
 
-struct LegSettingStruct
+class LegSetting
 {
+public:
 	// body constant initialization
 	float bdConstX; // [mm] half hight of body
 	float bdConstY; // [mm] half width of body
@@ -23,7 +24,7 @@ struct LegSettingStruct
 	float maxFemur; // [°] (femur joint) beta angle max limit
 	float maxTibia; // [°] (tibia joint) gamma angle max limit
 
-	LegSettingStruct(float bdConstX = 0.0f, float bdConstY = 0.0f, float bdConstZ = 0.0f, float jointInitA = 0.0f, float jointInitB = 0.0f, float jointInitC = 0.0f, float minCoxa = 0.0f, float minFemur = 0.0f, float minTibia = 0.0f, float maxCoxa = 0.0f, float maxFemur = 0.0f, float maxTibia = 0.0f) :
+	LegSetting(float bdConstX = 0.0f, float bdConstY = 0.0f, float bdConstZ = 0.0f, float jointInitA = 0.0f, float jointInitB = 0.0f, float jointInitC = 0.0f, float minCoxa = 0.0f, float minFemur = 0.0f, float minTibia = 0.0f, float maxCoxa = 0.0f, float maxFemur = 0.0f, float maxTibia = 0.0f) :
 		bdConstX(bdConstX),
 		bdConstY(bdConstY),
 		bdConstZ(bdConstZ),
@@ -40,6 +41,6 @@ struct LegSettingStruct
 	}
 };
 
-#endif // LEGSETTINGSTRUCT_H
+#endif // LEGSETTING_H
 
 

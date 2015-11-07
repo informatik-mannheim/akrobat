@@ -12,7 +12,7 @@
 #include <akrobat/TrajectoryStruct.h>
 #include <akrobat/RumblePad2Struct.h>
 #include <akrobat/CoordinateSystemStruct.h>
-#include <akrobat/LegSettingStruct.h>
+#include <akrobat/LegSetting.h>
 
 /// The Akrobat class
 /**
@@ -58,7 +58,7 @@ public:
 	trajectoryStruct traData; // [	.. ] --
 	coordinateSystemStruct MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState js;
-	LegSettingStruct legSettings[numberOfLegs];
+	LegSetting legSettings[numberOfLegs];
 
 
 	// constructor
