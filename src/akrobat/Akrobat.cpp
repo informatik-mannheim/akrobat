@@ -254,6 +254,8 @@ void Akrobat::initAkrobat()
 		cout << endl;
 #endif
 	}// FOR (legNum)
+
+	//ros::shutdown();
 }// Akrobat::initAkrobat()
 
 /*********************************************************************************************************

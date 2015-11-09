@@ -16,13 +16,13 @@ TODO:
 */
 
 //---------------------OUTPUT MACRO
-#define  F1DEBUG 	1 //initAkrobat()
+#define  F1DEBUG 	0 //initAkrobat()
 #define  F2DEBUG 	0 //runAkrobat()
 #define  F3DEBUG 	0 //tripodGait()
 #define  F4DEBUG 	0 //waveGait()
 #define  F5DEBUG 	0 //rippleGait()
 #define  F6DEBUG 	0 //coordinateTransformation()
-#define  F7DEBUG 	0 //inverseKinematics()
+#define  F7DEBUG 	0//inverseKinematics()
 #define  F8DEBUG 	0 //moveLeg()
 #define  F9DEBUG 	0 //transformCS()
 #define  F10DEBUG 	0 //callRumblePad2Back()
