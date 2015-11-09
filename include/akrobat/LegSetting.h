@@ -5,26 +5,43 @@ class LegSetting
 {
 public:
 	// body constant initialization
-	float bdConstX = 0.0f; // [mm] half hight of body
-	float bdConstY = 0.0f; // [mm] half width of body
-	float bdConstZ = 0.0f; // [mm] half length of body
+	float bdConstX; // [mm] half hight of body
+	float bdConstY; // [mm] half width of body
+	float bdConstZ; // [mm] half length of body
 
 	// joint angle initialization
-	float jointInitA = 0.0f; // [°] (coxa joint) alpha angle init
-	float jointInitB = 0.0f; // [°] (femur joint) beta angle init
-	float jointInitC = 0.0f; // [°] (tibia joint) gamma angle init
+	float jointInitA; // [°] (coxa joint) alpha angle init
+	float jointInitB; // [°] (femur joint) beta angle init
+	float jointInitC; // [°] (tibia joint) gamma angle init
 
 	// min limit of coxa joint initialization
-	float minCoxa = 0.0f; // [°] (coxa joint) alpha angle min limit
-	float minFemur = 0.0f; // [°] (femur joint) beta angle min limit
-	float minTibia = 0.0f; // [°] (tibia joint) gamma angle min limit
+	float minCoxa; // [°] (coxa joint) alpha angle min limit
+	float minFemur; // [°] (femur joint) beta angle min limit
+	float minTibia; // [°] (tibia joint) gamma angle min limit
 
 	// max limit of coxa jointinitialization
-	float maxCoxa = 0.0f; // [°] (coxa joint) alpha angle max limit
-	float maxFemur = 0.0f; // [°] (femur joint) beta angle max limit
-	float maxTibia = 0.0f; // [°] (tibia joint) gamma angle max limit
+	float maxCoxa; // [°] (coxa joint) alpha angle max limit
+	float maxFemur; // [°] (femur joint) beta angle max limit
+	float maxTibia; // [°] (tibia joint) gamma angle max limit
+
+	LegSetting()
+	{
+		bdConstX = 0.0f;
+		bdConstY = 0.0f;
+		bdConstZ = 0.0f;
+
+		jointInitA = 0.0f;
+		jointInitB = 0.0f;
+		jointInitC = 0.0f;
+
+		minCoxa = 0.0f;
+		minFemur = 0.0f;
+		minTibia = 0.0f;
+
+		maxCoxa = 0.0f;
+		maxFemur = 0.0f;
+		maxTibia = 0.0f;
+	}
 };
 
 #endif // LEGSETTING_H
-
-
