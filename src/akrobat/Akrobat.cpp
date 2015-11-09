@@ -869,10 +869,12 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 ********************************************************************************************************/
 Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 {
-	Transform TCS_local; // [TRANSFORMATION DATA TYP] -- create a transform
+	
+
+	Transform TCS_local = Transform::getIdentity(); // [TRANSFORMATION DATA TYP] -- create a transform
 	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
 	TCS_local.setOrigin(transVec); // [.setOrigin] -- set translational element of transform
-	Quaternion rotQuat; // [ROTATION] -- create quaternion
+	Quaternion rotQuat = Quaternion::getIdentity(); // [ROTATION] -- create quaternion
 	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z())); // [.setRPY] -- define quaternion
 	TCS_local.setRotation(rotQuat); // [.setRotaion] -- set rotational element of transform
 
