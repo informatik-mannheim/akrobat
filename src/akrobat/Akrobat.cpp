@@ -35,6 +35,11 @@ using namespace angles;
 ********************************************************************************************************/
 Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 {
+	// TODO left off: 
+	// need to put settings into settings class replaces usages
+	// merge legs/configuration
+	// move controller config into separate class
+	// rethink overall structure
 
 
 	rotOfCoxa[LEFT_FRONT] = -160;
