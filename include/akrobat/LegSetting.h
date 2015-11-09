@@ -24,7 +24,12 @@ public:
 	float maxFemur; // [°] (femur joint) beta angle max limit
 	float maxTibia; // [°] (tibia joint) gamma angle max limit
 
-	LegSetting(float bdConstX = 0.0f, float bdConstY = 0.0f, float bdConstZ = 0.0f, float jointInitA = 0.0f, float jointInitB = 0.0f, float jointInitC = 0.0f, float minCoxa = 0.0f, float minFemur = 0.0f, float minTibia = 0.0f, float maxCoxa = 0.0f, float maxFemur = 0.0f, float maxTibia = 0.0f) :
+	LegSetting() : LegSetting(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
+	{
+
+	}
+
+	LegSetting(float bdConstX, float bdConstY, float bdConstZ, float jointInitA, float jointInitB, float jointInitC, float minCoxa, float minFemur, float minTibia, float maxCoxa, float maxFemur, float maxTibia) :
 		bdConstX(bdConstX),
 		bdConstY(bdConstY),
 		bdConstZ(bdConstZ),
