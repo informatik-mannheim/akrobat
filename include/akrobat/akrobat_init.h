@@ -16,7 +16,7 @@ TODO:
 */
 
 //---------------------OUTPUT MACRO
-#define  F1DEBUG 	0 //initAkrobat()
+#define  F1DEBUG 	1 //initAkrobat()
 #define  F2DEBUG 	0 //runAkrobat()
 #define  F3DEBUG 	0 //tripodGait()
 #define  F4DEBUG 	0 //waveGait()

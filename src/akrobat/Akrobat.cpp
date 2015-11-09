@@ -41,7 +41,6 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	// move controller config into separate class
 	// rethink overall structure
 
-
 	rotOfCoxa[LEFT_FRONT] = -160;
 	rotOfCoxa[RIGHT_FRONT] = -20;
 	rotOfCoxa[LEFT_MIDDLE] = 180;
