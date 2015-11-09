@@ -41,12 +41,12 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	// move controller config into separate class
 	// rethink overall structure
 
-	legSettings[LEFT_FRONT] = LegSetting(-160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 135, 96);
-	legSettings[RIGHT_FRONT] = LegSetting(-20, 51, 217, 0, 20, 10, -90, -71, -99, -135, 28, 96, 135);
-	legSettings[LEFT_MIDDLE] = LegSetting(180, -51, 0, 0, 180, 10, -90, -51, -99, -135, 48, 96, 135);
-	legSettings[RIGHT_MIDDLE] = LegSetting(0, 51, 0, 0, 0, 10, -90, -51, -99, -135, 48, 96, 135);
-	legSettings[LEFT_REAR] = LegSetting(160, -51, -217, 0, -160, 10, -90, -71, -99, -135, 30, 96, 135);
-	legSettings[RIGHT_REAR] = LegSetting(20, 51, -217, 0, -20, 10, -90, -23, -107, -135, 75, 96, 135);
+	legSettings[LEFT_FRONT] = LegSetting(0, -160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 135, 96);
+	legSettings[RIGHT_FRONT] = LegSetting(0, -20, 51, 217, 0, 20, 10, -90, -71, -99, -135, 28, 96, 135);
+	legSettings[LEFT_MIDDLE] = LegSetting(0, 180, -51, 0, 0, 180, 10, -90, -51, -99, -135, 48, 96, 135);
+	legSettings[RIGHT_MIDDLE] = LegSetting(0, 0, 51, 0, 0, 0, 10, -90, -51, -99, -135, 48, 96, 135);
+	legSettings[LEFT_REAR] = LegSetting(0, 160, -51, -217, 0, -160, 10, -90, -71, -99, -135, 30, 96, 135);
+	legSettings[RIGHT_REAR] = LegSetting(0, 20, 51, -217, 0, -20, 10, -90, -23, -107, -135, 75, 96, 135);
 
 	rotOfCoxa[LEFT_FRONT] = -160;
 	rotOfCoxa[RIGHT_FRONT] = -20;
