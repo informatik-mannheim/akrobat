@@ -994,7 +994,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			{
 				rollOver = 1;
 				rotBody = 180;
-				rotOfCoxa[LEFT_FRONT] = 160; // rotation of leg coordinate system (Leg 1)
+				legSettings[LEFT_FRONT].rotOfCoxa = 160; // rotation of leg coordinate system (Leg 1)
 				rotOfCoxa[RIGHT_FRONT] = 20; // rotation of leg coordinate system (Leg 2)
 				rotOfCoxa[LEFT_MIDDLE] = 180; // rotation of leg coordinate system (Leg 3)
 				rotOfCoxa[RIGHT_MIDDLE] = 0; // rotation of leg coordinate system (Leg 4)
@@ -1017,7 +1017,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			{
 				rollOver = 0;
 				rotBody = 0;
-				rotOfCoxa[LEFT_FRONT] = -160; // rotation of leg coordinate system (Leg 1)
+				legSettings[LEFT_FRONT].rotOfCoxa = -160; // rotation of leg coordinate system (Leg 1)
 				rotOfCoxa[RIGHT_FRONT] = -20; // rotation of leg coordinate system (Leg 2)
 				rotOfCoxa[LEFT_MIDDLE] = 180; // rotation of leg coordinate system (Leg 3)
 				rotOfCoxa[RIGHT_MIDDLE] = 0; // rotation of leg coordinate system (Leg 4)
