@@ -5,45 +5,24 @@ class LegSetting
 {
 public:
 	// body constant initialization
-	float bdConstX; // [mm] half hight of body
-	float bdConstY; // [mm] half width of body
-	float bdConstZ; // [mm] half length of body
+	float bdConstX = 0.0f; // [mm] half hight of body
+	float bdConstY = 0.0f; // [mm] half width of body
+	float bdConstZ = 0.0f; // [mm] half length of body
 
 	// joint angle initialization
-	float jointInitA; // [°] (coxa joint) alpha angle init
-	float jointInitB; // [°] (femur joint) beta angle init
-	float jointInitC; // [°] (tibia joint) gamma angle init
+	float jointInitA = 0.0f; // [°] (coxa joint) alpha angle init
+	float jointInitB = 0.0f; // [°] (femur joint) beta angle init
+	float jointInitC = 0.0f; // [°] (tibia joint) gamma angle init
 
 	// min limit of coxa joint initialization
-	float minCoxa; // [°] (coxa joint) alpha angle min limit
-	float minFemur; // [°] (femur joint) beta angle min limit
-	float minTibia; // [°] (tibia joint) gamma angle min limit
+	float minCoxa = 0.0f; // [°] (coxa joint) alpha angle min limit
+	float minFemur = 0.0f; // [°] (femur joint) beta angle min limit
+	float minTibia = 0.0f; // [°] (tibia joint) gamma angle min limit
 
 	// max limit of coxa jointinitialization
-	float maxCoxa; // [°] (coxa joint) alpha angle max limit
-	float maxFemur; // [°] (femur joint) beta angle max limit
-	float maxTibia; // [°] (tibia joint) gamma angle max limit
-
-	LegSetting() : LegSetting(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f)
-	{
-
-	}
-
-	LegSetting(float bdConstX, float bdConstY, float bdConstZ, float jointInitA, float jointInitB, float jointInitC, float minCoxa, float minFemur, float minTibia, float maxCoxa, float maxFemur, float maxTibia) :
-		bdConstX(bdConstX),
-		bdConstY(bdConstY),
-		bdConstZ(bdConstZ),
-		jointInitA(jointInitA),
-		jointInitB(jointInitB),
-		jointInitC(jointInitC),
-		minCoxa(minCoxa),
-		minFemur(minFemur),
-		minTibia(minTibia),
-		maxCoxa(maxCoxa),
-		maxFemur(maxFemur),
-		maxTibia(maxTibia)
-	{
-	}
+	float maxCoxa = 0.0f; // [°] (coxa joint) alpha angle max limit
+	float maxFemur = 0.0f; // [°] (femur joint) beta angle max limit
+	float maxTibia = 0.0f; // [°] (tibia joint) gamma angle max limit
 };
 
 #endif // LEGSETTING_H
