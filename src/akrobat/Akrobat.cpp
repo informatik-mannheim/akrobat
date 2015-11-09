@@ -599,7 +599,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(bdConstX[legNum], bdConstY[legNum], bdConstZ[legNum]));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("LCS", "LCS", Vector3(0, 0, rotOfCoxa[legNum]), Vector3(0, 0, 0));
+	T = Akrobat::transformCS("LCS", "LCS", Vector3(0, 0, legSettings[legNum].rotOfCoxa), Vector3(0, 0, 0));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
 	// [OUTPUT] -- console
@@ -995,13 +995,13 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 				rollOver = 1;
 				rotBody = 180;
 				legSettings[LEFT_FRONT].rotOfCoxa = 160; // rotation of leg coordinate system (Leg 1)
-legSettings[RIGHT_FRONT].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 2)
-				rotOfCoxa[LEFT_MIDDLE] = 180; // rotation of leg coordinate system (Leg 3)
-				rotOfCoxa[RIGHT_MIDDLE] = 0; // rotation of leg coordinate system (Leg 4)
-				rotOfCoxa[LEFT_REAR] = -160; // rotation of leg coordinate system (Leg 5)
-				rotOfCoxa[RIGHT_REAR] = -20; // rotation of leg coordinate system (Leg 6)
+				legSettings[RIGHT_FRONT].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 2)
+				legSettings[LEFT_MIDDLE].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 3)
+				legSettings[RIGHT_MIDDLE].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 4)
+				legSettings[LEFT_REAR].rotOfCoxa = -160; // rotation of leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 2 * legSettings[LEFT_FRONT].bdConstY; // translation offset for leg coordinate system (Leg 1)
-legSettings[RIGHT_FRONT].rollOv = 2 *legSettings[RIGHT_FRONT].bdConstY;// translation offset for leg coordinate system (Leg 2)
+				legSettings[RIGHT_FRONT].rollOv = 2 * legSettings[RIGHT_FRONT].bdConstY;// translation offset for leg coordinate system (Leg 2)
 				rollOv[LEFT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 3)
 				rollOv[RIGHT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 2 * bdConstY[LEFT_REAR]; // translation offset for leg coordinate system (Leg 5)
@@ -1018,13 +1018,13 @@ legSettings[RIGHT_FRONT].rollOv = 2 *legSettings[RIGHT_FRONT].bdConstY;// transl
 				rollOver = 0;
 				rotBody = 0;
 				legSettings[LEFT_FRONT].rotOfCoxa = -160; // rotation of leg coordinate system (Leg 1)
-legSettings[RIGHT_FRONT].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 2)
-				rotOfCoxa[LEFT_MIDDLE] = 180; // rotation of leg coordinate system (Leg 3)
-				rotOfCoxa[RIGHT_MIDDLE] = 0; // rotation of leg coordinate system (Leg 4)
-				rotOfCoxa[LEFT_REAR] = 160; // rotation of leg coordinate system (Leg 5)
-				rotOfCoxa[RIGHT_REAR] = 20; // rotation of leg coordinate system (Leg 6)
+				legSettings[RIGHT_FRONT].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 2)
+				legSettings[LEFT_MIDDLE].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 3)
+				legSettings[RIGHT_MIDDLE].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 4)
+				legSettings[LEFT_REAR].rotOfCoxa = 160; // rotation of leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 1)
-legSettings[RIGHT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 2)
+				legSettings[RIGHT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 2)
 				rollOv[LEFT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 3)
 				rollOv[RIGHT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 4)
 				rollOv[LEFT_REAR] = 0; // translation offset for leg coordinate system (Leg 5)
