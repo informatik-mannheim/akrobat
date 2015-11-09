@@ -234,17 +234,17 @@ void Akrobat::initAkrobat()
 		cout << "|----------------------------INITAKROBAT()------------------------LN: " << legNum << "|" << endl;
 		cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
 
-		// [OUTPUT] -- output of LCS.leg[legNum].footInitPos vector
-		cout << " LCS.leg[" << legNum << "].footInitPos---: ";
+		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footInitPos vector
+		cout << " LegCoordinateSystem.leg[" << legNum << "].footInitPos---: ";
 		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.x();
 		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.y();
 		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.z() << endl;
 
-		// [OUTPUT] -- output of BCS.leg[legNum].footGlobPos vector
-		cout << " BCS.leg[" << legNum << "].footGlobPos---: ";
-		cout << setw(12) << BCS.leg[legNum].footGlobPos.x();
-		cout << setw(12) << BCS.leg[legNum].footGlobPos.y();
-		cout << setw(12) << BCS.leg[legNum].footGlobPos.z() << endl;
+		// [OUTPUT] -- output of BodyCoordinateSystem.leg[legNum].footGlobPos vector
+		cout << " BodyCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
+		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.x();
+		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.y();
+		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
 
 		// [OUTPUT] -- output of MainCoordinateSystem.leg[legNum].footGlobPos vector
 		cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
@@ -347,14 +347,14 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
 		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
 
-		// [OUTPUT] -- output of FCS.leg[legNum].trajectoryPresPos vector
-		cout << "FCS.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FCS.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.z());// <<endl;
+		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
+		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
+		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z());// <<endl;
 
-		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
-		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
+		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
+		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
 		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
@@ -440,14 +440,14 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
 		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
 
-		// [OUTPUT] -- output of FCS.leg[legNum].trajectoryPresPos vector
-		cout << "FCS.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FCS.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.z()) << endl;
+		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
+		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
+		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z()) << endl;
 
-		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
-		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
+		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
+		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
 		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
@@ -534,21 +534,21 @@ void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
 		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
 
-		// [OUTPUT] -- output of FCS.leg[legNum].trajectoryPresPos vector
-		cout << "FCS.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FCS.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FCS.leg[legNum].trajectoryPresPos.z()) << endl;
+		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
+		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
+		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
+		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z()) << endl;
 
-		// [OUTPUT] -- output of LCS.leg[legNum].footPresPos vector
-		cout << "LCS.leg[" << legNum << "].footPresPos-: ";
+		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
+		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
 		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
 	}// IF (MOVING)
-	// FCS.leg[legNum].trajectoryPresPos.setZ(0);
+	// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
 }// Akrobat::rippleGait(int legNum)
 
 /*********************************************************************************************************
@@ -596,12 +596,12 @@ void Akrobat::coordinateTransformation(int legNum)
 	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.y();
 	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
 
-	cout << " BCS.leg[" << legNum << "].footGlobPos---: ";
-	cout << setw(12) << BCS.leg[legNum].footGlobPos.x();
-	cout << setw(12) << BCS.leg[legNum].footGlobPos.y();
-	cout << setw(12) << BCS.leg[legNum].footGlobPos.z() << endl;
+	cout << " BodyCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
+	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.x();
+	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.y();
+	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
 
-	cout << " LCS.leg[" << legNum << "].footPresPos---: ";
+	cout << " LegCoordinateSystem.leg[" << legNum << "].footPresPos---: ";
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.x();
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.y();
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.z() << endl;
@@ -653,7 +653,7 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	cout << "|----------------------inverseKinematics()------------------LN: " << legNum << "|" << endl;
 	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
 	cout << setw(40) << "CAngl" << setw(12) << "FAngl" << setw(12) << "TAngl" << endl;
-	cout << "LCS.leg[" << legNum << "].jointAngles---: ";
+	cout << "LegCoordinateSystem.leg[" << legNum << "].jointAngles---: ";
 	cout << "counter : " << cnt++ << "---: ";
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.alpha;
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.beta;
