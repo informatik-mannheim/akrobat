@@ -41,34 +41,41 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	// move controller config into separate class
 	// rethink overall structure
 
+	legSettings[LEFT_FRONT] = LegSetting(-160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 135, 96);
+	legSettings[RIGHT_FRONT] = LegSetting(-20, 51, 217, 0, 20, 10, -90, -71, -99, -135, 28, 96, 135);
+	legSettings[LEFT_MIDDLE] = LegSetting(180, -51, 0, 0, 180, 10, -90, -51, -99, -135, 48, 96, 135);
+	legSettings[RIGHT_MIDDLE] = LegSetting(0, 51, 0, 0, 0, 10, -90, -51, -99, -135, 48, 96, 135);
+	legSettings[LEFT_REAR] = LegSetting(160, -51, -217, 0, -160, 10, -90, -71, -99, -135, 30, 96, 135);
+	legSettings[RIGHT_REAR] = LegSetting(20, 51, -217, 0, -20, 10, -90, -23, -107, -135, 75, 96, 135);
+
 	rotOfCoxa[LEFT_FRONT] = -160;
 	rotOfCoxa[RIGHT_FRONT] = -20;
 	rotOfCoxa[LEFT_MIDDLE] = 180;
 	rotOfCoxa[RIGHT_MIDDLE] = 0;
 	rotOfCoxa[LEFT_REAR] = 160;
-	rotOfCoxa[RIGHT_REAR] = 20; // rotates abot coxa for angle 45° init
+	rotOfCoxa[RIGHT_REAR] = 20;
 
 	// body constant initialization
-	bdConstX[LEFT_FRONT] = -51; // body constant initialization
-	bdConstX[RIGHT_FRONT] = 51; // body constant initialization
-	bdConstX[LEFT_MIDDLE] = -51; // body constant initialization
-	bdConstX[RIGHT_MIDDLE] = 51; // body constant initialization
-	bdConstX[LEFT_REAR] = -51; // body constant initialization
-	bdConstX[RIGHT_REAR] = 51; // [mm] half hight of body
+	bdConstX[LEFT_FRONT] = -51;
+	bdConstX[RIGHT_FRONT] = 51;
+	bdConstX[LEFT_MIDDLE] = -51;
+	bdConstX[RIGHT_MIDDLE] = 51;
+	bdConstX[LEFT_REAR] = -51;
+	bdConstX[RIGHT_REAR] = 51;
 
 	bdConstY[LEFT_FRONT] = 217;
 	bdConstY[RIGHT_FRONT] = 217;
 	bdConstY[LEFT_MIDDLE] = 0;
 	bdConstY[RIGHT_MIDDLE] = 0;
 	bdConstY[LEFT_REAR] = -217;
-	bdConstY[RIGHT_REAR] = -217; // [mm] half width of body
+	bdConstY[RIGHT_REAR] = -217;
 
 	bdConstZ[LEFT_FRONT] = 0;
 	bdConstZ[RIGHT_FRONT] = 0;
 	bdConstZ[LEFT_MIDDLE] = 0;
 	bdConstZ[RIGHT_MIDDLE] = 0;
 	bdConstZ[LEFT_REAR] = 0;
-	bdConstZ[RIGHT_REAR] = 0; // [mm] half length of body
+	bdConstZ[RIGHT_REAR] = 0;
 
 	// joint angle initialization
 	jointInitA[LEFT_FRONT] = 160;
@@ -76,21 +83,22 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	jointInitA[LEFT_MIDDLE] = 180;
 	jointInitA[RIGHT_MIDDLE] = 0;
 	jointInitA[LEFT_REAR] = -160;
-	jointInitA[RIGHT_REAR] = -20; // [°] (coxa joint) alpha angle init
+	jointInitA[RIGHT_REAR] = -20;
 
 	jointInitB[LEFT_FRONT] = 10;
 	jointInitB[RIGHT_FRONT] = 10;
 	jointInitB[LEFT_MIDDLE] = 10;
 	jointInitB[RIGHT_MIDDLE] = 10;
 	jointInitB[LEFT_REAR] = 10;
-	jointInitB[RIGHT_REAR] = 10; // [°] (femur joint) beta angle init
+	jointInitB[RIGHT_REAR] = 10;
+
 
 	jointInitC[LEFT_FRONT] = -90;
 	jointInitC[RIGHT_FRONT] = -90;
 	jointInitC[LEFT_MIDDLE] = -90;
 	jointInitC[RIGHT_MIDDLE] = -90;
 	jointInitC[LEFT_REAR] = -90;
-	jointInitC[RIGHT_REAR] = -90; // [°] (tibia joint) gamma angle init
+	jointInitC[RIGHT_REAR] = -90;
 
 	// min limit of coxa joint initialization
 	minCoxa[LEFT_FRONT] = -26;
@@ -98,43 +106,44 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	minCoxa[LEFT_MIDDLE] = -51;
 	minCoxa[RIGHT_MIDDLE] = -51;
 	minCoxa[LEFT_REAR] = -71;
-	minCoxa[RIGHT_REAR] = -23; // [°] (coxa joint) alpha angle min limit // TODO should this be -26? (symetry)
+	minCoxa[RIGHT_REAR] = -23;
 
 	minFemur[LEFT_FRONT] = -99;
 	minFemur[RIGHT_FRONT] = -99;
 	minFemur[LEFT_MIDDLE] = -99;
 	minFemur[RIGHT_MIDDLE] = -99;
 	minFemur[LEFT_REAR] = -99;
-	minFemur[RIGHT_REAR] = -107; // [°] (femur joint) beta angle min limit // TODO why is this different?
+	minFemur[RIGHT_REAR] = -107;
 
 	minTibia[LEFT_FRONT] = -135;
 	minTibia[RIGHT_FRONT] = -135;
 	minTibia[LEFT_MIDDLE] = -135;
 	minTibia[RIGHT_MIDDLE] = -135;
 	minTibia[LEFT_REAR] = -135;
-	minTibia[RIGHT_REAR] = -135; // [°] (tibia joint) gamma angle min limit
+	minTibia[RIGHT_REAR] = -135;
 
 	// max limit of coxa jointinitialization
 	maxCoxa[LEFT_FRONT] = 65;
-	maxCoxa[RIGHT_FRONT] = 28; // TODO why is this different?
+	maxCoxa[RIGHT_FRONT] = 28;
 	maxCoxa[LEFT_MIDDLE] = 48;
 	maxCoxa[RIGHT_MIDDLE] = 48;
-	maxCoxa[LEFT_REAR] = 30; // TODO why is this different?
-	maxCoxa[RIGHT_REAR] = 75; // [°] (coxa joint) alpha angle max limit // TODO why is this different?
+	maxCoxa[LEFT_REAR] = 30;
+	maxCoxa[RIGHT_REAR] = 75;
+
 
 	maxFemur[LEFT_FRONT] = 96;
 	maxFemur[RIGHT_FRONT] = 96;
 	maxFemur[LEFT_MIDDLE] = 96;
 	maxFemur[RIGHT_MIDDLE] = 96;
 	maxFemur[LEFT_REAR] = 96;
-	maxFemur[RIGHT_REAR] = 96; // [°] (femur joint) beta angle max limit
+	maxFemur[RIGHT_REAR] = 96;
 
 	maxTibia[LEFT_FRONT] = 135;
 	maxTibia[RIGHT_FRONT] = 135;
 	maxTibia[LEFT_MIDDLE] = 135;
 	maxTibia[RIGHT_MIDDLE] = 135;
 	maxTibia[LEFT_REAR] = 135;
-	maxTibia[RIGHT_REAR] = 135; // [°] (tibia joint) gamma angle max limit
+	maxTibia[RIGHT_REAR] = 135;
 
 	for (int i = 0; i < numberOfLegs; i++)
 	{
@@ -367,23 +376,23 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		// cout<<endl;
 #endif
-		}// IF (MOVING)
-	}// Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
+	}// IF (MOVING)
+}// Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::waveGait()
-	*
-	* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
-	*              -int legNum:            execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 create wave gait
-	*
-	* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::waveGait()
+*
+* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+*              -int legNum:            execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 create wave gait
+*
+* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 {
 	if (MOVING)
@@ -460,23 +469,23 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-		}// IF (MOVING)
-	}// Akrobat::waveGait(trajectoryStruct *tS,int legNum)
+	}// IF (MOVING)
+}// Akrobat::waveGait(trajectoryStruct *tS,int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::rippleGait()
-	*
-	* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
-	*		-int legNum:		execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 create ripple gait
-	*
-	* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::rippleGait()
+*
+* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+*		-int legNum:		execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 create ripple gait
+*
+* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 {
 	if (MOVING)
@@ -554,23 +563,23 @@ void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-		}// IF (MOVING)
-		// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-	}// Akrobat::rippleGait(int legNum)
+	}// IF (MOVING)
+	// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+}// Akrobat::rippleGait(int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::coordinateTransformation()
-	*
-	* Input------:	-int legNum:	execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 transformate the coordinate systems
-	*
-	* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::coordinateTransformation()
+*
+* Input------:	-int legNum:	execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 transformate the coordinate systems
+*
+* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
@@ -667,25 +676,25 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.gamma;
 	cout << setw(12) << "Atan" << atan2(0, 160) << endl;
 #endif
-	}// Akrobat::inverseKinematics(int legNum)
+}// Akrobat::inverseKinematics(int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::moveLeg()
-	*
-	* Input------:	-float alpha: 	coxa joint angle
-	*              -float gamma: 	femur joint angle
-	*              -float beta:  	tibia joint angle
-	*              -int legNum:	execute function operation for this leg
-	*
-	* Output-----:	 0: failed
-	*               1: successful
-	*
-	* Overview---:	 move the leg to target position
-	*
-	* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::moveLeg()
+*
+* Input------:	-float alpha: 	coxa joint angle
+*              -float gamma: 	femur joint angle
+*              -float beta:  	tibia joint angle
+*              -int legNum:	execute function operation for this leg
+*
+* Output-----:	 0: failed
+*               1: successful
+*
+* Overview---:	 move the leg to target position
+*
+* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
 	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, minCoxa[legNum], maxCoxa[legNum]))
