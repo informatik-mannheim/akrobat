@@ -54,11 +54,11 @@ public:
 	float maxFemur[numberOfLegs]; // [°] (femur joint) beta angle max limit
 	float maxTibia[numberOfLegs]; // [°] (tibia joint) gamma angle max limit
 
-	LegSetting legSettings[numberOfLegs];
 	rumblePad2Struct pad; // [	PAD   ] -- joypad object
 	trajectoryStruct traData; // [	.. ] --
 	coordinateSystemStruct MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState js;
+	LegSetting legSettings[numberOfLegs];
 
 
 	// constructor
