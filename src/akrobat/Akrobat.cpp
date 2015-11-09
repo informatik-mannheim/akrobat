@@ -136,6 +136,11 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	maxTibia[LEFT_REAR] = 135;
 	maxTibia[RIGHT_REAR] = 135; // [°] (tibia joint) gamma angle max limit
 
+	for (int i = 0; i < numberOfLegs; i++)
+	{
+		rollOv[i] = 0.0f;
+	}
+
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
@@ -362,23 +367,23 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		// cout<<endl;
 #endif
-	}// IF (MOVING)
-}// Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
+		}// IF (MOVING)
+	}// Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
 
-/*********************************************************************************************************
-* Function---:  Akrobat::waveGait()
-*
-* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
-*              -int legNum:            execute function operation for this leg
-*
-* Output-----:	 None.
-*
-* Overview---:	 create wave gait
-*
-* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::waveGait()
+	*
+	* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+	*              -int legNum:            execute function operation for this leg
+	*
+	* Output-----:	 None.
+	*
+	* Overview---:	 create wave gait
+	*
+	* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 {
 	if (MOVING)
@@ -455,23 +460,23 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-	}// IF (MOVING)
-}// Akrobat::waveGait(trajectoryStruct *tS,int legNum)
+		}// IF (MOVING)
+	}// Akrobat::waveGait(trajectoryStruct *tS,int legNum)
 
-/*********************************************************************************************************
-* Function---:  Akrobat::rippleGait()
-*
-* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
-*		-int legNum:		execute function operation for this leg
-*
-* Output-----:	 None.
-*
-* Overview---:	 create ripple gait
-*
-* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::rippleGait()
+	*
+	* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+	*		-int legNum:		execute function operation for this leg
+	*
+	* Output-----:	 None.
+	*
+	* Overview---:	 create ripple gait
+	*
+	* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 {
 	if (MOVING)
@@ -549,23 +554,23 @@ void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-	}// IF (MOVING)
-	// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-}// Akrobat::rippleGait(int legNum)
+		}// IF (MOVING)
+		// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+	}// Akrobat::rippleGait(int legNum)
 
-/*********************************************************************************************************
-* Function---:  Akrobat::coordinateTransformation()
-*
-* Input------:	-int legNum:	execute function operation for this leg
-*
-* Output-----:	 None.
-*
-* Overview---:	 transformate the coordinate systems
-*
-* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::coordinateTransformation()
+	*
+	* Input------:	-int legNum:	execute function operation for this leg
+	*
+	* Output-----:	 None.
+	*
+	* Overview---:	 transformate the coordinate systems
+	*
+	* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
@@ -662,25 +667,25 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.gamma;
 	cout << setw(12) << "Atan" << atan2(0, 160) << endl;
 #endif
-}// Akrobat::inverseKinematics(int legNum)
+	}// Akrobat::inverseKinematics(int legNum)
 
-/*********************************************************************************************************
-* Function---:  Akrobat::moveLeg()
-*
-* Input------:	-float alpha: 	coxa joint angle
-*              -float gamma: 	femur joint angle
-*              -float beta:  	tibia joint angle
-*              -int legNum:	execute function operation for this leg
-*
-* Output-----:	 0: failed
-*               1: successful
-*
-* Overview---:	 move the leg to target position
-*
-* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::moveLeg()
+	*
+	* Input------:	-float alpha: 	coxa joint angle
+	*              -float gamma: 	femur joint angle
+	*              -float beta:  	tibia joint angle
+	*              -int legNum:	execute function operation for this leg
+	*
+	* Output-----:	 0: failed
+	*               1: successful
+	*
+	* Overview---:	 move the leg to target position
+	*
+	* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
 	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, minCoxa[legNum], maxCoxa[legNum]))
@@ -871,7 +876,7 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 ********************************************************************************************************/
 Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 {
-	
+
 
 	Transform TCS_local = Transform::getIdentity(); // [TRANSFORMATION DATA TYP] -- create a transform
 	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
