@@ -4,6 +4,7 @@
 class LegSetting
 {
 public:
+	float rollOv;
 	float rotOfCoxa;
 	// body constant initialization
 	float bdConstX; // [mm] half hight of body
@@ -27,6 +28,7 @@ public:
 
 	LegSetting()
 	{
+		rollOv = 0.0f;
 		rotOfCoxa = 0.0f;
 
 		bdConstX = 0.0f;
@@ -46,7 +48,8 @@ public:
 		maxTibia = 0.0f;
 	}
 
-	LegSetting(float rotOfCoxa, float bdConstX, float bdConstY, float bdConstZ, float jointInitA, float jointInitB, float jointInitC, float minCoxa, float minFemur, float minTibia, float maxCoxa, float maxFemur, float maxTibia) :
+	LegSetting(float rollOv, float rotOfCoxa, float bdConstX, float bdConstY, float bdConstZ, float jointInitA, float jointInitB, float jointInitC, float minCoxa, float minFemur, float minTibia, float maxCoxa, float maxFemur, float maxTibia) :
+		rollOv(rollOv),
 		rotOfCoxa(rotOfCoxa),
 		bdConstX(bdConstX),
 		bdConstY(bdConstY),
