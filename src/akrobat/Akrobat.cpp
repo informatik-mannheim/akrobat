@@ -15,7 +15,7 @@
 #include <sensor_msgs/JointState.h>
 
 #include <akrobat/akrobat_init.h>
-#include <akrobat/TrajectoryStruct.h>
+#include <akrobat/Trajectory.h>
 
 using namespace std;
 using namespace tf;
@@ -35,7 +35,7 @@ using namespace angles;
 ********************************************************************************************************/
 Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 {
-	// TODO left off: 
+	// TODO left off:
 	// need to put settings into settings class replaces usages
 	// merge legs/configuration
 	// move controller config into separate class
@@ -214,7 +214,7 @@ void Akrobat::runAkrobat()
 /*********************************************************************************************************
 * Function---:  Akrobat::tripodGait()
 *
-* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
 *              -int legNum:            execute function operation for this leg
 *
 * Output-----:	 None.
@@ -225,7 +225,7 @@ void Akrobat::runAkrobat()
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
+void Akrobat::tripodGait(Trajectory* tS, int legNum)
 {
 	if (MOVING)
 	{ // [MOVING] -- one of joypad sticks was actived
@@ -275,12 +275,12 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 		// cout<<endl;
 #endif
 	}// IF (MOVING)
-}// Akrobat::tripodGait(trajectoryStruct *tS,int legNum)
+}// Akrobat::tripodGait(Trajectory *tS,int legNum)
 
 /*********************************************************************************************************
 * Function---:  Akrobat::waveGait()
 *
-* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
 *              -int legNum:            execute function operation for this leg
 *
 * Output-----:	 None.
@@ -291,7 +291,7 @@ void Akrobat::tripodGait(trajectoryStruct* tS, int legNum)
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
+void Akrobat::waveGait(Trajectory* tS, int legNum)
 {
 	if (MOVING)
 	{ // [MOVING] -- one of joypad sticks was actived
@@ -368,12 +368,12 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 		cout << endl;
 #endif
 	}// IF (MOVING)
-}// Akrobat::waveGait(trajectoryStruct *tS,int legNum)
+}// Akrobat::waveGait(Trajectory *tS,int legNum)
 
 /*********************************************************************************************************
 * Function---:  Akrobat::rippleGait()
 *
-* Input------:	-trajectoryStruct *tS: 	include the data of trajectory for each leg
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
 *		-int legNum:		execute function operation for this leg
 *
 * Output-----:	 None.
@@ -384,7 +384,7 @@ void Akrobat::waveGait(trajectoryStruct* tS, int legNum)
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-void Akrobat::rippleGait(trajectoryStruct* tS, int legNum)
+void Akrobat::rippleGait(Trajectory* tS, int legNum)
 {
 	if (MOVING)
 	{
@@ -783,8 +783,6 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 ********************************************************************************************************/
 Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 {
-
-
 	Transform TCS_local = Transform::getIdentity(); // [TRANSFORMATION DATA TYP] -- create a transform
 	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
 	TCS_local.setOrigin(transVec); // [.setOrigin] -- set translational element of transform
