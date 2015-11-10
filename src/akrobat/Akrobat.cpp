@@ -41,7 +41,7 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	// move controller config into separate class
 	// rethink overall structure
 
-	legSettings[LEFT_FRONT] = LegSetting(0, -160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 135, 96);
+	legSettings[LEFT_FRONT] = LegSetting(0, -160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 96, 135);
 	legSettings[RIGHT_FRONT] = LegSetting(0, -20, 51, 217, 0, 20, 10, -90, -71, -99, -135, 28, 96, 135);
 	legSettings[LEFT_MIDDLE] = LegSetting(0, 180, -51, 0, 0, 180, 10, -90, -51, -99, -135, 48, 96, 135);
 	legSettings[RIGHT_MIDDLE] = LegSetting(0, 0, 51, 0, 0, 0, 10, -90, -51, -99, -135, 48, 96, 135);
