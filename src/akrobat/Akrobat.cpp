@@ -212,19 +212,19 @@ void Akrobat::initAkrobat()
 		iT = Akrobat::transformCS("TIBIA", "ENDEFFCTR", Vector3(0, 0, 0), Vector3(LENGTH_TIBIA, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("TIBIA", "TIBIA", Vector3(0, 0, -jointInitC[legNum]), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS("TIBIA", "TIBIA", Vector3(0, 0, -legSettings[legNum].jointInitC), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		iT = Akrobat::transformCS("FEMUR", "TIBIA", Vector3(0, 0, 0), Vector3(LENGTH_FEMUR, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("FEMUR", "FEMUR", Vector3(0, 0, -jointInitB[legNum]), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS("FEMUR", "FEMUR", Vector3(0, 0, -legSettings[legNum].jointInitB), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		iT = Akrobat::transformCS("COXA", "FEMUR", Vector3(0, 0, 0), Vector3(LENGTH_COXA, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("COXA", "COXA", Vector3(-90, 0, jointInitA[legNum]), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS("COXA", "COXA", Vector3(-90, 0, legSettings[legNum].jointInitA), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		// [BCS] -- definition of body coordinate system
@@ -697,11 +697,11 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 ********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
-	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, minCoxa[legNum], maxCoxa[legNum]))
+	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, legSettings[legNum].minCoxa, maxCoxa[legNum]))
 	{ // [COXA  JOINT LIMITS] -- control the joint max and min limits
-		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, minFemur[legNum], maxFemur[legNum]))
+		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, legSettings[legNum].minFemur, maxFemur[legNum]))
 		{ // [FEMUR JOINT LIMITS] -- control the joint max and min limits
-			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, minTibia[legNum], maxTibia[legNum]))
+			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, legSettings[legNum].minTibia, maxTibia[legNum]))
 			{ // [TIBIA JOINT LIMITS] -- control the joint max and min limits
 				std_msgs::Float64 aux; // [STANDARD MESSAGE TYPE] -- publishing data type
 				// [...publish(..)] -- function to publish data
@@ -852,17 +852,17 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 			}
 			else
 			{
-				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << minTibia[legNum] << ":" << maxTibia[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.gamma << endl;
+				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << legSettings[legNum].minTibia << ":" << maxTibia[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.gamma << endl;
 			}
 		}
 		else
 		{
-			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << minFemur[legNum] << ":" << maxFemur[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.beta << endl;
+			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << legSettings[legNum].minFemur << ":" << maxFemur[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.beta << endl;
 		}
 	}
 	else
 	{
-		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << minCoxa[legNum] << ":" << maxCoxa[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << legSettings[legNum].minCoxa << ":" << maxCoxa[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
 	}
 	return 0;
 }// int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
