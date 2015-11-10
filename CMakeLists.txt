@@ -107,7 +107,7 @@ include_directories(
 #//--------------------AKROBAT------------------------// 
 #add_library(akrobat_init src/akrobat/akrobat_init.cpp) 
 #add_executable(commander src/akrobat/commander.cpp) 
-add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/Akrobat.cpp) 
+add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/Akrobat.cpp src/akrobat/CoordinateSystem.cpp src/akrobat/FloatJoint.cpp src/akrobat/Leg.cpp src/akrobat/LegSetting.cpp src/akrobat/MotorState.cpp src/akrobat/RumblePad2.cpp src/akrobat/Trajectory.cpp) 
 #target_link_libraries(akrobat akrobat_init)
 #target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})

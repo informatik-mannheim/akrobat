@@ -9,9 +9,9 @@
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/JointState.h>
 
-#include <akrobat/TrajectoryStruct.h>
-#include <akrobat/RumblePad2Struct.h>
-#include <akrobat/CoordinateSystemStruct.h>
+#include <akrobat/Trajectory.h>
+#include <akrobat/RumblePad2.h>
+#include <akrobat/CoordinateSystem.h>
 #include <akrobat/LegSetting.h>
 
 /// The Akrobat class
@@ -32,9 +32,9 @@ public:
 	int rollOver; // [ rollOver ] -- if body roll over (0/1)
 
 	LegSetting legSettings[numberOfLegs];
-	rumblePad2Struct pad; // [	PAD   ] -- joypad object
-	trajectoryStruct traData; // [	.. ] --
-	coordinateSystemStruct MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
+	RumblePad2 pad; // [	PAD   ] -- joypad object
+	Trajectory traData; // [	.. ] --
+	CoordinateSystem MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState js;
 
 
@@ -48,13 +48,13 @@ public:
 	void runAkrobat();
 
 	// create tripod gait
-	void tripodGait(trajectoryStruct* tS, int legNum);
+	void tripodGait(Trajectory* tS, int legNum);
 
 	// create wave gait
-	void waveGait(trajectoryStruct* tS, int legNum);
+	void waveGait(Trajectory* tS, int legNum);
 
 	// create ripple gait
-	void rippleGait(trajectoryStruct* tS, int legNum);
+	void rippleGait(Trajectory* tS, int legNum);
 
 	// transformate the coordinate systems
 	void coordinateTransformation(int legNum);

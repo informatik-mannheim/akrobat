@@ -1,8 +1,9 @@
-#ifndef MOTORSTATESTRUCT_H
-#define MOTORSTATESTRUCT_H
+#ifndef MOTORSTATE_H
+#define MOTORSTATE_H
 
-struct motorStateStruct
+class MotorState
 {
+public:
 	float timestamp; // time stamp
 	int id; // motor id
 	int goal; // position value of destination
@@ -13,8 +14,10 @@ struct motorStateStruct
 	float voltage; // size of current voltage supplied
 	float temperature; // internal temperature in celsius
 	bool moving; // goal position execution completed(0)/in progress(1)
+
+	MotorState();
 };
 
-#endif // MOTORSTATESTRUCT_H
+#endif // MOTORSTATE_H
 
 
