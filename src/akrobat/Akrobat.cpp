@@ -48,108 +48,6 @@ Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
 	legSettings[LEFT_REAR] = LegSetting(0, 160, -51, -217, 0, -160, 10, -90, -71, -99, -135, 30, 96, 135);
 	legSettings[RIGHT_REAR] = LegSetting(0, 20, 51, -217, 0, -20, 10, -90, -23, -107, -135, 75, 96, 135);
 
-	rotOfCoxa[LEFT_FRONT] = -160;
-	rotOfCoxa[RIGHT_FRONT] = -20;
-	rotOfCoxa[LEFT_MIDDLE] = 180;
-	rotOfCoxa[RIGHT_MIDDLE] = 0;
-	rotOfCoxa[LEFT_REAR] = 160;
-	rotOfCoxa[RIGHT_REAR] = 20;
-
-	// body constant initialization
-	bdConstX[LEFT_FRONT] = -51;
-	bdConstX[RIGHT_FRONT] = 51;
-	bdConstX[LEFT_MIDDLE] = -51;
-	bdConstX[RIGHT_MIDDLE] = 51;
-	bdConstX[LEFT_REAR] = -51;
-	bdConstX[RIGHT_REAR] = 51;
-
-	bdConstY[LEFT_FRONT] = 217;
-	bdConstY[RIGHT_FRONT] = 217;
-	bdConstY[LEFT_MIDDLE] = 0;
-	bdConstY[RIGHT_MIDDLE] = 0;
-	bdConstY[LEFT_REAR] = -217;
-	bdConstY[RIGHT_REAR] = -217;
-
-	bdConstZ[LEFT_FRONT] = 0;
-	bdConstZ[RIGHT_FRONT] = 0;
-	bdConstZ[LEFT_MIDDLE] = 0;
-	bdConstZ[RIGHT_MIDDLE] = 0;
-	bdConstZ[LEFT_REAR] = 0;
-	bdConstZ[RIGHT_REAR] = 0;
-
-	// joint angle initialization
-	jointInitA[LEFT_FRONT] = 160;
-	jointInitA[RIGHT_FRONT] = 20;
-	jointInitA[LEFT_MIDDLE] = 180;
-	jointInitA[RIGHT_MIDDLE] = 0;
-	jointInitA[LEFT_REAR] = -160;
-	jointInitA[RIGHT_REAR] = -20;
-
-	jointInitB[LEFT_FRONT] = 10;
-	jointInitB[RIGHT_FRONT] = 10;
-	jointInitB[LEFT_MIDDLE] = 10;
-	jointInitB[RIGHT_MIDDLE] = 10;
-	jointInitB[LEFT_REAR] = 10;
-	jointInitB[RIGHT_REAR] = 10;
-
-
-	jointInitC[LEFT_FRONT] = -90;
-	jointInitC[RIGHT_FRONT] = -90;
-	jointInitC[LEFT_MIDDLE] = -90;
-	jointInitC[RIGHT_MIDDLE] = -90;
-	jointInitC[LEFT_REAR] = -90;
-	jointInitC[RIGHT_REAR] = -90;
-
-	// min limit of coxa joint initialization
-	minCoxa[LEFT_FRONT] = -26;
-	minCoxa[RIGHT_FRONT] = -71;
-	minCoxa[LEFT_MIDDLE] = -51;
-	minCoxa[RIGHT_MIDDLE] = -51;
-	minCoxa[LEFT_REAR] = -71;
-	minCoxa[RIGHT_REAR] = -23;
-
-	minFemur[LEFT_FRONT] = -99;
-	minFemur[RIGHT_FRONT] = -99;
-	minFemur[LEFT_MIDDLE] = -99;
-	minFemur[RIGHT_MIDDLE] = -99;
-	minFemur[LEFT_REAR] = -99;
-	minFemur[RIGHT_REAR] = -107;
-
-	minTibia[LEFT_FRONT] = -135;
-	minTibia[RIGHT_FRONT] = -135;
-	minTibia[LEFT_MIDDLE] = -135;
-	minTibia[RIGHT_MIDDLE] = -135;
-	minTibia[LEFT_REAR] = -135;
-	minTibia[RIGHT_REAR] = -135;
-
-	// max limit of coxa jointinitialization
-	maxCoxa[LEFT_FRONT] = 65;
-	maxCoxa[RIGHT_FRONT] = 28;
-	maxCoxa[LEFT_MIDDLE] = 48;
-	maxCoxa[RIGHT_MIDDLE] = 48;
-	maxCoxa[LEFT_REAR] = 30;
-	maxCoxa[RIGHT_REAR] = 75;
-
-
-	maxFemur[LEFT_FRONT] = 96;
-	maxFemur[RIGHT_FRONT] = 96;
-	maxFemur[LEFT_MIDDLE] = 96;
-	maxFemur[RIGHT_MIDDLE] = 96;
-	maxFemur[LEFT_REAR] = 96;
-	maxFemur[RIGHT_REAR] = 96;
-
-	maxTibia[LEFT_FRONT] = 135;
-	maxTibia[RIGHT_FRONT] = 135;
-	maxTibia[LEFT_MIDDLE] = 135;
-	maxTibia[RIGHT_MIDDLE] = 135;
-	maxTibia[LEFT_REAR] = 135;
-	maxTibia[RIGHT_REAR] = 135;
-
-	for (int i = 0; i < numberOfLegs; i++)
-	{
-		rollOv[i] = 0.0f;
-	}
-
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
@@ -593,7 +491,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	T = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
 	MainCoordinateSystem.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("MCS", "BCS", Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + rollOv[legNum]), pad.bdT.z()));
+	T = Akrobat::transformCS("MCS", "BCS", Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + legSettings[legNum].rollOv), pad.bdT.z()));
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 
 	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
@@ -697,11 +595,11 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 ********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
-	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, legSettings[legNum].minCoxa, maxCoxa[legNum]))
+	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, legSettings[legNum].minCoxa, legSettings[legNum].maxCoxa))
 	{ // [COXA  JOINT LIMITS] -- control the joint max and min limits
-		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, legSettings[legNum].minFemur, maxFemur[legNum]))
+		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, legSettings[legNum].minFemur, legSettings[legNum].maxFemur))
 		{ // [FEMUR JOINT LIMITS] -- control the joint max and min limits
-			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, legSettings[legNum].minTibia, maxTibia[legNum]))
+			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, legSettings[legNum].minTibia, legSettings[legNum].maxTibia))
 			{ // [TIBIA JOINT LIMITS] -- control the joint max and min limits
 				std_msgs::Float64 aux; // [STANDARD MESSAGE TYPE] -- publishing data type
 				// [...publish(..)] -- function to publish data
@@ -852,17 +750,17 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 			}
 			else
 			{
-				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << legSettings[legNum].minTibia << ":" << maxTibia[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.gamma << endl;
+				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << legSettings[legNum].minTibia << ":" << legSettings[legNum].maxTibia << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.gamma << endl;
 			}
 		}
 		else
 		{
-			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << legSettings[legNum].minFemur << ":" << maxFemur[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.beta << endl;
+			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << legSettings[legNum].minFemur << ":" << legSettings[legNum].maxFemur << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.beta << endl;
 		}
 	}
 	else
 	{
-		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << legSettings[legNum].minCoxa << ":" << maxCoxa[legNum] << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << legSettings[legNum].minCoxa << ":" << legSettings[legNum].maxCoxa << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
 	}
 	return 0;
 }// int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
@@ -1002,10 +900,10 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 				legSettings[RIGHT_REAR].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 2 * legSettings[LEFT_FRONT].bdConstY; // translation offset for leg coordinate system (Leg 1)
 				legSettings[RIGHT_FRONT].rollOv = 2 * legSettings[RIGHT_FRONT].bdConstY;// translation offset for leg coordinate system (Leg 2)
-				rollOv[LEFT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 3)
-				rollOv[RIGHT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 4)
-				rollOv[LEFT_REAR] = 2 * legSettings[LEFT_REAR].bdConstY; // translation offset for leg coordinate system (Leg 5)
-				rollOv[RIGHT_REAR] = 2 * legSettings[RIGHT_REAR].bdConstY; // translation offset for leg coordinate system (Leg 6)
+				legSettings[LEFT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 3)
+				legSettings[RIGHT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 4)
+				legSettings[LEFT_REAR].rollOv = 2 * legSettings[LEFT_REAR].bdConstY; // translation offset for leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rollOv = 2 * legSettings[RIGHT_REAR].bdConstY; // translation offset for leg coordinate system (Leg 6)
 				for (int legNum = 0; legNum < numberOfLegs; legNum++)
 				{
 					Akrobat::coordinateTransformation(legNum);
@@ -1025,10 +923,10 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 				legSettings[RIGHT_REAR].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 1)
 				legSettings[RIGHT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 2)
-				rollOv[LEFT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 3)
-				rollOv[RIGHT_MIDDLE] = 0; // translation offset for leg coordinate system (Leg 4)
-				rollOv[LEFT_REAR] = 0; // translation offset for leg coordinate system (Leg 5)
-				rollOv[RIGHT_REAR] = 0; // translation offset for leg coordinate system (Leg 6)
+				legSettings[LEFT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 3)
+				legSettings[RIGHT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 4)
+				legSettings[LEFT_REAR].rollOv = 0; // translation offset for leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rollOv = 0; // translation offset for leg coordinate system (Leg 6)
 				for (int legNum = 0; legNum < numberOfLegs; legNum++)
 				{
 					Akrobat::coordinateTransformation(legNum);

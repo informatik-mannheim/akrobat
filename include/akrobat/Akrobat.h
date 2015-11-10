@@ -31,29 +31,6 @@ public:
 	int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
 	int rollOver; // [ rollOver ] -- if body roll over (0/1)
 
-	float rollOv[numberOfLegs]; // LCS translational correction after body roll over
-	float rotOfCoxa[numberOfLegs]; // rotates abot coxa for angle 45° init
-
-	// body constant initialization
-	float bdConstX[numberOfLegs]; // [mm] half hight of body
-	float bdConstY[numberOfLegs]; // [mm] half width of body
-	float bdConstZ[numberOfLegs]; // [mm] half length of body
-
-	// joint angle initialization
-	float jointInitA[numberOfLegs]; // [°] (coxa joint) alpha angle init
-	float jointInitB[numberOfLegs]; // [°] (femur joint) beta angle init
-	float jointInitC[numberOfLegs]; // [°] (tibia joint) gamma angle init
-
-	// min limit of coxa joint initialization
-	float minCoxa[numberOfLegs]; // [°] (coxa joint) alpha angle min limit
-	float minFemur[numberOfLegs]; // [°] (femur joint) beta angle min limit
-	float minTibia[numberOfLegs]; // [°] (tibia joint) gamma angle min limit
-
-	// max limit of coxa jointinitialization
-	float maxCoxa[numberOfLegs]; // [°] (coxa joint) alpha angle max limit
-	float maxFemur[numberOfLegs]; // [°] (femur joint) beta angle max limit
-	float maxTibia[numberOfLegs]; // [°] (tibia joint) gamma angle max limit
-
 	LegSetting legSettings[numberOfLegs];
 	rumblePad2Struct pad; // [	PAD   ] -- joypad object
 	trajectoryStruct traData; // [	.. ] --
