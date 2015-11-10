@@ -228,7 +228,7 @@ void Akrobat::initAkrobat()
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		// [BCS] -- definition of body coordinate system
-		iT = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, bdConstZ[legNum]));
+		iT = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
 		BodyCoordinateSystem.leg[legNum].footGlobPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		// [MainCoordinateSystem] -- definition of main coordinate system
@@ -587,7 +587,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	T = Akrobat::transformCS("FCS", "LCS", Vector3(0, 0, 0), LegCoordinateSystem.leg[legNum].footInitPos);
 	LegCoordinateSystem.leg[legNum].footPresPos = T * FootCoordinateSystem.leg[legNum].trajectoryPresPos;
 
-	T = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, bdConstZ[legNum]));
+	T = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
 	T = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
@@ -596,7 +596,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	T = Akrobat::transformCS("MCS", "BCS", Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + rollOv[legNum]), pad.bdT.z()));
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, bdConstZ[legNum]));
+	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
 	T = Akrobat::transformCS("LCS", "LCS", Vector3(0, 0, legSettings[legNum].rotOfCoxa), Vector3(0, 0, 0));
