@@ -28,9 +28,9 @@ TODO:
 #define  F10DEBUG 	0 //callRumblePad2Back()
 
 //-----------------------BODY MACRO
-#define halfBodyHight  	0     //[mm] half hight of body
-#define halfBodyWidth  	51    //[mm] half width of body
-#define halfBodyLength 	217   //[mm] half length of body
+//#define halfBodyHight  	0     //[mm] half hight of body
+//#define halfBodyWidth  	51    //[mm] half width of body
+//#define halfBodyLength 	217   //[mm] half length of body
 
 //------------------------LEG MACRO
 #define LEFT_FRONT    	0 //[ID'S] COXA: 11 / FEMUR: 12 / TIBIA: 13
@@ -40,7 +40,7 @@ TODO:
 #define LEFT_REAR       4 //[ID'S] COXA: 51 / FEMUR: 52 / TIBIA: 53
 #define RIGHT_REAR      5 //[ID'S] COXA: 61 / FEMUR: 62 / TIBIA: 63
 
-#define numberOfJoints  3
+//#define numberOfJoints  3
 #define numberOfLegs    6
 
 #define LENGTH_COXA     72  //[mm] distance coxa - femur !!!!!!!!!!!!!!!!!!!!!!!
