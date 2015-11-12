@@ -185,7 +185,7 @@ void Akrobat::initAkrobat()
 ********************************************************************************************************/
 void Akrobat::runAkrobat()
 {
-	if (MOVING || TRANSLATION || ROTATION)
+	if (IsMoving() || IsTranslating() || IsRotating())
 	{
 		// cout<<"runAkr"<<endl;
 		js.header.stamp = ros::Time::now();
@@ -207,7 +207,7 @@ void Akrobat::runAkrobat()
 			Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 			Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 		}// FOR (legNum)
-	}// MOVING
+	}// IsMoving()
 	jointPub.publish(js);
 }// Akrobat::runAkrobat()
 
@@ -227,7 +227,7 @@ void Akrobat::runAkrobat()
 ********************************************************************************************************/
 void Akrobat::tripodGait(Trajectory* tS, int legNum)
 {
-	if (MOVING)
+	if (IsMoving())
 	{ // [MOVING] -- one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
 		{
@@ -293,7 +293,7 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 ********************************************************************************************************/
 void Akrobat::waveGait(Trajectory* tS, int legNum)
 {
-	if (MOVING)
+	if (IsMoving())
 	{ // [MOVING] -- one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
 		{
@@ -386,7 +386,7 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 ********************************************************************************************************/
 void Akrobat::rippleGait(Trajectory* tS, int legNum)
 {
-	if (MOVING)
+	if (IsMoving())
 	{
 		// [MOVING] --one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
@@ -1122,3 +1122,19 @@ bool Akrobat::IsWithinLimits(const float& value, const float& min, const float& 
 {
 	return value >= min && value <= max;
 }
+
+bool Akrobat::IsMoving() const
+{
+	return (pad.speed.x() > 0.3) || (pad.speed.x() < -0.3) || (pad.speed.y() > 0.3) || (pad.speed.y() < -0.3) || (pad.speed.z() > 0.3) || (pad.speed.z() < -0.3);
+}
+
+bool Akrobat::IsTranslating() const
+{
+	return (pad.bdT.x() > 0.3) || (pad.bdT.x() < -0.3) || (pad.bdT.y() > 0.3) || (pad.bdT.y() < -0.3) || (pad.bdT.z() > 0.3) || (pad.bdT.z() < -0.3);
+}
+
+bool Akrobat::IsRotating() const
+{
+	return (pad.bdR.x() > 0.3) || (pad.bdR.x() < -0.3) || (pad.bdR.y() > 0.3) || (pad.bdR.y() < -0.3) || (pad.bdR.z() > 0.3) || (pad.bdR.z() < -0.3);
+}
+

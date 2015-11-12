@@ -70,6 +70,12 @@ public:
 
 	static bool IsWithinLimits(const float& value, const float& min, const float& max);
 
+	bool IsMoving() const;
+
+	bool IsTranslating() const;
+
+	bool IsRotating() const;
+
 	// call the motor state list back
 	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
 
