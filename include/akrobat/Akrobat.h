@@ -31,6 +31,21 @@ public:
 	int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
 	int rollOver; // [ rollOver ] -- if body roll over (0/1)
 
+				  //----------------------GAIT  MACRO
+				  //TRIPOD
+
+	int tripodAmpWidth;
+	int tripodAmpHight;
+	int tNumTick;
+
+	int waveAmpWidth;
+	int waveAmpHight;
+	int wNumTick;
+
+	int rippleAmpWidth;
+	int rippleAmpHight;
+	int rNumTick;
+
 	LegSetting legSettings[numberOfLegs];
 	RumblePad2 pad; // [	PAD   ] -- joypad object
 	Trajectory traData; // [	.. ] --

@@ -33,7 +33,20 @@ using namespace angles;
 *
 * Note-------:	 None
 ********************************************************************************************************/
-Akrobat::Akrobat() : mode(0), gait(0), rotBody(0), rollOver(0)
+Akrobat::Akrobat() :
+	mode(0),
+	gait(0),
+	rotBody(0),
+	rollOver(0),
+	tripodAmpWidth(40),
+	tripodAmpHight(40),
+	tNumTick(15),
+	waveAmpWidth(40),
+	waveAmpHight(40),
+	wNumTick(15),
+	rippleAmpWidth(40),
+	rippleAmpHight(40),
+	rNumTick(15)
 {
 	// TODO left off:
 	// need to put settings into settings class replaces usages

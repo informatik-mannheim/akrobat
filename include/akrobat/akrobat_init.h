@@ -81,18 +81,18 @@ TODO:
 #define scaleFacTrans  50
 #define scaleFacRot    10
 
-//----------------------GAIT  MACRO
-//TRIPOD
-#define tripodAmpWidth 	40 //[mm] amplitude width of leg trajectory for tripod gait
-#define tripodAmpHight	40 //[mm] amplitude hight of leg trajectory for tripod gait
-#define tNumTick        15 //number of trajectory points
-//WAVE
-#define waveAmpWidth 	40 //[mm] amplitude width of leg trajectory for wave gait
-#define waveAmpHight	40 //[mm] amplitude hight of leg trajectory for wave gait
-#define wNumTick        15 //number of trajectory points
-//RIPPLE
-#define rippleAmpWidth 	40 //[mm] amplitude width of leg trajectory for ripple gait
-#define rippleAmpHight	40 //[mm] amplitude hight of leg trajectory for ripple gait
-#define rNumTick        15 //number of trajectory points
+////----------------------GAIT  MACRO
+////TRIPOD
+//#define tripodAmpWidth 	40 //[mm] amplitude width of leg trajectory for tripod gait
+//#define tripodAmpHight	40 //[mm] amplitude hight of leg trajectory for tripod gait
+//#define tNumTick        15 //number of trajectory points
+////WAVE
+//#define waveAmpWidth 	40 //[mm] amplitude width of leg trajectory for wave gait
+//#define waveAmpHight	40 //[mm] amplitude hight of leg trajectory for wave gait
+//#define wNumTick        15 //number of trajectory points
+////RIPPLE
+//#define rippleAmpWidth 	40 //[mm] amplitude width of leg trajectory for ripple gait
+//#define rippleAmpHight	40 //[mm] amplitude hight of leg trajectory for ripple gait
+//#define rNumTick        15 //number of trajectory points
 
 #endif
