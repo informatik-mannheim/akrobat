@@ -32,6 +32,9 @@
     </rosparam>
   </node>
 
+  <!-- Load joint controller configuration from YAML file to parameter server -->
+  <rosparam ns="$(arg dynamixel_namespace)" file="$(find akrobat)/config/dynamixel_params.yaml" command="load"/>
+
   <!-- start specified joint controllers -->
   <node ns="$(arg dynamixel_namespace)" name="dynamixel_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
   args="--manager=dxl_manager
