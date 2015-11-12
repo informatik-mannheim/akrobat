@@ -65,6 +65,6 @@
     <param name="use_gui" value="TRUE" />
   </node>
 
-  <!--node name="akrobat" pkg="akrobat" type="akrobat" output="screen" required="true">
-  </node -->
+  <node name="akrobat" pkg="akrobat" type="akrobat" output="screen" required="true">
+  </node>
 </launch>
