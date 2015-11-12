@@ -61,7 +61,7 @@
   output="screen">
   </node>
 
-  <node ns="$(arg dynamixel_namespace)" name="dynamixel_joint_states_publisher" pkg="akrobat" type="$(find akrobat)src/akrobat/dynamixel_joint_state_publisher.py" output="screen">
+  <node ns="$(arg dynamixel_namespace)" name="dynamixel_joint_states_publisher" pkg="akrobat" type="src/akrobat/dynamixel_joint_state_publisher.py" output="screen">
     <param name="use_gui" value="TRUE" />
   </node>
 
