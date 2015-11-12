@@ -107,29 +107,29 @@ Akrobat::Akrobat() :
 
 	// [PUBLISHER] -- pubLegXJointX: publish the joint angles of each leg to topic(/controller_mxx/command)
 	// LEG 1
-	pubLeg1Joint1 = n.advertise<std_msgs::Float64>("/m11/command", 1);
-	pubLeg1Joint2 = n.advertise<std_msgs::Float64>("/m12/command", 1);
-	pubLeg1Joint3 = n.advertise<std_msgs::Float64>("/m13/command", 1);
+	pubLeg1Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m11/command", 1);
+	pubLeg1Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m12/command", 1);
+	pubLeg1Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m13/command", 1);
 	// LEG 2
-	pubLeg2Joint1 = n.advertise<std_msgs::Float64>("/m21/command", 1);
-	pubLeg2Joint2 = n.advertise<std_msgs::Float64>("/m22/command", 1);
-	pubLeg2Joint3 = n.advertise<std_msgs::Float64>("/m23/command", 1);
+	pubLeg2Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m21/command", 1);
+	pubLeg2Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m22/command", 1);
+	pubLeg2Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m23/command", 1);
 	// LEG 3
-	pubLeg3Joint1 = n.advertise<std_msgs::Float64>("/m31/command", 1);
-	pubLeg3Joint2 = n.advertise<std_msgs::Float64>("/m32/command", 1);
-	pubLeg3Joint3 = n.advertise<std_msgs::Float64>("/m33/command", 1);
+	pubLeg3Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m31/command", 1);
+	pubLeg3Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m32/command", 1);
+	pubLeg3Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m33/command", 1);
 	// LEG 4
-	pubLeg4Joint1 = n.advertise<std_msgs::Float64>("/m41/command", 1);
-	pubLeg4Joint2 = n.advertise<std_msgs::Float64>("/m42/command", 1);
-	pubLeg4Joint3 = n.advertise<std_msgs::Float64>("/m43/command", 1);
+	pubLeg4Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m41/command", 1);
+	pubLeg4Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m42/command", 1);
+	pubLeg4Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m43/command", 1);
 	// LEG 5
-	pubLeg5Joint1 = n.advertise<std_msgs::Float64>("/m51/command", 1);
-	pubLeg5Joint2 = n.advertise<std_msgs::Float64>("/m52/command", 1);
-	pubLeg5Joint3 = n.advertise<std_msgs::Float64>("/m53/command", 1);
+	pubLeg5Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m51/command", 1);
+	pubLeg5Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m52/command", 1);
+	pubLeg5Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m53/command", 1);
 	// LEG 6
-	pubLeg6Joint1 = n.advertise<std_msgs::Float64>("/m61/command", 1);
-	pubLeg6Joint2 = n.advertise<std_msgs::Float64>("/m62/command", 1);
-	pubLeg6Joint3 = n.advertise<std_msgs::Float64>("/m63/command", 1);
+	pubLeg6Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m61/command", 1);
+	pubLeg6Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m62/command", 1);
+	pubLeg6Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m63/command", 1);
 
 	// ARRAY SIZE
 	js.name.resize(18);
