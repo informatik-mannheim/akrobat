@@ -103,7 +103,7 @@ Akrobat::Akrobat() :
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
-	jointPub = n.advertise<sensor_msgs::JointState>("/joint_states", 1);
+	//// jointPub = n.advertise<sensor_msgs::JointState>("/joint_states", 1);
 
 	// [PUBLISHER] -- pubLegXJointX: publish the joint angles of each leg to topic(/controller_mxx/command)
 	// LEG 1
@@ -190,7 +190,7 @@ void Akrobat::initAkrobat()
 		Akrobat::coordinateTransformation(legNum);
 		Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 		Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
-		jointPub.publish(js);
+		//// jointPub.publish(js);
 
 		// [OUTPUT] -- console
 #if F1DEBUG == 1 // -------->[MACRO] -- akrobat_init.h
@@ -260,7 +260,7 @@ void Akrobat::runAkrobat()
 			Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 		}// FOR (legNum)
 	}// IsMoving()
-	jointPub.publish(js);
+	// jointPub.publish(js);
 	}// Akrobat::runAkrobat()
 
 	/*********************************************************************************************************
@@ -984,7 +984,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 					Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 				}
 			}
-			jointPub.publish(js);
+			// jointPub.publish(js);
 		}
 
 		if (joy->buttons[LB_BUTTON] && !(joy->buttons[RB_BUTTON]) && mode == 0)
