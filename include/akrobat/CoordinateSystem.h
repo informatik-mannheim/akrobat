@@ -8,8 +8,10 @@ class CoordinateSystem
 {
 public:
 	Leg leg[numberOfLegs]; //array of legs
+
+	virtual std::ostream& ToString(std::ostream& o) const;
 };
 
+std::ostream& operator<<(std::ostream& o, const CoordinateSystem& b);
+
 #endif // COORDINATESYSTEM_H
-
-

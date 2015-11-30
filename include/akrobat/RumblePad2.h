@@ -9,6 +9,8 @@ public:
 	tf::Vector3 speed; // forward/backward/sideward movement
 	tf::Vector3 bdR; // body rotation
 	tf::Vector3 bdT; // body translation
+
+	RumblePad2();
 };
 
 #endif // RUMBLEPAD2_H
