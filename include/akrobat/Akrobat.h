@@ -144,6 +144,8 @@ public:
 	// call the motor state list back
 	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
 
+	void Debug(int i, std::string message = "") const;
+
 private:
 	ros::NodeHandle n;
 	ros::Subscriber subJoy; // subscriber of joy topic

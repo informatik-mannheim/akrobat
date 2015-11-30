@@ -1,9 +1,12 @@
 #ifndef LEG_H
 #define LEG_H
 
+#include <ostream>
+
 #include <tf/transform_datatypes.h>
 
 #include <akrobat/FloatJoint.h>
+
 
 class Leg
 {
@@ -15,6 +18,11 @@ public:
 	FloatJoint jointAngles; // joint angles
 
 	Leg();
+
+	virtual std::ostream& ToString(std::ostream& o) const;
 };
 
+std::ostream& operator<<(std::ostream& o, const Leg& b);
+
+std::ostream& operator<<(std::ostream& stream, const tf::Vector3& vector3);
 #endif // LEG_H

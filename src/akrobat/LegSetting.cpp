@@ -18,7 +18,7 @@ LegSetting::LegSetting() :
 {
 }
 
-LegSetting::LegSetting(float rollOv, float rotOfCoxa, float bdConstX, float bdConstY, float bdConstZ, float jointInitA, float jointInitB, float jointInitC, float minCoxa, float minFemur, float minTibia, float maxCoxa, float maxFemur, float maxTibia) :
+LegSetting::LegSetting(double rollOv, double rotOfCoxa, double bdConstX, double bdConstY, double bdConstZ, double jointInitA, double jointInitB, double jointInitC, double minCoxa, double minFemur, double minTibia, double maxCoxa, double maxFemur, double maxTibia) :
 	rollOv(rollOv),
 	rotOfCoxa(rotOfCoxa),
 	bdConstX(bdConstX),

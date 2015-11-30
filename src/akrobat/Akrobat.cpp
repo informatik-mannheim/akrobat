@@ -93,12 +93,13 @@ Akrobat::Akrobat() :
 	// move controller config into separate class
 	// rethink overall structure
 
-	legSettings[LEFT_FRONT] = LegSetting(0, -160, -51, 217, 0, 160, 10, -90, -26, -99, -135, 65, 96, 135);
-	legSettings[RIGHT_FRONT] = LegSetting(0, -20, 51, 217, 0, 20, 10, -90, -71, -99, -135, 28, 96, 135);
-	legSettings[LEFT_MIDDLE] = LegSetting(0, 180, -51, 0, 0, 180, 10, -90, -51, -99, -135, 48, 96, 135);
-	legSettings[RIGHT_MIDDLE] = LegSetting(0, 0, 51, 0, 0, 0, 10, -90, -51, -99, -135, 48, 96, 135);
-	legSettings[LEFT_REAR] = LegSetting(0, 160, -51, -217, 0, -160, 10, -90, -71, -99, -135, 30, 96, 135);
-	legSettings[RIGHT_REAR] = LegSetting(0, 20, 51, -217, 0, -20, 10, -90, -23, -107, -135, 75, 96, 135);
+	//float rollOv, rotOfCoxa, bdConstX, bdConstY, bdConstZ, jointInitA, jointInitB, jointInitC, minCoxa, minFemur, minTibia, maxCoxa, maxFemur, maxTibia
+	legSettings[LEFT_FRONT] = LegSetting(0.0, -160.0, -51.0, 217.0, 0.0, 160.0, 10.0, -90.0, -26.0, -99.0, -135.0, 65.0, 96.0, 135.0);
+	legSettings[RIGHT_FRONT] = LegSetting(0.0, -20.0, 51.0, 217.0, 0.0, 20.0, 10.0, -90.0, -71.0, -99.0, -135.0, 28.0, 96.0, 135.0);
+	legSettings[LEFT_MIDDLE] = LegSetting(0.0, 180.0, -51.0, 0.0, 0.0, 180.0, 10.0, -90.0, -51.0, -99.0, -135.0, 48.0, 96.0, 135.0);
+	legSettings[RIGHT_MIDDLE] = LegSetting(0.0, 0.0, 51.0, 0.0, 0.0, 0.0, 10.0, -90.0, -51.0, -99.0, -135.0, 48.0, 96.0, 135.0);
+	legSettings[LEFT_REAR] = LegSetting(0.0, 160.0, -51.0, -217.0, 0.0, -160.0, 10.0, -90.0, -71.0, -99.0, -135.0, 30.0, 96.0, 135.0);
+	legSettings[RIGHT_REAR] = LegSetting(0.0, 20.0, 51.0, -217.0, 0.0, -20.0, 10.0, -90.0, -23.0, -107.0, -135.0, 75.0, 96.0, 135.0);
 
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
@@ -191,36 +192,95 @@ void Akrobat::initAkrobat()
 		Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 		Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 		//// jointPub.publish(js);
+	}
+}
 
-		// [OUTPUT] -- console
-#if F1DEBUG == 1 // -------->[MACRO] -- akrobat_init.h
+/*********************************************************************************************************
+* Function---:  Akrobat::transformCS()
+*
+* Input------:	-string sCS: 		source frame
+*              -string tCS:		target frame
+*              -Vector3 rot:		rotational element
+*              -Vector3 trans:		translational element
+*
+* Output-----:	-TCS: calculated transformation for two frames
+*
+* Overview---:	 transformate source coordinate system to target coordinate system
+*
+* Console-Out:  F9DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
+Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
+{
+	Transform TCS_local; // [TRANSFORMATION DATA TYP] -- create a transform
+	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
+	TCS_local.setOrigin(transVec); // [.setOrigin] -- set translational element of transform
+	Quaternion rotQuat; // [ROTATION] -- create quaternion
+	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z())); // [.setRPY] -- define quaternion
+	TCS_local.setRotation(rotQuat); // [.setRotaion] -- set rotational element of transform
 
-		cout << "|----------------------------INITAKROBAT()------------------------LN: " << legNum << "|" << endl;
-		cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
+	if ((sCS == "LCS") && (tCS == "FCS"))
+	{
+		return TCS_local.inverse();
+	}
 
-		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footInitPos vector
-		cout << " LegCoordinateSystem.leg[" << legNum << "].footInitPos---: ";
-		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.x();
-		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.y();
-		cout << setw(12) << LegCoordinateSystem.leg[legNum].footInitPos.z() << endl;
+	if ((sCS == "BCS") && (tCS == "LCS"))
+	{
+		return TCS_local.inverse();
+	}
 
-		// [OUTPUT] -- output of BodyCoordinateSystem.leg[legNum].footGlobPos vector
-		cout << " BodyCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
-		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.x();
-		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.y();
-		cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
+	if ((sCS == "MCS") && (tCS == "BCS"))
+	{
+		return TCS_local.inverse();
+	}
 
-		// [OUTPUT] -- output of MainCoordinateSystem.leg[legNum].footGlobPos vector
-		cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
-		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.x();
-		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.y();
-		cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
-		cout << endl;
-#endif
-	}// FOR (legNum)
+	if ((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS")))
+	{
+		return TCS_local;
+	}
 
-	//ros::shutdown();
-}// Akrobat::initAkrobat()
+	if ((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS")))
+	{
+		return TCS_local;
+	}
+
+	if ((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS")))
+	{
+		return TCS_local;
+	}
+
+	if ((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA")))
+	{
+		return TCS_local;
+	}
+
+	if ((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR")))
+	{
+		return TCS_local;
+	}
+
+	if ((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA")))
+	{
+		return TCS_local;
+	}
+
+	// [ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
+	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
+	return TCS_local;
+}// Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
+
+void Akrobat::Debug(int legNum, string message) const
+{
+	if (message != "")
+	{
+		cout << message << endl;
+	}
+
+	cout << "LegCoordinateSystem.leg[" << legNum << "].footInitPos: " << LegCoordinateSystem.leg[legNum].footInitPos << endl;
+	cout << "BodyCoordinateSystem.leg[" << legNum << "].footGlobPos: " << BodyCoordinateSystem.leg[legNum].footGlobPos << endl;
+	cout << "MainCoordinateSystem.leg[" << legNum << "].footGlobPos: " << MainCoordinateSystem.leg[legNum].footGlobPos << endl;
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::runAkrobat()
@@ -261,22 +321,22 @@ void Akrobat::runAkrobat()
 		}// FOR (legNum)
 	}// IsMoving()
 	// jointPub.publish(js);
-	}// Akrobat::runAkrobat()
+}// Akrobat::runAkrobat()
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::tripodGait()
-	*
-	* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-	*              -int legNum:            execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 create tripod gait
-	*
-	* Console-Out:  F3DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::tripodGait()
+*
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
+*              -int legNum:            execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 create tripod gait
+*
+* Console-Out:  F3DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::tripodGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
@@ -326,23 +386,23 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		// cout<<endl;
 #endif
-	}// IF (MOVING)
-}// Akrobat::tripodGait(Trajectory *tS,int legNum)
+			}// IF (MOVING)
+		}// Akrobat::tripodGait(Trajectory *tS,int legNum)
 
-/*********************************************************************************************************
-* Function---:  Akrobat::waveGait()
-*
-* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-*              -int legNum:            execute function operation for this leg
-*
-* Output-----:	 None.
-*
-* Overview---:	 create wave gait
-*
-* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+		/*********************************************************************************************************
+		* Function---:  Akrobat::waveGait()
+		*
+		* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
+		*              -int legNum:            execute function operation for this leg
+		*
+		* Output-----:	 None.
+		*
+		* Overview---:	 create wave gait
+		*
+		* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
+		*
+		* Note-------:	 None.
+		********************************************************************************************************/
 void Akrobat::waveGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
@@ -419,23 +479,23 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-}// IF (MOVING)
-		}// Akrobat::waveGait(Trajectory *tS,int legNum)
+		}// IF (MOVING)
+	}// Akrobat::waveGait(Trajectory *tS,int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::rippleGait()
-		*
-		* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-		*		-int legNum:		execute function operation for this leg
-		*
-		* Output-----:	 None.
-		*
-		* Overview---:	 create ripple gait
-		*
-		* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::rippleGait()
+	*
+	* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
+	*		-int legNum:		execute function operation for this leg
+	*
+	* Output-----:	 None.
+	*
+	* Overview---:	 create ripple gait
+	*
+	* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 void Akrobat::rippleGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
@@ -513,23 +573,23 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-			}// IF (MOVING)
-			// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-		}// Akrobat::rippleGait(int legNum)
+		}// IF (MOVING)
+		// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+	}// Akrobat::rippleGait(int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::coordinateTransformation()
-		*
-		* Input------:	-int legNum:	execute function operation for this leg
-		*
-		* Output-----:	 None.
-		*
-		* Overview---:	 transformate the coordinate systems
-		*
-		* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
+	/*********************************************************************************************************
+	* Function---:  Akrobat::coordinateTransformation()
+	*
+	* Input------:	-int legNum:	execute function operation for this leg
+	*
+	* Output-----:	 None.
+	*
+	* Overview---:	 transformate the coordinate systems
+	*
+	* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
+	*
+	* Note-------:	 None.
+	********************************************************************************************************/
 void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
@@ -573,21 +633,21 @@ void Akrobat::coordinateTransformation(int legNum)
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.z() << endl;
 	cout << endl;
 #endif
-		}// Akrobat::coordinateTransformation(int legNum)
+}// Akrobat::coordinateTransformation(int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::inverseKinematics()
-		*
-		* Input------: -int legNum:	execute function operation for this leg
-		*
-		* Output-----:	 None.
-		*
-		* Overview---:	 calculate the inverse kinematics for each leg
-		*
-		* Console-Out:  F7DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::inverseKinematics()
+*
+* Input------: -int legNum:	execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 calculate the inverse kinematics for each leg
+*
+* Console-Out:  F7DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 {
 	float R, L, ALPHA, BETA1, BETA2, BETA, GAMMA;
@@ -626,25 +686,25 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.gamma;
 	cout << setw(12) << "Atan" << atan2(0, 160) << endl;
 #endif
-		}// Akrobat::inverseKinematics(int legNum)
+}// Akrobat::inverseKinematics(int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::moveLeg()
-		*
-		* Input------:	-float alpha: 	coxa joint angle
-		*              -float gamma: 	femur joint angle
-		*              -float beta:  	tibia joint angle
-		*              -int legNum:	execute function operation for this leg
-		*
-		* Output-----:	 0: failed
-		*               1: successful
-		*
-		* Overview---:	 move the leg to target position
-		*
-		* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::moveLeg()
+*
+* Input------:	-float alpha: 	coxa joint angle
+*              -float gamma: 	femur joint angle
+*              -float beta:  	tibia joint angle
+*              -int legNum:	execute function operation for this leg
+*
+* Output-----:	 0: failed
+*               1: successful
+*
+* Overview---:	 move the leg to target position
+*
+* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
 	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, legSettings[legNum].minCoxa, legSettings[legNum].maxCoxa))
@@ -815,82 +875,8 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << legSettings[legNum].minCoxa << ":" << legSettings[legNum].maxCoxa << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
 	}
 	return 0;
-		}// int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
+}// int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::transformCS()
-		*
-		* Input------:	-string sCS: 		source frame
-		*              -string tCS:		target frame
-		*              -Vector3 rot:		rotational element
-		*              -Vector3 trans:		translational element
-		*
-		* Output-----:	-TCS: calculated transformation for two frames
-		*
-		* Overview---:	 transformate source coordinate system to target coordinate system
-		*
-		* Console-Out:  F9DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
-Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
-{
-	Transform TCS_local = Transform::getIdentity(); // [TRANSFORMATION DATA TYP] -- create a transform
-	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
-	TCS_local.setOrigin(transVec); // [.setOrigin] -- set translational element of transform
-	Quaternion rotQuat = Quaternion::getIdentity(); // [ROTATION] -- create quaternion
-	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z())); // [.setRPY] -- define quaternion
-	TCS_local.setRotation(rotQuat); // [.setRotaion] -- set rotational element of transform
-
-	if ((sCS == "LCS") && (tCS == "FCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "BCS") && (tCS == "LCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "MCS") && (tCS == "BCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA")))
-	{
-		return TCS_local;
-	}
-
-	// [ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
-	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
-	return TCS_local;
-}// Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
 
 /*********************************************************************************************************
 * Function---:  Akrobat::callRumblePad2Back()
