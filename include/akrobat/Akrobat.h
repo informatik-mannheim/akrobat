@@ -150,31 +150,6 @@ private:
 	ros::NodeHandle n;
 	ros::Subscriber subJoy; // subscriber of joy topic
 	ros::Publisher jointPub; // publisher (rviz)
-
-	// LEG1
-	ros::Publisher pubLeg1Joint1; // publicher for jointX of legX
-	ros::Publisher pubLeg1Joint2; // .....
-	ros::Publisher pubLeg1Joint3;
-	// LEG2
-	ros::Publisher pubLeg2Joint1;
-	ros::Publisher pubLeg2Joint2;
-	ros::Publisher pubLeg2Joint3;
-	// LEG3
-	ros::Publisher pubLeg3Joint1;
-	ros::Publisher pubLeg3Joint2;
-	ros::Publisher pubLeg3Joint3;
-	// LEG4
-	ros::Publisher pubLeg4Joint1;
-	ros::Publisher pubLeg4Joint2;
-	ros::Publisher pubLeg4Joint3;
-	// LEG5
-	ros::Publisher pubLeg5Joint1;
-	ros::Publisher pubLeg5Joint2;
-	ros::Publisher pubLeg5Joint3;
-	// LEG6
-	ros::Publisher pubLeg6Joint1;
-	ros::Publisher pubLeg6Joint2;
-	ros::Publisher pubLeg6Joint3; // .....
 };
 
 #endif

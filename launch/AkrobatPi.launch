@@ -19,6 +19,10 @@
     <param name="publish_frequency" value="20.0" />
   </node>
 
+  <node name="jointstate_to_dynamixel" pkg="akrobat" type="jointstate_to_dynamixel">
+    <param name="publish_frequency" value="20.0" />
+  </node>
+
   <node ns="$(arg dynamixel_namespace)" name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
     <rosparam>
       namespace: dxl_manager

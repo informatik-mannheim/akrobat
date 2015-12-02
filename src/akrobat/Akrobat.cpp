@@ -3,6 +3,7 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include <ros/ros.h>
 #include <angles/angles.h>
@@ -47,16 +48,6 @@ Akrobat::Akrobat() :
 	rippleAmpWidth(40),
 	rippleAmpHight(40),
 	rNumTick(15),
-	F1DEBUG(0),
-	F2DEBUG(0),
-	F3DEBUG(0),
-	F4DEBUG(0),
-	F5DEBUG(0),
-	F6DEBUG(0),
-	F7DEBUG(0),
-	F8DEBUG(0),
-	F9DEBUG(0),
-	F10DEBUG(0),
 	LEFT_FRONT(0),
 	RIGHT_FRONT(1),
 	LEFT_MIDDLE(2),
@@ -104,40 +95,50 @@ Akrobat::Akrobat() :
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
 	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
-	//// jointPub = n.advertise<sensor_msgs::JointState>("/joint_states", 1);
-
-	// [PUBLISHER] -- pubLegXJointX: publish the joint angles of each leg to topic(/controller_mxx/command)
-	// LEG 1
-	pubLeg1Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m11/command", 1);
-	pubLeg1Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m12/command", 1);
-	pubLeg1Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m13/command", 1);
-	// LEG 2
-	pubLeg2Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m21/command", 1);
-	pubLeg2Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m22/command", 1);
-	pubLeg2Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m23/command", 1);
-	// LEG 3
-	pubLeg3Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m31/command", 1);
-	pubLeg3Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m32/command", 1);
-	pubLeg3Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m33/command", 1);
-	// LEG 4
-	pubLeg4Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m41/command", 1);
-	pubLeg4Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m42/command", 1);
-	pubLeg4Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m43/command", 1);
-	// LEG 5
-	pubLeg5Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m51/command", 1);
-	pubLeg5Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m52/command", 1);
-	pubLeg5Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m53/command", 1);
-	// LEG 6
-	pubLeg6Joint1 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m61/command", 1);
-	pubLeg6Joint2 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m62/command", 1);
-	pubLeg6Joint3 = n.advertise<std_msgs::Float64>("/dynamixel_controller/m63/command", 1);
+	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
 
 	// ARRAY SIZE
 	js.name.resize(18);
 	js.position.resize(18);
 	js.velocity.resize(18);
 	js.effort.resize(18);
-}// Akrobat::Akrobat()
+
+	//js.name[0] = "m11";
+	//js.name[1] = "m12";
+	//js.name[2] = "m13";
+	//js.name[3] = "m21";
+	//js.name[4] = "m22";
+	//js.name[5] = "m23";
+	//js.name[6] = "m31";
+	//js.name[7] = "m32";
+	//js.name[8] = "m33";
+	//js.name[9] = "m41";
+	//js.name[10] = "m42";
+	//js.name[11] = "m43";
+	//js.name[12] = "m51";
+	//js.name[13] = "m52";
+	//js.name[14] = "m53";
+	//js.name[15] = "m61";
+	//js.name[16] = "m62";
+	//js.name[17] = "m63";
+
+	for (int i = 0, j = 1, k = 1; i < 18; i++)
+	{
+		string name = "m";
+		name += ('0' + j);
+		name += ('0' + k++);
+
+		js.name[i] = name;
+		js.velocity[i] = 0.0;
+		js.effort[i] = 0.0;
+
+		if (k > 3)
+		{
+			j++;
+			k = 1;
+		}
+	}
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::initAkrobat()
@@ -191,7 +192,7 @@ void Akrobat::initAkrobat()
 		Akrobat::coordinateTransformation(legNum);
 		Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 		Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
-		//// jointPub.publish(js);
+		jointPub.publish(js);
 	}
 }
 
@@ -268,7 +269,7 @@ Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 tran
 	// [ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
 	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
 	return TCS_local;
-}// Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
+}
 
 void Akrobat::Debug(int legNum, string message) const
 {
@@ -318,9 +319,10 @@ void Akrobat::runAkrobat()
 			Akrobat::coordinateTransformation(legNum);
 			Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 			Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
-		}// FOR (legNum)
-	}// IsMoving()
-	// jointPub.publish(js);
+		}
+	}
+
+	jointPub.publish(js);
 }// Akrobat::runAkrobat()
 
 /*********************************************************************************************************
@@ -386,23 +388,23 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		// cout<<endl;
 #endif
-			}// IF (MOVING)
-		}// Akrobat::tripodGait(Trajectory *tS,int legNum)
+	}// IF (MOVING)
+}// Akrobat::tripodGait(Trajectory *tS,int legNum)
 
-		/*********************************************************************************************************
-		* Function---:  Akrobat::waveGait()
-		*
-		* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-		*              -int legNum:            execute function operation for this leg
-		*
-		* Output-----:	 None.
-		*
-		* Overview---:	 create wave gait
-		*
-		* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
-		*
-		* Note-------:	 None.
-		********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::waveGait()
+*
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
+*              -int legNum:            execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 create wave gait
+*
+* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::waveGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
@@ -479,23 +481,23 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-		}// IF (MOVING)
-	}// Akrobat::waveGait(Trajectory *tS,int legNum)
+	}// IF (MOVING)
+}// Akrobat::waveGait(Trajectory *tS,int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::rippleGait()
-	*
-	* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-	*		-int legNum:		execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 create ripple gait
-	*
-	* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::rippleGait()
+*
+* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
+*		-int legNum:		execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 create ripple gait
+*
+* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::rippleGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
@@ -573,23 +575,23 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
 		cout << endl;
 #endif
-		}// IF (MOVING)
-		// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-	}// Akrobat::rippleGait(int legNum)
+	}// IF (MOVING)
+	// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+}// Akrobat::rippleGait(int legNum)
 
-	/*********************************************************************************************************
-	* Function---:  Akrobat::coordinateTransformation()
-	*
-	* Input------:	-int legNum:	execute function operation for this leg
-	*
-	* Output-----:	 None.
-	*
-	* Overview---:	 transformate the coordinate systems
-	*
-	* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
-	*
-	* Note-------:	 None.
-	********************************************************************************************************/
+/*********************************************************************************************************
+* Function---:  Akrobat::coordinateTransformation()
+*
+* Input------:	-int legNum:	execute function operation for this leg
+*
+* Output-----:	 None.
+*
+* Overview---:	 transformate the coordinate systems
+*
+* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
+*
+* Note-------:	 None.
+********************************************************************************************************/
 void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
@@ -707,176 +709,33 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 ********************************************************************************************************/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
-	if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.alpha, legSettings[legNum].minCoxa, legSettings[legNum].maxCoxa))
-	{ // [COXA  JOINT LIMITS] -- control the joint max and min limits
-		if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.beta, legSettings[legNum].minFemur, legSettings[legNum].maxFemur))
-		{ // [FEMUR JOINT LIMITS] -- control the joint max and min limits
-			if (IsWithinLimits(LegCoordinateSystem.leg[legNum].jointAngles.gamma, legSettings[legNum].minTibia, legSettings[legNum].maxTibia))
-			{ // [TIBIA JOINT LIMITS] -- control the joint max and min limits
-				std_msgs::Float64 aux; // [STANDARD MESSAGE TYPE] -- publishing data type
-				// [...publish(..)] -- function to publish data
-				switch (legNum)
-				{
-				case 0: // [LEG 1] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg1Joint1.publish(aux);
-					js.name[0] = "m11";
-					js.position[0] = aux.data;
-					js.velocity[0] = 0.0;
-					js.effort[0] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg1Joint2.publish(aux);
-					js.name[1] = "m12";
-					js.position[1] = aux.data;
-					js.velocity[1] = 0.0;
-					js.effort[1] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg1Joint3.publish(aux);
-					js.name[2] = "m13";
-					js.position[2] = aux.data;
-					js.velocity[2] = 0.0;
-					js.effort[2] = 0.0;
-					break;
-
-				case 1: // [LEG 2] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg2Joint1.publish(aux);
-					js.name[3] = "m21";
-					js.position[3] = aux.data;
-					js.velocity[3] = 0.0;
-					js.effort[3] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg2Joint2.publish(aux);
-					js.name[4] = "m22";
-					js.position[4] = aux.data;
-					js.velocity[4] = 0.0;
-					js.effort[4] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg2Joint3.publish(aux);
-					js.name[5] = "m23";
-					js.position[5] = aux.data;
-					js.velocity[5] = 0.0;
-					js.effort[5] = 0.0;
-					break;
-
-				case 2: // [LEG 3] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg3Joint1.publish(aux);
-					js.name[6] = "m31";
-					js.position[6] = aux.data;
-					js.velocity[6] = 0.0;
-					js.effort[6] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg3Joint2.publish(aux);
-					js.name[7] = "m32";
-					js.position[7] = aux.data;
-					js.velocity[7] = 0.0;
-					js.effort[7] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg3Joint3.publish(aux);
-					js.name[8] = "m33";
-					js.position[8] = aux.data;
-					js.velocity[8] = 0.0;
-					js.effort[8] = 0.0;
-					break;
-
-				case 3: // [LEG 4] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg4Joint1.publish(aux);
-					js.name[9] = "m41";
-					js.position[9] = aux.data;
-					js.velocity[9] = 0.0;
-					js.effort[9] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg4Joint2.publish(aux);
-					js.name[10] = "m42";
-					js.position[10] = aux.data;
-					js.velocity[10] = 0.0;
-					js.effort[10] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg4Joint3.publish(aux);
-					js.name[11] = "m43";
-					js.position[11] = aux.data;
-					js.velocity[11] = 0.0;
-					js.effort[11] = 0.0;
-					break;
-
-				case 4: // [LEG 5] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg5Joint1.publish(aux);
-					js.name[12] = "m51";
-					js.position[12] = aux.data;
-					js.velocity[12] = 0.0;
-					js.effort[12] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg5Joint2.publish(aux);
-					js.name[13] = "m52";
-					js.position[13] = aux.data;
-					js.velocity[13] = 0.0;
-					js.effort[13] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg5Joint3.publish(aux);
-					js.name[14] = "m53";
-					js.position[14] = aux.data;
-					js.velocity[14] = 0.0;
-					js.effort[14] = 0.0;
-					break;
-
-				case 5: // [LEG 6] -- set angle values and publish
-					aux.data = from_degrees(alpha);
-					pubLeg6Joint1.publish(aux);
-					js.name[15] = "m61";
-					js.position[15] = aux.data;
-					js.velocity[15] = 0.0;
-					js.effort[15] = 0.0;
-
-					aux.data = from_degrees(beta);
-					pubLeg6Joint2.publish(aux);
-					js.name[16] = "m62";
-					js.position[16] = aux.data;
-					js.velocity[16] = 0.0;
-					js.effort[16] = 0.0;
-
-					aux.data = from_degrees(gamma);
-					pubLeg6Joint3.publish(aux);
-					js.name[17] = "m63";
-					js.position[17] = aux.data;
-					js.velocity[17] = 0.0;
-					js.effort[17] = 0.0;
-					break;
-				}
-
-				return 1;
-
-				// [OUTPUT WARNING] -- range warnings of joint (limit valu's: akrobat_init.h)
-			}
-			else
-			{
-				cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia(" << legSettings[legNum].minTibia << ":" << legSettings[legNum].maxTibia << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.gamma << endl;
-			}
-		}
-		else
-		{
-			cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur(" << legSettings[legNum].minFemur << ":" << legSettings[legNum].maxFemur << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.beta << endl;
-		}
-	}
-	else
+	if (!IsWithinLimits(alpha, legSettings[legNum].minCoxa, legSettings[legNum].maxCoxa))
 	{
-		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa(" << legSettings[legNum].minCoxa << ":" << legSettings[legNum].maxCoxa << ") joint is exceeded " << LegCoordinateSystem.leg[legNum].jointAngles.alpha << endl;
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of coxa("
+			<< legSettings[legNum].minCoxa << ":" << legSettings[legNum].maxCoxa << ") joint is exceeded " << alpha << endl;
+		return 0;
 	}
-	return 0;
-}// int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 
+	if (!IsWithinLimits(beta, legSettings[legNum].minFemur, legSettings[legNum].maxFemur))
+	{
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of femur("
+			<< legSettings[legNum].minFemur << ":" << legSettings[legNum].maxFemur << ") joint is exceeded " << beta << endl;
+		return 0;
+	}
+
+	if (!IsWithinLimits(gamma, legSettings[legNum].minTibia, legSettings[legNum].maxTibia))
+	{
+		cout << "[WARNING] " << "LEG " << legNum << ": angle range of tibia("
+			<< legSettings[legNum].minTibia << ":" << legSettings[legNum].maxTibia << ") joint is exceeded " << gamma << endl;
+		return 0;
+	}
+
+	js.position[legNum * 3 + 0] = from_degrees(alpha);
+	js.position[legNum * 3 + 1] = from_degrees(beta);
+	js.position[legNum * 3 + 2] = from_degrees(gamma);
+
+	return 1;
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::callRumblePad2Back()
@@ -970,7 +829,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 					Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 				}
 			}
-			// jointPub.publish(js);
+			jointPub.publish(js);
 		}
 
 		if (joy->buttons[LB_BUTTON] && !(joy->buttons[RB_BUTTON]) && mode == 0)
@@ -1175,4 +1034,3 @@ bool Akrobat::IsRotating() const
 {
 	return (pad.bdR.x() > 0.3) || (pad.bdR.x() < -0.3) || (pad.bdR.y() > 0.3) || (pad.bdR.y() < -0.3) || (pad.bdR.z() > 0.3) || (pad.bdR.z() < -0.3);
 }
-
