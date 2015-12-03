@@ -142,30 +142,30 @@ void Akrobat::initAkrobat()
 		Transform iT; // [TRANSFORMATION DATA TYP] -- create a transform
 
 		// [LCS] -- definition of leg coordinate system
-		iT = Akrobat::transformCS("TIBIA", "ENDEFFCTR", Vector3(0, 0, 0), Vector3(LENGTH_TIBIA, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(LENGTH_TIBIA, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("TIBIA", "TIBIA", Vector3(0, 0, -legSettings[legNum].jointInitC), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, -legSettings[legNum].jointInitC), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("FEMUR", "TIBIA", Vector3(0, 0, 0), Vector3(LENGTH_FEMUR, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(LENGTH_FEMUR, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("FEMUR", "FEMUR", Vector3(0, 0, -legSettings[legNum].jointInitB), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, -legSettings[legNum].jointInitB), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("COXA", "FEMUR", Vector3(0, 0, 0), Vector3(LENGTH_COXA, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(LENGTH_COXA, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
-		iT = Akrobat::transformCS("COXA", "COXA", Vector3(-90, 0, legSettings[legNum].jointInitA), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS(Vector3(-90, 0, legSettings[legNum].jointInitA), Vector3(0, 0, 0));
 		LegCoordinateSystem.leg[legNum].footInitPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		// [BCS] -- definition of body coordinate system
-		iT = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
+		iT = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
 		BodyCoordinateSystem.leg[legNum].footGlobPos = iT * LegCoordinateSystem.leg[legNum].footInitPos;
 
 		// [MainCoordinateSystem] -- definition of main coordinate system
-		iT = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
+		iT = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(0, 0, 0));
 		MainCoordinateSystem.leg[legNum].footGlobPos = iT * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
 		// 3D - RVIZ init position
@@ -193,7 +193,7 @@ void Akrobat::initAkrobat()
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 trans)
+Transform Akrobat::transformCS(Vector3 rot, Vector3 trans)
 {
 	Transform TCS_local; // [TRANSFORMATION DATA TYP] -- create a transform
 	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
@@ -202,53 +202,7 @@ Transform Akrobat::transformCS(string sCS, string tCS, Vector3 rot, Vector3 tran
 	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z())); // [.setRPY] -- define quaternion
 	TCS_local.setRotation(rotQuat); // [.setRotaion] -- set rotational element of transform
 
-	if ((sCS == "LCS") && (tCS == "FCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "BCS") && (tCS == "LCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "MCS") && (tCS == "BCS"))
-	{
-		return TCS_local.inverse();
-	}
-
-	if ((sCS == "FCS") && ((tCS == "LCS") || (tCS == "FCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "LCS") && ((tCS == "BCS") || (tCS == "LCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "BCS") && ((tCS == "MCS") || (tCS == "BCS")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "COXA") && ((tCS == "FEMUR") || (tCS == "COXA")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "FEMUR") && ((tCS == "TIBIA") || (tCS == "FEMUR")))
-	{
-		return TCS_local;
-	}
-
-	if ((sCS == "TIBIA") && ((tCS == "ENDEFFCTR") || (tCS == "TIBIA")))
-	{
-		return TCS_local;
-	}
-
-	// [ERROR OUTPUT] -- if the sCS (source coord. system) or tCS (target coord. system) does not exist
-	cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
+	// cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
 	return TCS_local;
 }
 
@@ -326,19 +280,19 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 	{ // [MOVING] -- one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
 		{
-		case 1: // [LEG MOVING] -- up/forward
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / tNumTick));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / tNumTick));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / tNumTick));
-			if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 2;
-			break;
+			case 1: // [LEG MOVING] -- up/forward
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / tNumTick));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / tNumTick));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / tNumTick));
+				if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 2;
+				break;
 
-		case 2: // [LEG MOVING] -- down/backward
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] - 2.0 * (*tS).ampX[legNum] * (*tS).tick / tNumTick);
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] - 2.0 * (*tS).ampY[legNum] * (*tS).tick / tNumTick);
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 1;
-			break;
+			case 2: // [LEG MOVING] -- down/backward
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] - 2.0 * (*tS).ampX[legNum] * (*tS).tick / tNumTick);
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] - 2.0 * (*tS).ampY[legNum] * (*tS).tick / tNumTick);
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= tNumTick - 1) (*tS).caseStep[legNum] = 1;
+				break;
 		}// SWITCH ((*tS).caseStep[legNum])
 		if (legNum == numberOfLegs - 1)
 		{
@@ -351,6 +305,7 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 
 		// [OUTPUT] -- console
 #if F3DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
+
 
 		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
@@ -392,47 +347,47 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 	{ // [MOVING] -- one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
 		{
-		case 1: // [LEG MOVING] -- up/forward
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / wNumTick));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / wNumTick));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / wNumTick));
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 2;
-			break;
+			case 1: // [LEG MOVING] -- up/forward
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / wNumTick));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / wNumTick));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / wNumTick));
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 2;
+				break;
 
-		case 2: // [LEG MOVING] -- down/backward (1 segment of 5)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (*tS).tick / (5.0 * wNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (*tS).tick / (5.0 * wNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 3;
-			break;
+			case 2: // [LEG MOVING] -- down/backward (1 segment of 5)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (*tS).tick / (5.0 * wNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (*tS).tick / (5.0 * wNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 3;
+				break;
 
-		case 3: // [LEG MOVING] -- down/backward (2 segments of 5)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 4;
-			break;
+			case 3: // [LEG MOVING] -- down/backward (2 segments of 5)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 4;
+				break;
 
-		case 4: // [LEG MOVING] -- down/backward (3 segments of 5)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 5;
-			break;
+			case 4: // [LEG MOVING] -- down/backward (3 segments of 5)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 5;
+				break;
 
-		case 5: // [LEG MOVING] -- down/backward (4 segments of 5)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 6;
-			break;
+			case 5: // [LEG MOVING] -- down/backward (4 segments of 5)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 6;
+				break;
 
-		case 6: // [LEG MOVING] -- down/backward (5 segments of 5)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 4.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 4.0 * wNumTick) / (5.0 * wNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 1;
-			break;
+			case 6: // [LEG MOVING] -- down/backward (5 segments of 5)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 4.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 4.0 * wNumTick) / (5.0 * wNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= wNumTick - 1) (*tS).caseStep[legNum] = 1;
+				break;
 		}// SWITCH ((*tS).caseStep[legNum])
 		if (legNum == numberOfLegs - 1)
 		{
@@ -444,6 +399,7 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 		}
 		// [OUTPUT] -- console
 #if F4DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
+
 
 		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
@@ -486,47 +442,47 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 		// [MOVING] --one of joypad sticks was actived
 		switch ((*tS).caseStep[legNum])
 		{
-		case 1: // [LEG MOVING] -- up/forward first half stride
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / (2.0 * rNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / (2.0 * rNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / (2.0 * rNumTick)));
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2;
-			break;
+			case 1: // [LEG MOVING] -- up/forward first half stride
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * (*tS).tick / (2.0 * rNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * (*tS).tick / (2.0 * rNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * (*tS).tick / (2.0 * rNumTick)));
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 2;
+				break;
 
-		case 2: // [LEG MOVING] -- up/forward second half stride
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3;
-			break;
+			case 2: // [LEG MOVING] -- up/forward second half stride
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX(-(*tS).ampX[legNum] * cos(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY(-(*tS).ampY[legNum] * cos(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(abs((*tS).ampZ[legNum]) * sin(M_PI * ((*tS).tick + rNumTick) / (2.0 * rNumTick)));
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 3;
+				break;
 
-		case 3: // [LEG MOVING] -- down/backward (1 segment of 4)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4;
-			break;
+			case 3: // [LEG MOVING] -- down/backward (1 segment of 4)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 4;
+				break;
 
-		case 4: // [LEG MOVING] -- down/backward (2 segments of 4)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5;
-			break;
+			case 4: // [LEG MOVING] -- down/backward (2 segments of 4)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 5;
+				break;
 
-		case 5: // [LEG MOVING] -- down/backward (2 segments of 4)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6;
-			break;
+			case 5: // [LEG MOVING] -- down/backward (2 segments of 4)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 2.0 * rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 6;
+				break;
 
-		case 6: // [LEG MOVING] -- down/backward (2 segments of 4)
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * rNumTick) / (4.0 * rNumTick))));
-			FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-			if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1;
-			break;
+			case 6: // [LEG MOVING] -- down/backward (2 segments of 4)
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setX((*tS).ampX[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setY((*tS).ampY[legNum] * (1.0 - 2.0 * (((*tS).tick + 3.0 * rNumTick) / (4.0 * rNumTick))));
+				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
+				if ((*tS).tick >= rNumTick - 1) (*tS).caseStep[legNum] = 1;
+				break;
 		}// SWITCH ((*tS).caseStep[legNum])
 		if (legNum == numberOfLegs - 1)
 		{
@@ -538,6 +494,7 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 		}
 		// [OUTPUT] -- console
 #if F5DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
+
 
 		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
 		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
@@ -577,27 +534,26 @@ void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
 
-	T = Akrobat::transformCS("FCS", "LCS", Vector3(0, 0, 0), LegCoordinateSystem.leg[legNum].footInitPos);
+	T = Akrobat::transformCS(Vector3(0, 0, 0), LegCoordinateSystem.leg[legNum].footInitPos);
 	LegCoordinateSystem.leg[legNum].footPresPos = T * FootCoordinateSystem.leg[legNum].trajectoryPresPos;
 
-	T = Akrobat::transformCS("LCS", "BCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
+	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
-	T = Akrobat::transformCS("BCS", "MCS", Vector3(0, 0, 0), Vector3(0, 0, 0));
+	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(0, 0, 0));
 	MainCoordinateSystem.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("MCS", "BCS", Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + legSettings[legNum].rollOv), pad.bdT.z()));
+	T = Akrobat::transformCS(Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + legSettings[legNum].rollOv), pad.bdT.z())).inverse();
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("BCS", "LCS", Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
+	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ)).inverse();
 	LegCoordinateSystem.leg[legNum].footPresPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
-	T = Akrobat::transformCS("LCS", "LCS", Vector3(0, 0, legSettings[legNum].rotOfCoxa), Vector3(0, 0, 0));
+	T = Akrobat::transformCS(Vector3(0, 0, legSettings[legNum].rotOfCoxa), Vector3(0, 0, 0));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
 	// [OUTPUT] -- console
 #if F6DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-
 	cout << "|-------------------coordinateTransformation()----------------LN: " << legNum << "|" << endl;
 	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
 	cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
@@ -658,7 +614,6 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 
 	// [OUTPUT] -- console
 #if F7DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-
 	cout << "|----------------------inverseKinematics()------------------LN: " << legNum << "|" << endl;
 	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
 	cout << setw(40) << "CAngl" << setw(12) << "FAngl" << setw(12) << "TAngl" << endl;
@@ -740,29 +695,26 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 	}
 	else
 	{
-		if (joy->buttons[RB_BUTTON] && !(joy->buttons[LB_BUTTON]))
+		if (joy->buttons[RB_BUTTON])
 		{
 			mode = 0;
 			cout << "[OPERATION]: Normal" << endl;
 			gait = 0;
 		}
-
-		if (joy->buttons[RT_BUTTON] && !joy->buttons[B_BUTTON])
+		else if (joy->buttons[L3_BUTTON])
 		{
 			mode = 1;
 			cout << "[OPERATION]: Translation" << endl;
 			gait = 0;
 		}
-
-		if (joy->buttons[R3_BUTTON])
+		else if (joy->buttons[R3_BUTTON])
 		{
 			mode = 2;
 			cout << "[OPERATION]: Rotation" << endl;
 			gait = 0;
 		}
-
-		if (joy->buttons[START_BUTTON])
-		{ // rollOver=1;  cout<<"rollover: "<< rollOver <<endl;
+		else if (joy->buttons[START_BUTTON])
+		{
 			js.header.stamp = ros::Time::now();
 			if (rollOver == 0)
 			{
@@ -812,53 +764,76 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			}
 			jointPub.publish(js);
 		}
-
-		if (joy->buttons[LB_BUTTON] && !(joy->buttons[RB_BUTTON]) && mode == 0)
+		else if (joy->buttons[RT_BUTTON] != joy->buttons[LT_BUTTON])
 		{
-			gait = 1;
-			cout << "[  GAIT   ]: Tripod" << endl;
-			traData.caseStep[LEFT_FRONT] = 2;
-			traData.caseStep[RIGHT_FRONT] = 1;
-			traData.caseStep[LEFT_MIDDLE] = 1;
-			traData.caseStep[RIGHT_MIDDLE] = 2;
-			traData.caseStep[LEFT_REAR] = 2;
-			traData.caseStep[RIGHT_REAR] = 1;
-			traData.initAmpX = tripodAmpWidth; // [mm] X amplitude width of leg trajectory for tripod gait
-			traData.initAmpY = tripodAmpWidth; // [mm] Y amplitude width of leg trajectory for tripod gait
-			traData.initAmpZ = tripodAmpHight; // [mm] Z amplitude hight of leg trajectory for tripod gait
-			traData.tick = 0;
-		}
+			int numberOfWalkingPattern = 4;
 
-		if (joy->buttons[LT_BUTTON] && mode == 0)
-		{
-			gait = 2;
-			cout << "[  GAIT   ]: Wave" << endl;
-			traData.caseStep[LEFT_FRONT] = 1; // .....
-			traData.caseStep[RIGHT_FRONT] = 4;
-			traData.caseStep[LEFT_MIDDLE] = 2;
-			traData.caseStep[RIGHT_MIDDLE] = 5;
-			traData.caseStep[LEFT_REAR] = 3;
-			traData.caseStep[RIGHT_REAR] = 6;
-			traData.initAmpX = waveAmpWidth;
-			traData.initAmpY = waveAmpWidth;
-			traData.initAmpZ = waveAmpHight;
-			traData.tick = 0;
-		}
+			gait = (gait + joy->buttons[RT_BUTTON] - joy->buttons[LT_BUTTON] + numberOfWalkingPattern) % numberOfWalkingPattern;
 
-		if (joy->buttons[L3_BUTTON] && mode == 0)
-		{
-			gait = 3;
-			cout << "[  GAIT   ]: Ripple" << endl;
-			traData.caseStep[LEFT_FRONT] = 5; // [LEG MOVING] -- up/forward first half stride
-			traData.caseStep[RIGHT_FRONT] = 2; // [LEG MOVING] -- up/forward second half stride
-			traData.caseStep[LEFT_MIDDLE] = 3; // [LEG MOVING] -- down/backward (1 segment of 4)
-			traData.caseStep[RIGHT_MIDDLE] = 6;
-			traData.caseStep[LEFT_REAR] = 1;
-			traData.caseStep[RIGHT_REAR] = 4;
-			traData.initAmpX = rippleAmpWidth;
-			traData.initAmpY = rippleAmpWidth;
-			traData.initAmpZ = rippleAmpHight;
-			traData.tick = 0;
+			if (gait == 0 && joy->buttons[RT_BUTTON]) // skip 0. Zero means no movement
+				gait = 1;
+
+			if (gait == 0 && joy->buttons[LT_BUTTON])
+				gait = numberOfWalkingPattern - 1;
+
+			mode = 0;
+
+			switch (gait)
+			{
+				case 1:
+				{
+					gait = 1;
+					cout << "[  GAIT   ]: Tripod" << endl;
+					traData.caseStep[LEFT_FRONT] = 2;
+					traData.caseStep[RIGHT_FRONT] = 1;
+					traData.caseStep[LEFT_MIDDLE] = 1;
+					traData.caseStep[RIGHT_MIDDLE] = 2;
+					traData.caseStep[LEFT_REAR] = 2;
+					traData.caseStep[RIGHT_REAR] = 1;
+					traData.initAmpX = tripodAmpWidth; // [mm] X amplitude width of leg trajectory for tripod gait
+					traData.initAmpY = tripodAmpWidth; // [mm] Y amplitude width of leg trajectory for tripod gait
+					traData.initAmpZ = tripodAmpHight; // [mm] Z amplitude hight of leg trajectory for tripod gait
+					traData.tick = 0;
+					break;
+				}
+
+				case 2:
+				{
+					gait = 2;
+					cout << "[  GAIT   ]: Wave" << endl;
+					traData.caseStep[LEFT_FRONT] = 1; // .....
+					traData.caseStep[RIGHT_FRONT] = 4;
+					traData.caseStep[LEFT_MIDDLE] = 2;
+					traData.caseStep[RIGHT_MIDDLE] = 5;
+					traData.caseStep[LEFT_REAR] = 3;
+					traData.caseStep[RIGHT_REAR] = 6;
+					traData.initAmpX = waveAmpWidth;
+					traData.initAmpY = waveAmpWidth;
+					traData.initAmpZ = waveAmpHight;
+					traData.tick = 0;
+					break;
+				}
+
+				case 3:
+				{
+					gait = 3;
+					cout << "[  GAIT   ]: Ripple" << endl;
+					traData.caseStep[LEFT_FRONT] = 5; // [LEG MOVING] -- up/forward first half stride
+					traData.caseStep[RIGHT_FRONT] = 2; // [LEG MOVING] -- up/forward second half stride
+					traData.caseStep[LEFT_MIDDLE] = 3; // [LEG MOVING] -- down/backward (1 segment of 4)
+					traData.caseStep[RIGHT_MIDDLE] = 6;
+					traData.caseStep[LEFT_REAR] = 1;
+					traData.caseStep[RIGHT_REAR] = 4;
+					traData.initAmpX = rippleAmpWidth;
+					traData.initAmpY = rippleAmpWidth;
+					traData.initAmpZ = rippleAmpHight;
+					traData.tick = 0;
+					break;
+				}
+
+				default:
+					break;
+			}
 		}
 
 		if (mode == 1)
@@ -872,7 +847,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			pad.bdR.setX(0);
 			pad.bdR.setY(0);
 			pad.bdR.setZ(0);
-		}// IF (mode 1)
+		}
 		else if (mode == 2)
 		{// [mode 2][OPERATION] -- Rotation
 			pad.bdR.setX(joy->axes[UD_stick_left] * scaleFacRot); // body rotation X
@@ -884,7 +859,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			pad.bdT.setX(0);
 			pad.bdT.setY(0);
 			pad.bdT.setZ(0);
-		}// ELSEIF (mode 2)
+		}
 		else
 		{// [mode 0][OPERATION] -- Normal
 			pad.bdT.setX(0);
@@ -893,6 +868,7 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			pad.bdR.setX(0);
 			pad.bdR.setY(0);
 			pad.bdR.setZ(0);
+
 			if ((joy->axes[LR_stick_left] > 0.3) || (joy->axes[LR_stick_left] < -0.3))
 			{ // sideward movement
 				pad.speed.setX(-(joy->axes[LR_stick_left]) / abs(joy->axes[LR_stick_left]));

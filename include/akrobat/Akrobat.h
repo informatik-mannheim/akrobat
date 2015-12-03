@@ -131,7 +131,7 @@ public:
 	int moveLeg(float alpha, float beta, float gamma, int legNum);
 
 	// transformate source coordinate system to target coordinate system
-	tf::Transform transformCS(std::string sourceCS, std::string targetCS, tf::Vector3 rot, tf::Vector3 trans);
+	tf::Transform transformCS(tf::Vector3 rot, tf::Vector3 trans);
 
 	static bool IsWithinLimits(const float& value, const float& min, const float& max);
 
