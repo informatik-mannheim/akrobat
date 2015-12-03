@@ -103,25 +103,6 @@ Akrobat::Akrobat() :
 	js.velocity.resize(18);
 	js.effort.resize(18);
 
-	//js.name[0] = "m11";
-	//js.name[1] = "m12";
-	//js.name[2] = "m13";
-	//js.name[3] = "m21";
-	//js.name[4] = "m22";
-	//js.name[5] = "m23";
-	//js.name[6] = "m31";
-	//js.name[7] = "m32";
-	//js.name[8] = "m33";
-	//js.name[9] = "m41";
-	//js.name[10] = "m42";
-	//js.name[11] = "m43";
-	//js.name[12] = "m51";
-	//js.name[13] = "m52";
-	//js.name[14] = "m53";
-	//js.name[15] = "m61";
-	//js.name[16] = "m62";
-	//js.name[17] = "m63";
-
 	for (int i = 0, j = 1, k = 1; i < 18; i++)
 	{
 		string name = "m";
