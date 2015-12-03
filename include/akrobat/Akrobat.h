@@ -13,6 +13,7 @@
 #include <akrobat/RumblePad2.h>
 #include <akrobat/CoordinateSystem.h>
 #include <akrobat/LegSetting.h>
+#include <akrobat/TrajectorySettings.h>
 
 /// The Akrobat class
 /**
@@ -26,71 +27,63 @@
 class Akrobat
 {
 public:
+	enum JoyPadButton : int
+	{
+		X = 0,
+		A = 1,
+		B = 2,
+		Y = 3,
+		LB = 4,
+		RB = 5,
+		LT = 6,
+		RT = 7,
+		BACK = 8,
+		START = 9,
+		L3 = 10,
+		R3 = 11
+	};
+
+	enum JoyPadAxis : int
+	{
+		leftStickRightLeft = 0,
+		leftStickUpDown = 1,
+		rightStickRightLeft = 2,
+		rightStickUpDown = 3,
+		crossRightLeft = 4,
+		crossUpDown = 5
+	};
+
+	enum LegNumber : int
+	{
+		LEFT_FRONT = 0,
+		RIGHT_FRONT = 1,
+		LEFT_MIDDLE = 2,
+		RIGHT_MIDDLE = 3,
+		LEFT_REAR = 4,
+		RIGHT_REAR = 5
+	};
+
+	enum WalkingMode : int
+	{
+		TRIPOD = 0,
+		WAVE = 1,
+		RIPPLE = 2
+	};
+
+	static const int numberOfWalkingPattern = 3;
+
 	int mode; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
 	int gait; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 	int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
 	int rollOver; // [ rollOver ] -- if body roll over (0/1)
 
-	int tripodAmpWidth;
-	int tripodAmpHight;
-	int tNumTick;
-
-	int waveAmpWidth;
-	int waveAmpHight;
-	int wNumTick;
-
-	int rippleAmpWidth;
-	int rippleAmpHight;
-	int rNumTick;
-
-	int F1DEBUG;
-	int F2DEBUG;
-	int F3DEBUG;
-	int F4DEBUG;
-	int F5DEBUG;
-	int F6DEBUG;
-	int F7DEBUG;
-	int F8DEBUG;
-	int F9DEBUG;
-	int F10DEBUG;
-
-	int LEFT_FRONT;
-	int RIGHT_FRONT;
-	int LEFT_MIDDLE;
-	int RIGHT_MIDDLE;
-	int LEFT_REAR;
-	int RIGHT_REAR;
-
-
 	int LENGTH_COXA;
 	int LENGTH_FEMUR;
 	int LENGTH_TIBIA;
 
-	//sticks
-	int LR_stick_left;
-	int UD_stick_left;
-	int LR_stick_right;
-	int UD_stick_right;
-	//cross
-	int LR_cross_key;
-	int UD_cross_key;
-
 	// TODO check joy device
 	// mode cannot be detected // mode turns left stick into digital input mode
 	// D-X switch can be identified with number of axis available
-
-	int X_BUTTON;
-	int A_BUTTON;
-	int B_BUTTON;
-	int Y_BUTTON;
-	int LB_BUTTON;
-	int RB_BUTTON;
-	int LT_BUTTON;
-	int RT_BUTTON;
-	int BACK_BUTTON;
-	int START_BUTTON;
-	int L3_BUTTON;
-	int R3_BUTTON;
 
 	//joystick sticks scale factor
 	int scaleFacTrans;
@@ -99,9 +92,9 @@ public:
 	LegSetting legSettings[numberOfLegs];
 	RumblePad2 pad; // [	PAD   ] -- joypad object
 	Trajectory traData; // [	.. ] --
+	TrajectorySettings trajectorySettings[numberOfWalkingPattern]; // 3 = number of walking modes
 	CoordinateSystem MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState js;
-
 
 	// constructor
 	Akrobat();

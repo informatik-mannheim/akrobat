@@ -1,10 +1,11 @@
 <!-- -*- mode: XML -*- -->
 <launch>
   <!-- configuration -->
-  <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
   <arg name="gui" default="false" />
   <arg name="sim" default="false" />
   <arg name="akrobat_walking" default="true" />
+  <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
+
   <!-- configuration end -->
 
   <arg name="dynamixel_namespace" value="dynamixel_controller" />

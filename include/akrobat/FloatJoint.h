@@ -6,12 +6,9 @@
 class FloatJoint
 {
 public:
-	float alpha;
-	float beta;
-	float gamma;
-
-	FloatJoint();
-	virtual ~FloatJoint();
+	float alpha = 0.0f;
+	float beta = 0.0f;
+	float gamma = 0.0f;
 
 	virtual std::ostream& ToString(std::ostream& o) const;
 };
