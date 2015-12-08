@@ -5,6 +5,8 @@ project(akrobat)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  controller_manager
+  hardware_interface
   dynamixel_controllers
   dynamixel_driver
   dynamixel_msgs
@@ -89,7 +91,7 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES $(PROJECT_NAME)
-   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf
+   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf controller_manager hardware_interface
 #  DEPENDS system_lib
 )
 
@@ -109,11 +111,13 @@ include_directories(
 #add_library(akrobat_init src/akrobat/akrobat_init.cpp) 
 #add_executable(commander src/akrobat/commander.cpp) 
 add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/Akrobat.cpp src/akrobat/CoordinateSystem.cpp src/akrobat/FloatJoint.cpp src/akrobat/Leg.cpp src/akrobat/LegSetting.cpp src/akrobat/RumblePad2.cpp src/akrobat/Trajectory.cpp src/akrobat/TrajectorySettings.cpp) 
-add_executable(jointstate_to_dynamixel src/akrobat/JointStateToDynamixel.cpp) 
+add_executable(jointstate_to_dynamixel src/akrobat/JointStateToDynamixel.cpp)
+add_executable(akrobat_controller src/akrobat/Controller.cpp src/akrobat/HardwareInterface.cpp)
 #target_link_libraries(akrobat akrobat_init)
 #target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})
 target_link_libraries(jointstate_to_dynamixel ${catkin_LIBRARIES})
+target_link_libraries(akrobat_controller ${catkin_LIBRARIES})
 
 ## Declare a cpp library
 # add_library(akrobat
