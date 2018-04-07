@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,11 +54,10 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   movement.msg
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -74,10 +74,11 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   dynamixel_msgs#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   #dynamixel_msgs#   
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -91,7 +92,7 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES $(PROJECT_NAME)
-   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf controller_manager hardware_interface
+   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf controller_manager hardware_interface message_runtime
 #  DEPENDS system_lib
 )
 
@@ -183,3 +184,9 @@ install(PROGRAMS
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+add_executable(test_publisher src/test_publisher.cpp)
+target_link_libraries(test_publisher ${catkin_LIBRARIES})
+add_dependencies(test_publisher akrobat_hector_generate_messages_cpp)
+add_executable(test_subscriber src/test_subscriber.cpp)
+target_link_libraries(test_subscriber ${catkin_LIBRARIES})
+add_dependencies(test_subscriber akrobat_hector_generate_messages_cpp)
