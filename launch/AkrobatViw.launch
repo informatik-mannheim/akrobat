@@ -1,0 +1,19 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <!-- configuration -->
+  <arg name="gui" default="false" />
+  <arg name="sim" default="false" />
+  <arg name="akrobat_walking" default="true" />
+  <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
+
+  <!-- configuration end -->
+
+  <arg name="dynamixel_namespace" value="dynamixel_controller" />
+
+  <param name="robot_description" textfile="$(arg model)" />
+  <param name="use_gui" value="$(arg gui)" />
+
+  
+  <!-- start rviz-->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
+</launch>
