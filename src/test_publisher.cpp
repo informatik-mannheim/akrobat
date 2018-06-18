@@ -8,13 +8,11 @@
 #include "sensor_msgs/Joy.h"
 
 int int_max = std::numeric_limits<int>::max();
-enum Mode_right_joystick 
+
+enum Mode 
 {
-	DEFAULT_MODE, 
-	shift, 
-	roll_pitch, 
-	yaw, 
-	level
+	navigate, 
+	work
 };
 enum Walking_Mode 
 {
@@ -22,10 +20,13 @@ enum Walking_Mode
 	wave, 
 	ripple
 };
-enum Mode 
+enum Mode_right_joystick 
 {
-	navigate, 
-	work
+	DEFAULT_MODE, 
+	shift, 
+	roll_pitch, 
+	yaw, 
+	level
 };
 enum Macro 
 {
