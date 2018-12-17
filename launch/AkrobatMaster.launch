@@ -35,7 +35,9 @@
   <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" unless="$(arg akrobat_walking)">
     <remap from="/joint_states" to="/goal_joint_states"/>
   </node>
-  
+
+  <!-- start translationNode -->
+  <node name="translateJoypad" pkg="akrobat" type="translateJoypad"></node>
   <!-- start rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
 </launch>

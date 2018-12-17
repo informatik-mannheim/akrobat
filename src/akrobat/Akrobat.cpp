@@ -17,6 +17,7 @@
 
 #include <akrobat/akrobat_init.h>
 #include <akrobat/Trajectory.h>
+#include <akrobat/movement.h>
 
 using namespace std;
 using namespace tf;
@@ -67,8 +68,11 @@ Akrobat::Akrobat() :
 
 	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
 	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
-	subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
+	//subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
+
+	//[SUBSCRIBER] -- subMov: subscribe the topic movements
+	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 
 	// ARRAY SIZE
 	js.name.resize(18);
@@ -668,36 +672,32 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 *
 * Note-------:	 None.
 ********************************************************************************************************/
-void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
+void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 {
-	const double joystickDeadZone = 0.3;
+	std::string gaitToString = "";
+	switch(gait)
+	{
+		case TRIPOD:
+			gaitToString = "tripod";
+			break;
+		case RIPPLE:
+			gaitToString = "ripple";
+			break;
+		case WAVE:
+			gaitToString = "wave";
+			break;
+		default:
+			break;
+	}
 
-	if (joy->buttons[LB] && joy->buttons[RB])
+	if (mov->macro == "shutdown")
 	{
 		cout << "SHUTTING DOWN!" << endl;
 		ros::shutdown();
 	}
 	else
 	{
-		if (joy->buttons[RB])
-		{
-			mode = 0;
-			cout << "[OPERATION]: Normal" << endl;
-			gait = -1;
-		}
-		else if (joy->buttons[L3])
-		{
-			mode = 1;
-			cout << "[OPERATION]: Translation" << endl;
-			gait = -1;
-		}
-		else if (joy->buttons[R3])
-		{
-			mode = 2;
-			cout << "[OPERATION]: Rotation" << endl;
-			gait = -1;
-		}
-		else if (joy->buttons[START])
+		if (mov->macro == "start")
 		{
 			js.header.stamp = ros::Time::now();
 
@@ -752,11 +752,21 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 
 			jointPub.publish(js);
 		}
-		else if (joy->buttons[RT] != joy->buttons[LT])
+		else if (mov->walking_mode != gaitToString)
 		{
-			gait = (gait + joy->buttons[RT] - joy->buttons[LT] + numberOfWalkingPattern) % numberOfWalkingPattern;
-
-			mode = 0;
+			std:string mv = mov->walking_mode;
+			if(mv == "tripod")
+			{				
+				gait = TRIPOD;
+			}			
+			else if(mv == "wave")
+			{
+				gait = WAVE;
+			}			
+			else if(mv == "ripple")
+			{
+				gait = RIPPLE;
+			}
 
 			switch (gait)
 			{
@@ -813,65 +823,43 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 			}
 		}
 
-		if (mode == 1)
-		{// [mode 1][OPERATION] -- Translation
-			pad.bdT.setX(joy->axes[leftStickRightLeft] * scaleFacTrans); // body translation X
-			pad.bdT.setY(joy->axes[leftStickUpDown] * scaleFacTrans); // body translation Y
-			pad.bdT.setZ(joy->axes[rightStickUpDown] * scaleFacTrans);// body translation Z
-			pad.speed.setX(0);
-			pad.speed.setY(0);
-			pad.speed.setZ(0);
-			pad.bdR.setX(0);
-			pad.bdR.setY(0);
-			pad.bdR.setZ(0);
-		}
-		else if (mode == 2)
-		{// [mode 2][OPERATION] -- Rotation
-			pad.bdR.setX(joy->axes[leftStickUpDown] * scaleFacRot); // body rotation X
-			pad.bdR.setY(joy->axes[leftStickRightLeft] * scaleFacRot); // body rotation Y
-			pad.bdR.setZ(joy->axes[rightStickRightLeft] * scaleFacRot); // body rotation Z
-			pad.speed.setX(0);
-			pad.speed.setY(0);
-			pad.speed.setZ(0);
-			pad.bdT.setX(0);
-			pad.bdT.setY(0);
-			pad.bdT.setZ(0);
-		}
-		else
-		{// [mode 0][OPERATION] -- Normal
-			pad.bdT.setX(0);
-			pad.bdT.setY(0);
-			pad.bdT.setZ(0);
-			pad.bdR.setX(0);
-			pad.bdR.setY(0);
-			pad.bdR.setZ(0);
-
-			if ((joy->axes[leftStickRightLeft] > joystickDeadZone) || (joy->axes[leftStickRightLeft] < -joystickDeadZone))
-			{ // sideward movement
-				pad.speed.setX(-(joy->axes[leftStickRightLeft]) / abs(joy->axes[leftStickRightLeft]));
+			//Translation
+			pad.bdT.setX((mov->commands[7] * scaleFacTrans) / 32767); // body translation X
+			pad.bdT.setY((mov->commands[6] * scaleFacTrans) / 32767); // body translation Y
+			pad.bdT.setZ((mov->commands[8] * scaleFacTrans) / 32767); // body translation Z
+			//Walking
+			if(mov->commands[1] != 0)
+			{
+				pad.speed.setX(-(mov->commands[1] / abs(mov->commands[1])));
 			}
 			else
 			{
 				pad.speed.setX(0);
 			}
-
-			if ((joy->axes[leftStickUpDown] > joystickDeadZone) || (joy->axes[leftStickUpDown] < -joystickDeadZone))
-			{ // forward/backward movement
-				pad.speed.setY(joy->axes[leftStickUpDown] / abs(joy->axes[leftStickUpDown]));
+			if(mov->commands[0] != 0)
+			{
+				pad.speed.setY(-(mov->commands[0] / abs(mov->commands[0])));
 			}
 			else
 			{
 				pad.speed.setY(0);
 			}
-
-			if ((joy->axes[rightStickRightLeft] > joystickDeadZone) || (joy->axes[rightStickRightLeft] < -joystickDeadZone))
-			{ // rotational movement
-				pad.speed.setZ((joy->axes[rightStickRightLeft] / abs(joy->axes[rightStickRightLeft])));
+			if(mov->commands[2] != 0)
+			{
+				pad.speed.setZ(-(mov->commands[2] / abs(mov->commands[2])));
 			}
 			else
 			{
 				pad.speed.setZ(0);
 			}
+
+
+
+			//Rotation
+			pad.bdR.setX((mov->commands[4] * scaleFacRot) / 32767); // body rotation X
+			pad.bdR.setY((mov->commands[5] * scaleFacRot) / 32767); // body rotation Y
+			pad.bdR.setZ((mov->commands[3] * scaleFacRot) / 32767); // body rotation Z
+		
 
 			if (abs(pad.speed.x()) < abs(pad.speed.y()))
 			{
@@ -944,7 +932,6 @@ void Akrobat::callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy)
 				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.z();
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.z();
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.z();
-			}
 		}
 	}
 }

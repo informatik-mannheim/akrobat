@@ -14,6 +14,7 @@
 #include <akrobat/CoordinateSystem.h>
 #include <akrobat/LegSetting.h>
 #include <akrobat/TrajectorySettings.h>
+#include <akrobat/movement.h>
 
 /// The Akrobat class
 /**
@@ -135,13 +136,13 @@ public:
 	bool IsRotating() const;
 
 	// call the motor state list back
-	void callRumblePad2Back(const sensor_msgs::Joy::ConstPtr& joy);
+	void callRumblePad2Back(const akrobat::movement::ConstPtr& mov);
 
 	void Debug(int i, std::string message = "") const;
 
 private:
 	ros::NodeHandle n;
-	ros::Subscriber subJoy; // subscriber of joy topic
+	ros::Subscriber subMov; // subscriber of joy topic
 	ros::Publisher jointPub; // publisher (rviz)
 };
 
