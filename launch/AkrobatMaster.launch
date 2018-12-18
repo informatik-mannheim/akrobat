@@ -1,0 +1,43 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <!-- configuration -->
+  <arg name="gui" default="false" />
+  <arg name="sim" default="false" />
+  <arg name="akrobat_walking" default="true" />
+  <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
+
+  <!-- configuration end -->
+
+  <arg name="dynamixel_namespace" value="dynamixel_controller" />
+
+  <param name="robot_description" textfile="$(arg model)" />
+  <param name="use_gui" value="$(arg gui)" />
+
+  <!-- start joystick -->
+  <node respawn="true" pkg="joy" type="joy_node" name="akrobatJoy">
+    <param name="dev" type="string" value="/dev/input/js0" />
+  </node>
+
+  <!-- start robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <param name="publish_frequency" value="20.0" />
+  </node>
+
+  <!-- include dynamixel unless we are just simmulating -->
+  <include file="$(find akrobat)/launch/dynamixel.launch" unless="$(arg sim)" />
+
+  <!-- start akrobat walking algorithms -->
+  <node name="akrobat" pkg="akrobat" type="akrobat" output="screen" required="true" if="$(arg akrobat_walking)">
+    <remap from="/goal_joint_states" to="/joint_states" if="$(arg sim)"/>
+  </node>
+
+  <!-- start jointstates if we dont use akrobat algorithms-->
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" unless="$(arg akrobat_walking)">
+    <remap from="/joint_states" to="/goal_joint_states"/>
+  </node>
+
+  <!-- start translationNode -->
+  <node name="translateJoypad" pkg="akrobat" type="translateJoypad"></node>
+  <!-- start rviz-->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
+</launch>

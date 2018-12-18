@@ -1,0 +1,213 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="hexapod">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="front_left">
+        <joint name="m11" />
+        <joint name="m12" />
+        <joint name="m13" />
+    </group>
+    <group name="front_right">
+        <joint name="m21" />
+        <joint name="m22" />
+        <joint name="m23" />
+    </group>
+    <group name="middle_left">
+        <joint name="m31" />
+        <joint name="m32" />
+        <joint name="m33" />
+    </group>
+    <group name="middle_right">
+        <joint name="m41" />
+        <joint name="m42" />
+        <joint name="m43" />
+    </group>
+    <group name="back_left">
+        <joint name="m51" />
+        <joint name="m52" />
+        <joint name="m53" />
+    </group>
+    <group name="back_right">
+        <joint name="m61" />
+        <joint name="m62" />
+        <joint name="m63" />
+    </group>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="planar" parent_frame="odom_combined" child_link="base_link" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="1_coxa_link" link2="1_femur_link" reason="Adjacent" />
+    <disable_collisions link1="1_coxa_link" link2="1_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="2_coxa_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="2_femur_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="2_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="1_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="1_femur_link" link2="1_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="1_femur_link" link2="2_coxa_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="2_femur_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="2_tibia_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="1_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="2_coxa_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="2_femur_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="1_tibia_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="2_femur_link" reason="Adjacent" />
+    <disable_collisions link1="2_coxa_link" link2="2_tibia_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="2_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="2_femur_link" link2="2_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="2_femur_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="2_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="3_coxa_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="3_femur_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="2_tibia_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="3_femur_link" reason="Adjacent" />
+    <disable_collisions link1="3_coxa_link" link2="3_tibia_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="3_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="3_femur_link" link2="3_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="3_femur_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="3_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="4_coxa_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="4_femur_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="3_tibia_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="4_femur_link" reason="Adjacent" />
+    <disable_collisions link1="4_coxa_link" link2="4_tibia_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="4_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="4_femur_link" link2="4_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="4_femur_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="4_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="5_coxa_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="5_femur_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="4_tibia_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="5_coxa_link" link2="5_femur_link" reason="Adjacent" />
+    <disable_collisions link1="5_coxa_link" link2="5_tibia_link" reason="Never" />
+    <disable_collisions link1="5_coxa_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="5_coxa_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="5_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="5_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="5_femur_link" link2="5_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="5_femur_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="5_femur_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="5_femur_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="5_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="5_tibia_link" link2="6_coxa_link" reason="Never" />
+    <disable_collisions link1="5_tibia_link" link2="6_femur_link" reason="Never" />
+    <disable_collisions link1="5_tibia_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="6_coxa_link" link2="6_femur_link" reason="Adjacent" />
+    <disable_collisions link1="6_coxa_link" link2="6_tibia_link" reason="Never" />
+    <disable_collisions link1="6_coxa_link" link2="hexapod_link" reason="Adjacent" />
+    <disable_collisions link1="6_femur_link" link2="6_tibia_link" reason="Adjacent" />
+    <disable_collisions link1="6_femur_link" link2="hexapod_link" reason="Never" />
+    <disable_collisions link1="6_tibia_link" link2="hexapod_link" reason="Never" />
+</robot>
