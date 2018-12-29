@@ -3,7 +3,7 @@
   <arg name="dynamixel_namespace" value="dynamixel_controller" />
 
   <!-- Load controller configuration to parameter server -->
-  <rosparam ns="$(arg dynamixel_namespace)" file="$(find akrobat)/config/akrobat_controllers.yaml" command="load" />
+  <rosparam ns="$(arg dynamixel_namespace)" file="$(find akrobat)/config/dynamixel_params.yaml" command="load" />
 
   <node name="jointstate_to_dynamixel" pkg="akrobat" type="jointstate_to_dynamixel">
     <param name="publish_frequency" value="20.0" />
