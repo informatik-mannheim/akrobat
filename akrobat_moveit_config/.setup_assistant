@@ -1,8 +1,0 @@
-moveit_setup_assistant_config:
-  URDF:
-    package: akrobat
-    relative_path: urdf/hexapod.urdf
-  SRDF:
-    relative_path: config/hexapod.srdf
-  CONFIG:
-    generated_timestamp: 1447937376
