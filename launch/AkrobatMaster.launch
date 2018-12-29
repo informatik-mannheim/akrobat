@@ -1,8 +1,8 @@
 <!-- -*- mode: XML -*- -->
 <launch>
   <!-- configuration -->
-  <arg name="gui" default="false" />
-  <arg name="sim" default="false" />
+  <arg name="gui" default="true" />
+  <arg name="sim" default="true" />
   <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
 
   <!-- configuration end -->
