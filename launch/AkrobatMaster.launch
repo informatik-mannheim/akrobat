@@ -7,7 +7,6 @@
 
   <!-- configuration end -->
 
-  <arg name="dynamixel_namespace" value="dynamixel_controller" />
 
   <param name="robot_description" textfile="$(arg model)" />
   <param name="use_gui" value="$(arg gui)" />
