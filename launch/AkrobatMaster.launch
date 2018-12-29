@@ -3,7 +3,6 @@
   <!-- configuration -->
   <arg name="gui" default="false" />
   <arg name="sim" default="false" />
-  <arg name="akrobat_walking" default="true" />
   <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
 
   <!-- configuration end -->
@@ -27,7 +26,7 @@
   <include file="$(find akrobat)/launch/dynamixel.launch" unless="$(arg sim)" />
 
   <!-- start akrobat walking algorithms -->
-  <node name="akrobat" pkg="akrobat" type="akrobat" output="screen" required="true" if="$(arg akrobat_walking)">
+  <node name="akrobat" pkg="akrobat" type="akrobat" output="screen" required="true">
     <remap from="/goal_joint_states" to="/joint_states" if="$(arg sim)"/>
   </node>
 
