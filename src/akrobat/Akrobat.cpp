@@ -428,23 +428,15 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::moveLeg()
+/** Move leg to target position
 *
-* Input------:	-float alpha: 	coxa joint angle
-*              -float gamma: 	femur joint angle
-*              -float beta:  	tibia joint angle
-*              -int legNum:	execute function operation for this leg
+*   @param alpha Angle for Coxa.
+*   @param beta Angle for Femur.
+*   @param gamma Angle for Tibia.
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 0: failed
-*               1: successful
-*
-* Overview---:	 move the leg to target position
-*
-* Console-Out:  F8DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return 0 if not possible because one of the angles exceeds its range. 1 if successful.
+*/
 int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 {
 	if (!IsWithinLimits(alpha, legSettings[legNum].minCoxa, legSettings[legNum].maxCoxa))
