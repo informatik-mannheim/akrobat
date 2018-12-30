@@ -392,19 +392,15 @@ void Akrobat::coordinateTransformation(int legNum)
 
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::inverseKinematics()
+/** Calculate the inverse kinematics for a specific leg.
 *
-* Input------: -int legNum:	execute function operation for this leg
+*   @param x the x coordinate for the current position of the leg.
+*   @param y the y coordinate for the current position of the leg.
+*   @param z the z coordinate for the current position of the leg.
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 None.
-*
-* Overview---:	 calculate the inverse kinematics for each leg
-*
-* Console-Out:  F7DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 {
 	float R, L, ALPHA, BETA1, BETA2, BETA, GAMMA;
