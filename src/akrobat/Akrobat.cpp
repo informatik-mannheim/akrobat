@@ -240,29 +240,9 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 			}
 		}
 
-		// [OUTPUT] -- console
-#if F3DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
 
-
-		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
-		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
-		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
-
-		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
-		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z());// <<endl;
-
-		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
-		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
-		// cout<<endl;
-#endif
-	}// IF (MOVING)
-}// Akrobat::tripodGait(Trajectory *tS,int legNum)
+	}
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::waveGait()
@@ -325,7 +305,7 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
 				if ((*tS).tick >= trajectorySettings[WAVE].numTick - 1) (*tS).caseStep[legNum] = 1;
 				break;
-		}// SWITCH ((*tS).caseStep[legNum])
+		}
 		if (legNum == numberOfLegs - 1)
 		{
 			(*tS).tick++;
@@ -334,29 +314,8 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 				(*tS).tick = 0;
 			}
 		}
-		// [OUTPUT] -- console
-#if F4DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-
-
-		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
-		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
-		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
-
-		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
-		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z()) << endl;
-
-		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
-		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
-		cout << endl;
-#endif
-	}// IF (MOVING)
-}// Akrobat::waveGait(Trajectory *tS,int legNum)
+	}
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::rippleGait()
@@ -420,7 +379,7 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
 				if ((*tS).tick >= trajectorySettings[RIPPLE].numTick - 1) (*tS).caseStep[legNum] = 1;
 				break;
-		}// SWITCH ((*tS).caseStep[legNum])
+		}
 		if (legNum == numberOfLegs - 1)
 		{
 			(*tS).tick++;
@@ -429,30 +388,8 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 				(*tS).tick = 0;
 			}
 		}
-		// [OUTPUT] -- console
-#if F5DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-
-
-		cout << "|-------------------------tripodGait()-----------------------LN: " << legNum << "|" << endl;
-		cout << "LEG: " << legNum << "/ CASE: " << (*tS).caseStep[legNum] << "/ TICK: " << setw(2) << (*tS).tick << "-> ";
-		cout << setw(5) << ".x." << setw(5) << ".y." << setw(5) << ".y." << endl;
-
-		// [OUTPUT] -- output of FootCoordinateSystem.leg[legNum].trajectoryPresPos vector
-		cout << "FootCoordinateSystem.leg[" << legNum << "].tcryPresPos-: ";
-		cout << setw(8) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.x());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.y());
-		cout << setw(5) << round(FootCoordinateSystem.leg[legNum].trajectoryPresPos.z()) << endl;
-
-		// [OUTPUT] -- output of LegCoordinateSystem.leg[legNum].footPresPos vector
-		cout << "LegCoordinateSystem.leg[" << legNum << "].footPresPos-: ";
-		cout << setw(8) << round(LegCoordinateSystem.leg[legNum].footPresPos.x());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.y());
-		cout << setw(5) << round(LegCoordinateSystem.leg[legNum].footPresPos.z()) << endl;
-		cout << endl;
-#endif
-	}// IF (MOVING)
-	// FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
-}// Akrobat::rippleGait(int legNum)
+	}
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::coordinateTransformation()
@@ -489,27 +426,7 @@ void Akrobat::coordinateTransformation(int legNum)
 	T = Akrobat::transformCS(Vector3(0, 0, legSettings[legNum].rotOfCoxa), Vector3(0, 0, 0));
 	LegCoordinateSystem.leg[legNum].footPresPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
-	// [OUTPUT] -- console
-#if F6DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-	cout << "|-------------------coordinateTransformation()----------------LN: " << legNum << "|" << endl;
-	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
-	cout << " MainCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
-	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.x();
-	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.y();
-	cout << setw(12) << MainCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
-
-	cout << " BodyCoordinateSystem.leg[" << legNum << "].footGlobPos---: ";
-	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.x();
-	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.y();
-	cout << setw(12) << BodyCoordinateSystem.leg[legNum].footGlobPos.z() << endl;
-
-	cout << " LegCoordinateSystem.leg[" << legNum << "].footPresPos---: ";
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.x();
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.y();
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].footPresPos.z() << endl;
-	cout << endl;
-#endif
-}// Akrobat::coordinateTransformation(int legNum)
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::inverseKinematics()
@@ -549,19 +466,7 @@ void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 	LegCoordinateSystem.leg[legNum].jointAngles.beta = to_degrees(BETA); // [FEMUR ANGLE] -- beta
 	LegCoordinateSystem.leg[legNum].jointAngles.gamma = to_degrees(GAMMA); // [TIBIA ANGLE] -- gamma
 
-	// [OUTPUT] -- console
-#if F7DEBUG == 1 // -----> [SET MARCO] -- akrobat_init.h
-	cout << "|----------------------inverseKinematics()------------------LN: " << legNum << "|" << endl;
-	cout << setw(40) << "..x.." << setw(12) << "..y.." << setw(12) << "..y.." << endl;
-	cout << setw(40) << "CAngl" << setw(12) << "FAngl" << setw(12) << "TAngl" << endl;
-	cout << "LegCoordinateSystem.leg[" << legNum << "].jointAngles---: ";
-	cout << "counter : " << cnt++ << "---: ";
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.alpha;
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.beta;
-	cout << setw(12) << LegCoordinateSystem.leg[legNum].jointAngles.gamma;
-	cout << setw(12) << "Atan" << atan2(0, 160) << endl;
-#endif
-}// Akrobat::inverseKinematics(int legNum)
+}
 
 /*********************************************************************************************************
 * Function---:  Akrobat::moveLeg()
