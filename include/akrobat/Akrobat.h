@@ -16,6 +16,8 @@
 #include <akrobat/TrajectorySettings.h>
 #include <akrobat/movement.h>
 
+#include <akrobat/Settings.h>
+
 /// The Akrobat class
 /**
  * \class Akrobat

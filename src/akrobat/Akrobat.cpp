@@ -15,7 +15,6 @@
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/JointState.h>
 
-#include <akrobat/akrobat_init.h>
 #include <akrobat/Trajectory.h>
 #include <akrobat/movement.h>
 

@@ -1,7 +1,7 @@
 #ifndef TRAJECTORY_H
 #define TRAJECTORY_H
 
-#include <akrobat/akrobat_init.h>
+#include <akrobat/Settings.h>
 
 class Trajectory
 {
