@@ -52,9 +52,7 @@ Akrobat::Akrobat() :
 	trajectorySettings[WAVE] = TrajectorySettings(40, 40, 15);
 	trajectorySettings[RIPPLE] = TrajectorySettings(40, 40, 15);
 
-
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
-
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 
 	jointState.name.resize(18);
@@ -146,7 +144,6 @@ Transform Akrobat::transformCS(Vector3 rot, Vector3 trans)
 	return TCS_local;
 }
 
-
 /** Execute the gait functions respective to the current gait mode of the hexapod.
 *
 *   @return Void.
@@ -189,7 +186,6 @@ void Akrobat::runAkrobat()
 
 	jointPub.publish(jointState);
 }
-
 
 /** Create a tripod gait for a specific leg
 *
@@ -467,19 +463,12 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 	return 1;
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::callRumblePad2Back()
+/** Call the joy values back.
 *
-* Input------:	-const sensor_msgs::Joy::ConstPtr& joy:	a pointer to const joy message data
+*   @param mov a pointer to the constant joy message data.
 *
-* Output-----:	 None.
-*
-* Overview---:	 call the joy values back
-*
-* Console-Out:  F10DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 {
 	std::string gaitToString = "";
