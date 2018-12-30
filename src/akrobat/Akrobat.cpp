@@ -362,19 +362,12 @@ void Akrobat::rippleGait(Trajectory* tS, int legNum)
 	}
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::coordinateTransformation()
+/** Transform the coordinate system for one specific leg.
 *
-* Input------:	-int legNum:	execute function operation for this leg
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 None.
-*
-* Overview---:	 transformate the coordinate systems
-*
-* Console-Out:  F6DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::coordinateTransformation(int legNum)
 {
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
