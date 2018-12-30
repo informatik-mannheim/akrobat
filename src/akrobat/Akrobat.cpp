@@ -23,17 +23,11 @@ using namespace tf;
 using namespace ros;
 using namespace angles;
 
-/*********************************************************************************************************
-* Function---:  Akrobat::Akrobat()
-*
-* Input------:	 None.
-*
-* Output-----:	 None.
-*
-* Overview---:	 constructor
-*
-* Note-------:	 None
-********************************************************************************************************/
+/** The Akrobat constructor.
+*   Initializes the leg settings for all six legs.
+*   Initializes the trajectory for the different walking modes.
+*   Subscribes to sensor_msgs:JointState and to akrobat::movement topics.
+*/
 Akrobat::Akrobat() :
 	mode(0),
 	gait(-1),
@@ -46,12 +40,6 @@ Akrobat::Akrobat() :
 	scaleFacTrans(50),
 	scaleFacRot(10)
 {
-	// TODO left off:
-	// need to put settings into settings class replaces usages
-	// merge legs/configuration
-	// move controller config into separate class
-	// rethink overall structure
-
 	//float rollOv, rotOfCoxa, bdConstX, bdConstY, bdConstZ, jointInitA, jointInitB, jointInitC, minCoxa, minFemur, minTibia, maxCoxa, maxFemur, maxTibia
 	legSettings[LEFT_FRONT] = LegSetting(0.0, -160.0, -51.0, 217.0, 0.0, 160.0, 10.0, -90.0, -26.0, -99.0, -135.0, 65.0, 96.0, 135.0);
 	legSettings[RIGHT_FRONT] = LegSetting(0.0, -20.0, 51.0, 217.0, 0.0, 20.0, 10.0, -90.0, -71.0, -99.0, -135.0, 28.0, 96.0, 135.0);
@@ -65,15 +53,10 @@ Akrobat::Akrobat() :
 	trajectorySettings[RIPPLE] = TrajectorySettings(40, 40, 15);
 
 
-	// [SUBCRIBER]	-- subJoy:  subscribe the topic(joy)
-	// 		-- subMots: subscribe the topic(/motorState/pan_tilt_port/) test
-	//subJoy = n.subscribe<sensor_msgs::Joy>("joy", 10, &Akrobat::callRumblePad2Back, this);
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
 
-	//[SUBSCRIBER] -- subMov: subscribe the topic movements
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 
-	// ARRAY SIZE
 	jointState.name.resize(18);
 	jointState.position.resize(18);
 	jointState.velocity.resize(18);
