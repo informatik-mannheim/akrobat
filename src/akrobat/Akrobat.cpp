@@ -80,19 +80,10 @@ Akrobat::Akrobat() :
 	}
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::initAkrobat()
+/** Initialize the leg position of for each leg.
 *
-* Input------:	 None.
-*
-* Output-----:	 None.
-*
-* Overview---:	 initialize akrobat leg position
-*
-* Console-Out:  F1DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::initAkrobat()
 {
 	for (int legNum = 0; legNum < numberOfLegs; legNum++)
