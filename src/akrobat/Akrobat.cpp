@@ -582,7 +582,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 					traData.tick = 0;
 					break;
 				}
-
 				case WAVE:
 				{
 					cout << "[  GAIT   ]: Wave" << endl;
@@ -598,7 +597,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 					traData.tick = 0;
 					break;
 				}
-
 				case RIPPLE:
 				{
 					cout << "[  GAIT   ]: Ripple" << endl;
@@ -614,7 +612,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 					traData.tick = 0;
 					break;
 				}
-
 				default:
 					break;
 			}
@@ -650,14 +647,11 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				pad.speed.setZ(0);
 			}
 
-
-
 			//Rotation
 			pad.bdR.setX((mov->commands[4] * scaleFacRot) / 32767); // body rotation X
 			pad.bdR.setY((mov->commands[5] * scaleFacRot) / 32767); // body rotation Y
 			pad.bdR.setZ((mov->commands[3] * scaleFacRot) / 32767); // body rotation Z
 		
-
 			if (abs(pad.speed.x()) < abs(pad.speed.y()))
 			{
 				// LEG 1 amplitude					     // LEG 2 amplitude
@@ -733,21 +727,41 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 	}
 }
 
+/** Checks if the servo motor is within his movement limits.
+*
+*   @param value represents the current value of the servo motor.
+*   @param min represents the minimum angle of the servo motor.
+*   @param max represents the maximum angle of the servo motor.
+*
+*   @return true or false.
+*/
 bool Akrobat::IsWithinLimits(const float& value, const float& min, const float& max)
 {
 	return value >= min && value <= max;
 }
 
+/** Checks if the pad is moved.
+*
+*   @return true or false.
+*/
 bool Akrobat::IsMoving() const
 {
 	return (pad.speed.x() > 0.3) || (pad.speed.x() < -0.3) || (pad.speed.y() > 0.3) || (pad.speed.y() < -0.3) || (pad.speed.z() > 0.3) || (pad.speed.z() < -0.3);
 }
 
+/** Checks if the pad is translating.
+*
+*   @return true or false.
+*/
 bool Akrobat::IsTranslating() const
 {
 	return (pad.bdT.x() > 0.3) || (pad.bdT.x() < -0.3) || (pad.bdT.y() > 0.3) || (pad.bdT.y() < -0.3) || (pad.bdT.z() > 0.3) || (pad.bdT.z() < -0.3);
 }
 
+/** Checks if the pad is rotating.
+*
+*   @return true or false.
+*/
 bool Akrobat::IsRotating() const
 {
 	return (pad.bdR.x() > 0.3) || (pad.bdR.x() < -0.3) || (pad.bdR.y() > 0.3) || (pad.bdR.y() < -0.3) || (pad.bdR.z() > 0.3) || (pad.bdR.z() < -0.3);
