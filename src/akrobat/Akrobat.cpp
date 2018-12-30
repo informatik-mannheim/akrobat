@@ -127,32 +127,22 @@ void Akrobat::initAkrobat()
 	}
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::transformCS()
+/** Transform source coordinate system to target coordinate system.
 *
-* Input------:	-string sCS: 		source frame
-*              -string tCS:		target frame
-*              -Vector3 rot:		rotational element
-*              -Vector3 trans:		translational element
+*   @param rot rotational element
+*   @param trans translational element
 *
-* Output-----:	-TCS: calculated transformation for two frames
-*
-* Overview---:	 transformate source coordinate system to target coordinate system
-*
-* Console-Out:  F9DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return calculated transformation for two frames.
+*/
 Transform Akrobat::transformCS(Vector3 rot, Vector3 trans)
 {
-	Transform TCS_local; // [TRANSFORMATION DATA TYP] -- create a transform
-	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATON] -- create and define vector
+	Transform TCS_local;
+	Vector3 transVec(trans.x(), trans.y(), trans.z()); // [TRANSLATION] -- create and define vector
 	TCS_local.setOrigin(transVec); // [.setOrigin] -- set translational element of transform
-	Quaternion rotQuat; // [ROTATION] -- create quaternion
+	Quaternion rotQuat;
 	rotQuat.setRPY(from_degrees(rot.x()), from_degrees(rot.y()), from_degrees(rot.z())); // [.setRPY] -- define quaternion
 	TCS_local.setRotation(rotQuat); // [.setRotaion] -- set rotational element of transform
 
-	// cout << "[ERROR]: FAILED: Transform for this frame does not exist!" << endl;
 	return TCS_local;
 }
 
