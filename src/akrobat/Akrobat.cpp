@@ -146,18 +146,6 @@ Transform Akrobat::transformCS(Vector3 rot, Vector3 trans)
 	return TCS_local;
 }
 
-void Akrobat::Debug(int legNum, string message) const
-{
-	if (message != "")
-	{
-		cout << message << endl;
-	}
-
-	cout << "LegCoordinateSystem.leg[" << legNum << "].footInitPos: " << LegCoordinateSystem.leg[legNum].footInitPos << endl;
-	cout << "BodyCoordinateSystem.leg[" << legNum << "].footGlobPos: " << BodyCoordinateSystem.leg[legNum].footGlobPos << endl;
-	cout << "MainCoordinateSystem.leg[" << legNum << "].footGlobPos: " << MainCoordinateSystem.leg[legNum].footGlobPos << endl;
-}
-
 /*********************************************************************************************************
 * Function---:  Akrobat::runAkrobat()
 *

@@ -140,7 +140,6 @@ public:
 	// call the motor state list back
 	void callRumblePad2Back(const akrobat::movement::ConstPtr& mov);
 
-	void Debug(int i, std::string message = "") const;
 
 private:
 	ros::NodeHandle n;
