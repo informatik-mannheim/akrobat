@@ -74,10 +74,10 @@ Akrobat::Akrobat() :
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 
 	// ARRAY SIZE
-	js.name.resize(18);
-	js.position.resize(18);
-	js.velocity.resize(18);
-	js.effort.resize(18);
+	jointState.name.resize(18);
+	jointState.position.resize(18);
+	jointState.velocity.resize(18);
+	jointState.effort.resize(18);
 
 	for (int i = 0, j = 1, k = 1; i < 18; i++)
 	{
@@ -85,9 +85,9 @@ Akrobat::Akrobat() :
 		name += ('0' + j);
 		name += ('0' + k++);
 
-		js.name[i] = name;
-		js.velocity[i] = 0.0;
-		js.effort[i] = 0.0;
+		jointState.name[i] = name;
+		jointState.velocity[i] = 0.0;
+		jointState.effort[i] = 0.0;
 
 		if (k > 3)
 		{
@@ -145,11 +145,11 @@ void Akrobat::initAkrobat()
 		MainCoordinateSystem.leg[legNum].footGlobPos = iT * BodyCoordinateSystem.leg[legNum].footGlobPos;
 
 		// 3D - RVIZ init position
-		js.header.stamp = ros::Time::now();
+		jointState.header.stamp = ros::Time::now();
 		Akrobat::coordinateTransformation(legNum);
 		Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 		Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
-		jointPub.publish(js);
+		jointPub.publish(jointState);
 	}
 }
 
@@ -212,7 +212,7 @@ void Akrobat::runAkrobat()
 	if (IsMoving() || IsTranslating() || IsRotating())
 	{
 		// cout<<"runAkr"<<endl;
-		js.header.stamp = ros::Time::now();
+		jointState.header.stamp = ros::Time::now();
 		for (int legNum = 0; legNum < numberOfLegs; legNum++)
 		{
 			switch (gait)
@@ -242,7 +242,7 @@ void Akrobat::runAkrobat()
 		}
 	}
 
-	jointPub.publish(js);
+	jointPub.publish(jointState);
 }
 
 /*********************************************************************************************************
@@ -651,9 +651,9 @@ int Akrobat::moveLeg(float alpha, float beta, float gamma, int legNum)
 		return 0;
 	}
 
-	js.position[legNum * 3 + 0] = from_degrees(alpha);
-	js.position[legNum * 3 + 1] = from_degrees(beta);
-	js.position[legNum * 3 + 2] = from_degrees(gamma);
+	jointState.position[legNum * 3 + 0] = from_degrees(alpha);
+	jointState.position[legNum * 3 + 1] = from_degrees(beta);
+	jointState.position[legNum * 3 + 2] = from_degrees(gamma);
 
 	return 1;
 }
@@ -698,7 +698,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 	{
 		if (mov->macro == "start")
 		{
-			js.header.stamp = ros::Time::now();
+			jointState.header.stamp = ros::Time::now();
 
 			if (rollOver == 0)
 			{
@@ -749,7 +749,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				}
 			}
 
-			jointPub.publish(js);
+			jointPub.publish(jointState);
 		}
 		else if (mov->walking_mode != gaitToString)
 		{

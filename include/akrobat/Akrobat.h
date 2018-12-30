@@ -97,7 +97,7 @@ public:
 	Trajectory traData; // [	.. ] --
 	TrajectorySettings trajectorySettings[numberOfWalkingPattern]; // 3 = number of walking modes
 	CoordinateSystem MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
-	sensor_msgs::JointState js;
+	sensor_msgs::JointState jointState;
 
 	// constructor
 	Akrobat();
