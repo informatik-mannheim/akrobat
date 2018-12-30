@@ -129,8 +129,8 @@ void Akrobat::initAkrobat()
 
 /** Transform source coordinate system to target coordinate system.
 *
-*   @param rot rotational element
-*   @param trans translational element
+*   @param rot rotational element.
+*   @param trans translational element.
 *
 *   @return calculated transformation for two frames.
 */
@@ -146,25 +146,18 @@ Transform Akrobat::transformCS(Vector3 rot, Vector3 trans)
 	return TCS_local;
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::runAkrobat()
+
+/** Execute the gait functions respective to the current gait mode of the hexapod.
 *
-* Input------:	 None.
-*
-* Output-----:	 None.
-*
-* Overview---:	 execute important fuction to run the hexapod
-*
-* Console-Out:  F2DEBUG (akrobat_init.h)
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::runAkrobat()
 {
 	if (IsMoving() || IsTranslating() || IsRotating())
 	{
-		// cout<<"runAkr"<<endl;
 		jointState.header.stamp = ros::Time::now();
+
+
 		for (int legNum = 0; legNum < numberOfLegs; legNum++)
 		{
 			switch (gait)
@@ -197,24 +190,18 @@ void Akrobat::runAkrobat()
 	jointPub.publish(jointState);
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::tripodGait()
+
+/** Create a tripod gait for a specific leg
 *
-* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-*              -int legNum:            execute function operation for this leg
+*   @param tS includes the data of trajectory for each leg.
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 None.
-*
-* Overview---:	 create tripod gait
-*
-* Console-Out:  F3DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::tripodGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
-	{ // [MOVING] -- one of joypad sticks was actived
+	{
 		switch ((*tS).caseStep[legNum])
 		{
 			case 1: // [LEG MOVING] -- up/forward
@@ -230,7 +217,7 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 				FootCoordinateSystem.leg[legNum].trajectoryPresPos.setZ(0);
 				if ((*tS).tick >= trajectorySettings[TRIPOD].numTick - 1) (*tS).caseStep[legNum] = 1;
 				break;
-		}// SWITCH ((*tS).caseStep[legNum])
+		}
 		if (legNum == numberOfLegs - 1)
 		{
 			(*tS).tick++;
@@ -239,29 +226,20 @@ void Akrobat::tripodGait(Trajectory* tS, int legNum)
 				(*tS).tick = 0;
 			}
 		}
-
-
 	}
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::waveGait()
+/** Create a wave gait for a specific leg
 *
-* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-*              -int legNum:            execute function operation for this leg
+*   @param tS includes the data of trajectory for each leg.
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 None.
-*
-* Overview---:	 create wave gait
-*
-* Console-Out:  F4DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::waveGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
-	{ // [MOVING] -- one of joypad sticks was actived
+	{
 		switch ((*tS).caseStep[legNum])
 		{
 			case 1: // [LEG MOVING] -- up/forward
@@ -317,20 +295,13 @@ void Akrobat::waveGait(Trajectory* tS, int legNum)
 	}
 }
 
-/*********************************************************************************************************
-* Function---:  Akrobat::rippleGait()
+/** Create a ripple gait for a specific leg
 *
-* Input------:	-Trajectory *tS: 	include the data of trajectory for each leg
-*		-int legNum:		execute function operation for this leg
+*   @param tS includes the data of trajectory for each leg.
+*   @param legNum execute the operation for this specific leg.
 *
-* Output-----:	 None.
-*
-* Overview---:	 create ripple gait
-*
-* Console-Out:  F5DEBUG (akrobat_init.h) 1:output 0:no output
-*
-* Note-------:	 None.
-********************************************************************************************************/
+*   @return Void.
+*/
 void Akrobat::rippleGait(Trajectory* tS, int legNum)
 {
 	if (IsMoving())
