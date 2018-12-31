@@ -1,3 +1,9 @@
+/** @file Akrobat.cpp
+ *  @brief Main file of Akrobat project.
+ *
+ *  @author Author
+ */
+
 #include <akrobat/Akrobat.h>
 
 #include <cmath>
