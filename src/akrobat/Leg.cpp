@@ -1,7 +1,16 @@
-#include <akrobat/Leg.h>
+/** @file Leg.cpp
+ *  @brief Responsible for leg status.
+ *
+ *  @author Author
+ */
 
+#include <akrobat/Leg.h>
 #include <iomanip>
 
+/** ???.
+*
+*   @return String.
+*/
 std::ostream& Leg::ToString(std::ostream& o) const
 {
 	return o
@@ -11,11 +20,19 @@ std::ostream& Leg::ToString(std::ostream& o) const
 		<< "trajectoryPresPos: " << trajectoryPresPos << std::endl;
 }
 
+/** Converts information about one leg to string.
+*
+*   @return String.
+*/
 std::ostream& operator<<(std::ostream& o, const Leg& b)
 {
 	return b.ToString(o);
 }
 
+/** ???.
+*
+*   @return stream.
+*/
 std::ostream& operator<<(std::ostream& stream, const tf::Vector3& vector3)
 {
 	// Save flags/precision.

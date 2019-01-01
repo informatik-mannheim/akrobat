@@ -1,3 +1,9 @@
+/** @file Trajectory.cpp
+ *  @brief Initializes the Trajectory.
+ *
+ *  @author Author
+ */
+
 #include <akrobat/Trajectory.h>
 
 Trajectory::Trajectory() :
@@ -5,5 +11,4 @@ Trajectory::Trajectory() :
 	initAmpX(0.0f),
 	initAmpY(0.0f),
 	initAmpZ(0.0f)
-{
-}
+{}

@@ -13,4 +13,4 @@ public:
 	virtual ~TrajectorySettings();
 };
 
-#endif // TRAJECTORYSETTINGS_H
+#endif
