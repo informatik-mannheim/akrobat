@@ -14,4 +14,4 @@ public:
 
 std::ostream& operator<<(std::ostream& o, const CoordinateSystem& b);
 
-#endif // COORDINATESYSTEM_H
+#endif

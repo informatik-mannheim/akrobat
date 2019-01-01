@@ -1,5 +1,5 @@
 /** @file Akrobat.cpp
- *  @brief Main file of Akrobat project.
+ *  @brief Akrobat file with main methods.
  *
  *  @author Author
  */

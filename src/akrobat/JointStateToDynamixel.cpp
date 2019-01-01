@@ -1,8 +1,12 @@
+/** @file JointStateToDynamixel.cpp
+ *  @brief .
+ *
+ *  @author Author
+ */
+
 #include <vector>
 #include <string>
-
 #include "ros/ros.h"
-
 #include <std_msgs/Float64.h>
 #include <sensor_msgs/JointState.h>
 
@@ -14,6 +18,10 @@ NodeHandle* nodeHandle;
 string dynamixelPrefix;
 vector<Publisher> publishers;
 
+/** ???
+*
+*   @return Void.
+*/
 void goalJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
 	std_msgs::Float64 message;
@@ -34,6 +42,10 @@ void goalJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg)
 	}
 }
 
+/** ???
+*
+*   @return Integer.
+*/
 int main(int argc, char** argv)
 {
 	init(argc, argv, "JointStateToDynamixel");
