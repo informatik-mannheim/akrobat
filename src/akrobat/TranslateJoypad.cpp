@@ -131,7 +131,8 @@ int main(int argc, char **argv)
 		vector<int> buttonsValue = l.getButtonsValue();
 		string ct = l.getControllerType();
         akrobat::movement msg;
-		
+        akrobat::movement msg;
+
 		//Überprüfen, ob der richtige Controller angeschlossen ist
 		if(ct != "Logitech Gamepad F710")
 		{
@@ -141,8 +142,8 @@ int main(int argc, char **argv)
 			continue;
 		}
 
-		float commands[9] = {0.0f}; //w_x, w_y, w_alpha, yaw, pitch, roll, m_x, m_y, m_z
-		map<String,>
+		//w_x, w_y, w_alpha, yaw, pitch, roll, m_x, m_y, m_z
+        Map<string, float> commands;
 
 		//Befehle im Navigationsmodus
 		if(mode == navigate)
@@ -150,19 +151,19 @@ int main(int argc, char **argv)
 			//LINKER JOYSTICK
 			if(abs(axisValue[1]) > joystickDeadZone)
 			{ 
-				commands[0] = axisValue[1]*int_max;
+				commands["w_x"] = axisValue[1] * int_max;
 			}
 			else
 			{
-				commands[0] = 0;
-			}
+			
+			commandss["w_x"] = 0;
 			if(abs(axisValue[0]) > joystickDeadZone)
 			{
-				commands[1] = axisValue[0]*int_max*(-1);
+				commands["w_y"] = axisValue[0]*int_max*(-1);
 			}
 			else
 			{
-				commands[1] = 0;
+				commands["w_y"] = 0;
 			}
 
 			//RECHTER JOYSTICK
@@ -172,60 +173,60 @@ int main(int argc, char **argv)
 				{
 					if(abs(axisValue[4]) > joystickDeadZone)
 					{
-						commands[6] = axisValue[4]*int_max;
+						commands["m_x"] = axisValue[4]*int_max;
 					}
 					else
 					{
-						commands[6] = 0;
+						commands["m_x"] = 0;
 					}
 					if(abs(axisValue[3]) > joystickDeadZone)
 					{					
-						commands[7] = axisValue[3]*int_max;
+						commands["m_y"] = axisValue[3]*int_max;
 					}
 					else
 					{
-						commands[7] = 0;
+						commands["m_y"] = 0;
 					}
 				}
 				else if(m == roll_pitch)
 				{
 					if(abs(axisValue[4]) > joystickDeadZone)
 					{
-						commands[4] = axisValue[4]*int_max;
+						commands["pitch"] = axisValue[4]*int_max;
 					}
 					else
 					{
-						commands[4] = 0;
+						commands["pitch"] = 0;
 					}
 					if(abs(axisValue[3]) > joystickDeadZone)
 					{
-						commands[5] = axisValue[3]*int_max;
+						commands["roll"] = axisValue[3]*int_max;
 					}
 					else
 					{
-						commands[5] = 0;
+						commands["roll"] = 0;
 					}
 				}
 				else if(m == yaw)
 				{
 					if(abs(axisValue[3]) > joystickDeadZone)
 					{
-						commands[3] = axisValue[3]*int_max;
+						commands["yaw"] = axisValue[3]*int_max;
 					}
 					else
 					{
-						commands[3] = 0;
+						commands["yaw"] = 0;
 					}
 				}
 				else if(m == level)
 				{
 					if(abs(axisValue[4]) > joystickDeadZone)
 					{
-						commands[8] = axisValue[4]*int_max;
+						commands["m_z"] = axisValue[4]*int_max;
 					}
 					else
 					{
-						commands[8] = 0;
+						commands["m_z"] = 0;
 					}
 				}
 			}
@@ -233,12 +234,12 @@ int main(int argc, char **argv)
 			//RT&LT
 			if(abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
 			{
-				commands[2] = ((axisValue[2]-axisValue[5])*int_max)/2;
+				commands["w_y"] = ((axisValue[2]-axisValue[5])*int_max)/2;
 				//Im Uhrzeigersinn drehen --> positiv
 			}
 			else
 			{
-				commands[2] = 0;
+				commands["w_y"] = 0;
 			}
 
 			//Dig. Joystick
@@ -313,48 +314,48 @@ int main(int argc, char **argv)
 			//LINKER JOYSTICK
 			if(abs(axisValue[1]) > joystickDeadZone)
 			{
-				commands[6] = axisValue[1]*int_max;
+				commands["m_x"] = axisValue[1]*int_max;
 			}		
 			else
 			{
-				commands[6] = 0;
+				commands["m_x"] = 0;
 			}		
 			if(abs(axisValue[0]) > joystickDeadZone)
 			{
-				commands[7] = axisValue[0]*int_max*(-1);
+				commands["m_y"] = axisValue[0]*int_max*(-1);
 			}
 			else
 			{
-				commands[7] = 0;
+				commands["m_y"] = 0;
 			}
 
 			//RECHTER JOYSTICK
 			if(abs(axisValue[4]) > joystickDeadZone)
 			{			
-				commands[4] = axisValue[4]*int_max;
+				commands["pitch"] = axisValue[4]*int_max;
 			}
 			else
 			{
-				commands[4] = 0;
+				commands["pitch"] = 0;
 			}
 			if(abs(axisValue[3]) > joystickDeadZone)
 			{			
-				commands[5] = axisValue[3]*int_max*(-1);
+				commands["roll"] = axisValue[3]*int_max*(-1);
 			}
 			else
 			{
-				commands[5] = 0;
+				commands["roll"] = 0;
 			}
 
 			//RT&LT
 			if(abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
 			{
-				commands[3] = ((axisValue[2]-axisValue[5])*int_max)/2;
+				commands["yaw"] = ((axisValue[2]-axisValue[5])*int_max)/2;
 				//Im Uhrzeigersinn --> positiv
 			}
 			else
 			{
-				commands[3] = 0;
+				commands["yaw"] = 0;
 			}
 
 			//DIGITALER JOYSTICK
@@ -373,7 +374,7 @@ int main(int argc, char **argv)
 			//NOTHING TO DO HERE
 
 			//BUTTON LB&RB
-			commands[8] = ((buttonsValue[5]-buttonsValue[4])*int_max);
+			commands["m_z"] = ((buttonsValue[5]-buttonsValue[4])*int_max);
 
 			//Button START
 			if(buttonsValue[7] == 1)
@@ -450,11 +451,11 @@ int main(int argc, char **argv)
 
 		//Commands auf die Message posten
 		cout << "commands:{" << endl;
-		for(int i = 0; i < 9; i++)
-		{
-			msg.commands.push_back((int)commands[i]);
-			cout << commands[i] << endl;
-		}
+		for(auto& [key, value]: commands)
+        {
+  		     msg.commands.push_back((int)value)
+  		     cout << commands[i] << endl;
+        }
 		cout << "}" << endl;
 
 		//Walkingmode auf die Message posten
