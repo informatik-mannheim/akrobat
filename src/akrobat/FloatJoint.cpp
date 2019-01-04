@@ -1,14 +1,15 @@
 /** @file FloatJoint.cpp
- *  @brief Concatenades float numbers alpha, beta and gamma into one string.
+ *  @brief Joins and writes leg angles alpha, beta, gamma into ostream.
  *
  *  @author Author
  */
 
 #include <akrobat/FloatJoint.h>
 
-/** Receives the information from output stream and concatenates alpha, beta and gamma values.
+/** Receives an ostream object and writes the joined leg angles alpha, beta and gamma from one specific leg into it.
 *
-*   @return String with the concatenated output values.
+*	@param o ostream object.
+*   @return ostream object with new values.
 */
 std::ostream& FloatJoint::ToString(std::ostream& o) const
 {

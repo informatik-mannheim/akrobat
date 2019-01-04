@@ -1,14 +1,15 @@
 /** @file CoordinateSystem.cpp
- *  @brief Initialization file for Controller.
+ *  @brief Responsible for retrieving all leg position in coordinate system.
  *
  *  @author Author
  */
 
 #include <akrobat/CoordinateSystem.h>
 
-/** Keine Ahnung.
+/** Reads the information from every leg and writes it to the ostream.
 *
-*   @return ???.
+*	@param o ostream to write data.
+*   @return ostream with new leg values.
 */
 std::ostream& CoordinateSystem::ToString(std::ostream& o) const
 {
@@ -16,13 +17,14 @@ std::ostream& CoordinateSystem::ToString(std::ostream& o) const
 	{
 		o << leg[i] << std::endl;
 	}
-
 	return o;
 }
 
-/** Unnötig? Kann doch direkt in der Methode obendrüber gemacht werden.
+/** Overloads the << operator only if it is used with stream and CoordinateSystem as parameters.
 *
-*   @return ???.
+*	@param o ostream object where the information is written.
+*	@param b CoordinateSystem instance.
+*   @return ostream object with written leg values.
 */
 std::ostream& operator<<(std::ostream& o, const CoordinateSystem& b)
 {
