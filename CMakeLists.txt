@@ -184,6 +184,6 @@ install(PROGRAMS
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-add_executable(translateJoypad src/akrobat/translateJoypad.cpp)
+add_executable(translateJoypad src/akrobat/TranslateJoypad.cpp)
 target_link_libraries(translateJoypad ${catkin_LIBRARIES})
 add_dependencies(translateJoypad akrobat_generate_messages_cpp)
