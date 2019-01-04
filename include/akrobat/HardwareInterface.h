@@ -17,8 +17,8 @@ namespace Akrobat
 		ros::Time getTime() const { return ros::Time::now(); }
 		ros::Duration getPeriod() const { return ros::Duration(0.01); }
 		void readAsync(int motorArrayPosition, const dynamixel_msgs::JointStateConstPtr& motorState);
-		//void read();
 		void write();
+		
 	private:
 		static const int numberOfMotors = 18;
 
@@ -37,4 +37,4 @@ namespace Akrobat
 	};
 }
 
-#endif // HARDWAREINTERFACE_H
+#endif

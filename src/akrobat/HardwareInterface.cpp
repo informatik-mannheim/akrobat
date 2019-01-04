@@ -15,8 +15,6 @@ namespace Akrobat
 {
 	/** Initialization of the hardware interface. 
 	*	Publishes topic for writing hardware and topic for reading hardware.
-	*
-	*   @return String with the concatenated output values.
 	*/
 	HardwareInterface::HardwareInterface()
 	{
@@ -46,8 +44,9 @@ namespace Akrobat
 		registerInterface(&jnt_pos_interface);
 	}
 
-	/** Reads the state of one specific motor and updates the values in the motor array.
-	*
+	/** Receives dynamixel_msgs with motor state and writes the values into corresponding arrays.
+	*	@param motorArrayPosition Index of a motor in motorarray.
+	*	@param motorState Message from dynamixel motor about the current status.
 	*   @return Void.
 	*/
 	void HardwareInterface::readAsync(int motorArrayPosition, const dynamixel_msgs::JointStateConstPtr& motorState)
@@ -57,7 +56,7 @@ namespace Akrobat
 		effort[motorArrayPosition] = motorState->load;
 	}
 
-	/** Writes new values to ros::Publisher.
+	/** Publishes new move commands to ros::Publisher.
 	*
 	*   @return Void.
 	*/

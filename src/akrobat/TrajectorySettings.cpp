@@ -6,16 +6,27 @@
 
 #include <akrobat/TrajectorySettings.h>
 
-/** Default constructor for the TrajectorySettings class.
+/** Overloads TrajectorySettings constructor.
 * 
 */
-TrajectorySettings::TrajectorySettings() :ampWidth(0), ampHight(0), numTick(0){}
+TrajectorySettings::TrajectorySettings():
+ampWidth(0),
+ampHight(0),
+numTick(0)
+{}
 
 /** Overload constructor for the TrajectorySettings class with custom initialize values.
-*   @param ampWidth ???.
-*   @param ampHight ???.
-*   @param numTick ???.
+*   @param ampWidth [mm] X amplitude width of leg trajectory for tripod gait.
+*   @param ampHight [mm] Z amplitude hight of leg trajectory for tripod gait.
+*   @param numTick Ticker of one cycle for the servo motors.
 */
-TrajectorySettings::TrajectorySettings(int ampWidth, int ampHight, int numTick):ampWidth(ampWidth), ampHight(ampHight), numTick(numTick){}
+TrajectorySettings::TrajectorySettings(int ampWidth, int ampHight, int numTick):
+ampWidth(ampWidth),
+ampHight(ampHight),
+numTick(numTick)
+{}
 
+/** Destructor for TrajectorySettings class.
+* 
+*/
 TrajectorySettings::~TrajectorySettings() {}
