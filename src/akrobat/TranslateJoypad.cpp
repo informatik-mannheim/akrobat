@@ -86,14 +86,14 @@ class Listener
 				0: Joystick links, rechts<->links	0: A
 				1: Joystick links, oben<->unten		1: B
 				2: Joystick rechts, rechts<->links	2: X
-				3: Joystick rechts, oben<->unten		3: Y
-				4: LT											4: LB
-				5: RT											5: RB
-				6:	Dig. Joystick, rechts<->links		6: BACK
+				3: Joystick rechts, oben<->unten	3: Y
+				4: LT								4: LB
+				5: RT								5: RB
+				6:Joystick, rechts<->links	6: BACK
 				7: Dig. Joystick, oben<->unten		7: START
-																8: LOGITECH
-																9: LJoystick (drücken)
-																10: RJoystick (drücken)
+													8: LOGITECH
+												    9: LJoystick (drücken)
+													10: RJoystick (drücken)
 			*/
 			setControllerType("Logitech Gamepad F710");
 		}
