@@ -114,10 +114,10 @@ class Listener
 int main(int argc, char **argv)
 {
    ros::init(argc, argv, "translateJoypad");
-   ros::NodeHandle n;
+   ros::NodeHandle nh;
    Listener l;
-   ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
-   ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
+   ros::Subscriber joySub = nh.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
+   ros::Publisher movPub = nh.advertise<akrobat::movement>("movements", 1000);
    ros::Rate loop_rate(5);
 	Mode mode = navigate;
 	Walking_Mode wmode = tripod;
