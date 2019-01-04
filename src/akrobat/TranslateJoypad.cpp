@@ -131,7 +131,6 @@ int main(int argc, char **argv)
 		vector<int> buttonsValue = l.getButtonsValue();
 		string ct = l.getControllerType();
         akrobat::movement msg;
-        akrobat::movement msg;
 
 		//Überprüfen, ob der richtige Controller angeschlossen ist
 		if(ct != "Logitech Gamepad F710")
@@ -169,66 +168,68 @@ int main(int argc, char **argv)
 			//RECHTER JOYSTICK
 			if(m != DEFAULT_MODE)
 			{
-				if(m == shift)
-				{
-					if(abs(axisValue[4]) > joystickDeadZone)
-					{
-						commands["m_x"] = axisValue[4]*int_max;
-					}
-					else
-					{
-						commands["m_x"] = 0;
-					}
-					if(abs(axisValue[3]) > joystickDeadZone)
-					{					
-						commands["m_y"] = axisValue[3]*int_max;
-					}
-					else
-					{
-						commands["m_y"] = 0;
-					}
-				}
-				else if(m == roll_pitch)
-				{
-					if(abs(axisValue[4]) > joystickDeadZone)
-					{
-						commands["pitch"] = axisValue[4]*int_max;
-					}
-					else
-					{
-						commands["pitch"] = 0;
-					}
-					if(abs(axisValue[3]) > joystickDeadZone)
-					{
-						commands["roll"] = axisValue[3]*int_max;
-					}
-					else
-					{
-						commands["roll"] = 0;
-					}
-				}
-				else if(m == yaw)
-				{
-					if(abs(axisValue[3]) > joystickDeadZone)
-					{
-						commands["yaw"] = axisValue[3]*int_max;
-					}
-					else
-					{
-						commands["yaw"] = 0;
-					}
-				}
-				else if(m == level)
-				{
-					if(abs(axisValue[4]) > joystickDeadZone)
-					{
-						commands["m_z"] = axisValue[4]*int_max;
-					}
-					else
-					{
-						commands["m_z"] = 0;
-					}
-				}
+			switch(m){
+			    case shift:{
+			        if(abs(axisValue[4]) > joystickDeadZone)
+                    {
+                        commands["m_x"] = axisValue[4]*int_max;
+                    }
+                    else
+                    {
+                        commands["m_x"] = 0;
+                    }
+                    if(abs(axisValue[3]) > joystickDeadZone)
+                    {
+                        commands["m_y"] = axisValue[3]*int_max;
+                    }
+                    else
+                    {
+                        commands["m_y"] = 0;
+                    }
+                    break;
+			    }
+                case roll_pitch:{
+                    if(abs(axisValue[4]) > joystickDeadZone)
+                    {
+                        commands["pitch"] = axisValue[4]*int_max;
+                    }
+                    else
+                    {
+                        commands["pitch"] = 0;
+                    }
+                    if(abs(axisValue[3]) > joystickDeadZone)
+                    {
+                        commands["roll"] = axisValue[3]*int_max;
+                    }
+                    else
+                    {
+                        commands["roll"] = 0;
+                    }
+                    break;
+                }
+                case yaw:{
+                    if(abs(axisValue[3]) > joystickDeadZone)
+                    {
+                        commands["yaw"] = axisValue[3]*int_max;
+                    }
+                    else
+                    {
+                        commands["yaw"] = 0;
+                    }
+                    break;
+                }
+                case level:{
+                    if(abs(axisValue[4]) > joystickDeadZone)
+                    {
+                        commands["m_z"] = axisValue[4]*int_max;
+                    }
+                    else
+                    {
+                        commands["m_z"] = 0;
+                    }
+			        break;
+                }
+			    default: break;
 			}
 	
 			//RT&LT
