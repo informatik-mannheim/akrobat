@@ -7,7 +7,7 @@
 class CoordinateSystem
 {
 public:
-	Leg leg[numberOfLegs]; //array of legs
+	Leg leg[numberOfLegs];
 
 	virtual std::ostream& ToString(std::ostream& o) const;
 };

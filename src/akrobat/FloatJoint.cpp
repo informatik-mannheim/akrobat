@@ -9,7 +9,7 @@
 /** Receives an ostream object and writes the joined leg angles alpha, beta and gamma from one specific leg into it.
 *
 *	@param o ostream object.
-*   @return ostream object with new values.
+*   @return std::ostream object with new values.
 */
 std::ostream& FloatJoint::ToString(std::ostream& o) const
 {

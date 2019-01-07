@@ -9,7 +9,7 @@
 /** Reads the information from every leg and writes it to the ostream.
 *
 *	@param o ostream to write data.
-*   @return ostream with new leg values.
+*   @return std::ostream with new leg values.
 */
 std::ostream& CoordinateSystem::ToString(std::ostream& o) const
 {
@@ -20,11 +20,11 @@ std::ostream& CoordinateSystem::ToString(std::ostream& o) const
 	return o;
 }
 
-/** Overloads the << operator only if it is used with stream and CoordinateSystem as parameters.
+/** Overloads the << operator only if it is used with std::ostream and CoordinateSystem as parameters.
 *
 *	@param o ostream object where the information is written.
 *	@param b CoordinateSystem instance.
-*   @return ostream object with written leg values.
+*   @return std::ostream object with written leg values.
 */
 std::ostream& operator<<(std::ostream& o, const CoordinateSystem& b)
 {

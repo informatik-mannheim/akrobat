@@ -22,4 +22,4 @@ public:
 std::ostream& operator<<(std::ostream& o, const Leg& b);
 
 std::ostream& operator<<(std::ostream& stream, const tf::Vector3& vector3);
-#endif // LEG_H
+#endif
