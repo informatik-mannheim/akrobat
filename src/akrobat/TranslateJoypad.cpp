@@ -142,7 +142,7 @@ int main(int argc, char **argv)
 		}
 
 		//w_x, w_y, w_alpha, yaw, pitch, roll, m_x, m_y, m_z
-        Map<string, float> commands;
+        std::map<string, float> commands;
 
 		//Befehle im Navigationsmodus
 		if(mode == navigate)
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 			else
 			{
 			
-			commandss["w_x"] = 0;
+			commands["w_x"] = 0;
 			if(abs(axisValue[0]) > joystickDeadZone)
 			{
 				commands["w_y"] = axisValue[0]*int_max*(-1);
@@ -242,6 +242,8 @@ int main(int argc, char **argv)
 			{
 				commands["w_y"] = 0;
 			}
+
+
 
 			//Dig. Joystick
 			if(axisValue[7] > 0)
@@ -452,10 +454,10 @@ int main(int argc, char **argv)
 
 		//Commands auf die Message posten
 		cout << "commands:{" << endl;
-		for(auto& [key, value]: commands)
+		for(auto& KeyValuePair: commands)
         {
-  		     msg.commands.push_back((int)value)
-  		     cout << commands[i] << endl;
+  		     msg.commands.push_back((int)KeyValuePair.second);
+  		     cout << KeyValuePair.second << endl;
         }
 		cout << "}" << endl;
 
@@ -511,4 +513,4 @@ int main(int argc, char **argv)
 	   loop_rate.sleep();
    }
    return 0;
-}
+}}}
