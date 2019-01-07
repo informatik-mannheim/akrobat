@@ -13,6 +13,4 @@ public:
 	RumblePad2();
 };
 
-#endif // RUMBLEPAD2_H
-
-
+#endif

@@ -1,5 +1,5 @@
 /** @file Controller.cpp
- *  @brief Initialization file for Controller.
+ *  @brief Initializes Controller class.
  *
  *  @author Author
  */
@@ -13,7 +13,7 @@ using namespace ros;
 
 /** Main method for initializing Controller.
 *
-*   @return Integer.
+*   @return int.
 */
 int main(int argc, char** argv)
 {

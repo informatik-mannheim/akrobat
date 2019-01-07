@@ -15,4 +15,4 @@ public:
 
 std::ostream& operator<<(std::ostream& o, const FloatJoint& b);
 
-#endif // FLOATJOINT_H
+#endif

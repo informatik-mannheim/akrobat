@@ -20,6 +20,7 @@ vector<Publisher> publishers;
 
 /** ???
 *
+*	@param msg sensor_msgs::JointState::ConstPtr
 *   @return Void.
 */
 void goalJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg)
@@ -42,9 +43,9 @@ void goalJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg)
 	}
 }
 
-/** ???
+/** Main method of JointStateToDynamixel class.
 *
-*   @return Integer.
+*   @return int.
 */
 int main(int argc, char** argv)
 {

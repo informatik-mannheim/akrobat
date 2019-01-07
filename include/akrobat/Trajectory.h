@@ -18,4 +18,4 @@ public:
 	Trajectory();
 };
 
-#endif // TRAJECTORY_H
+#endif
