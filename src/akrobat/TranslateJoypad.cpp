@@ -8,32 +8,30 @@
 #include "std_msgs/String.h"
 #include "sensor_msgs/Joy.h"
 
-using namespace std;
-
 float int_max = 32767.0f;
 float joystickDeadZone = 0.2f;
-enum Mode_right_joystick 
+enum Mode_right_joystick
 {
-	DEFAULT_MODE, 
-	shift, 
-	roll_pitch, 
-	yaw, 
+	DEFAULT_MODE,
+	shift,
+	roll_pitch,
+	yaw,
 	level
 };
-enum Walking_Mode 
+enum Walking_Mode
 {
-	tripod, 
-	wave, 
+	tripod,
+	wave,
 	ripple
 };
-enum Mode 
+enum Mode
 {
-	navigate, 
+	navigate,
 	work
 };
-enum Macro 
+enum Macro
 {
-	DEFAULT_MACRO, 
+	DEFAULT_MACRO,
 	feet,
 	orientate_shift,
 	orientate_yaw,
@@ -46,32 +44,32 @@ enum Macro
 class Listener
 {
 	public:
-	vector<float> getAxisValue()
+	std::vector<float> getAxisValue()
 	{
 		return axis;
 	}
 
-	void setAxisValue(vector<float> av)
+	void setAxisValue(std::vector<float> av)
 	{
 		axis = av;
 	}
 
-	vector<int> getButtonsValue()
+	std::vector<int> getButtonsValue()
 	{
 		return buttons;
 	}
 
-	void setButtonsValue(vector<int> bv)
+	void setButtonsValue(std::vector<int> bv)
 	{
 		buttons = bv;
 	}
 
-	string getControllerType()
+	std::string getControllerType()
 	{
 		return controller_type;
 	}
 
-	void setControllerType(string ct)
+	void setControllerType(std::string ct)
 	{
 		controller_type = ct;
 	}
@@ -79,23 +77,23 @@ class Listener
 	void readJoypadCallback(const sensor_msgs::Joy::ConstPtr& msg)
 	{
 		amountAxis = msg->axes.size();
-   	    amountButtons = msg->buttons.size();
-		cout << "Anzahl Achsen: " << amountAxis << "\n Anzahl Buttons:" << amountButtons << endl;
+   	amountButtons = msg->buttons.size();
+		std::cout << "Anzahl Achsen: " << amountAxis << "\n Anzahl Buttons:" << amountButtons << std::endl;
 		if(amountAxis == 8 && amountButtons == 11)
 		{
 			/*
-				Achsennummern:						Buttonnummern:
+				Achsennummern:								Buttonnummern:
 				0: Joystick links, rechts<->links	0: A
 				1: Joystick links, oben<->unten		1: B
 				2: Joystick rechts, rechts<->links	2: X
-				3: Joystick rechts, oben<->unten	3: Y
-				4: LT								4: LB
-				5: RT								5: RB
-				6: Joystick, rechts<->links	        6: BACK
-				7: Joystick, oben<->unten		    7: START
-													8: LOGITECH
-					    						    9: LJoystick (drücken)
-												    10: RJoystick (drücken)
+				3: Joystick rechts, oben<->unten		3: Y
+				4: LT											4: LB
+				5: RT											5: RB
+				6:	Dig. Joystick, rechts<->links		6: BACK
+				7: Dig. Joystick, oben<->unten		7: START
+																8: LOGITECH
+																9: LJoystick (drücken)
+																10: RJoystick (drücken)
 			*/
 			setControllerType("Logitech Gamepad F710");
 		}
@@ -104,9 +102,9 @@ class Listener
 	}
 
 	protected:
-	vector<float> axis;
-	vector<int> buttons;
-	string controller_type = "DEFAULT!";
+	std::vector<float> axis;
+	std::vector<int> buttons;
+	std::string controller_type = "DEFAULT!";
 	int amountAxis = -1;
 	int amountButtons = -1;
 };
@@ -114,136 +112,131 @@ class Listener
 int main(int argc, char **argv)
 {
    ros::init(argc, argv, "translateJoypad");
-   ros::NodeHandle nh;
-   Listener l;
-   ros::Subscriber joySub = nh.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
-   ros::Publisher movPub = nh.advertise<akrobat::movement>("movements", 1000);
+   ros::NodeHandle n;
+	Listener l;
+   ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
+   ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
    ros::Rate loop_rate(5);
 	Mode mode = navigate;
 	Walking_Mode wmode = tripod;
 	Mode_right_joystick m = DEFAULT_MODE;
 	Macro macro = start;
-	vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	std::vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
    while(ros::ok())
    {
-		vector<float> axisValue = l.getAxisValue();
-		vector<int> buttonsValue = l.getButtonsValue();
-		string ct = l.getControllerType();
-        akrobat::movement msg;
+		std::vector<float> axisValue = l.getAxisValue();
+		std::vector<int> buttonsValue = l.getButtonsValue();
+		std::string ct = l.getControllerType();
+      akrobat::movement msg;
 
 		//Überprüfen, ob der richtige Controller angeschlossen ist
 		if(ct != "Logitech Gamepad F710")
 		{
-			cout << "Falscher Controller" << endl;
+			std::cout << "Falscher Controller!!!" << std::endl;
 			ros::spinOnce();
 			loop_rate.sleep();
 			continue;
 		}
 
-		//w_x, w_y, w_alpha, yaw, pitch, roll, m_x, m_y, m_z
-        std::map<string, float> commands;
+		float commands[9] = {0.0f}; //w_x, w_y, w_alpha, yaw, pitch, roll, m_x, m_y, m_z
 
 		//Befehle im Navigationsmodus
 		if(mode == navigate)
 		{
 			//LINKER JOYSTICK
-			if(abs(axisValue[1]) > joystickDeadZone)
-			{ 
-				commands["w_x"] = axisValue[1] * int_max;
+			if(std::abs(axisValue[1]) > joystickDeadZone)
+			{
+				commands[0] = axisValue[1]*int_max;
 			}
 			else
 			{
-			
-			commands["w_x"] = 0;
-			if(abs(axisValue[0]) > joystickDeadZone)
+				commands[0] = 0;
+			}
+			if(std::abs(axisValue[0]) > joystickDeadZone)
 			{
-				commands["w_y"] = axisValue[0]*int_max*(-1);
+				commands[1] = axisValue[0]*int_max*(-1);
 			}
 			else
 			{
-				commands["w_y"] = 0;
+				commands[1] = 0;
 			}
 
 			//RECHTER JOYSTICK
 			if(m != DEFAULT_MODE)
 			{
-			switch(m){
-			    case shift:{
-			        if(abs(axisValue[4]) > joystickDeadZone)
-                    {
-                        commands["m_x"] = axisValue[4]*int_max;
-                    }
-                    else
-                    {
-                        commands["m_x"] = 0;
-                    }
-                    if(abs(axisValue[3]) > joystickDeadZone)
-                    {
-                        commands["m_y"] = axisValue[3]*int_max;
-                    }
-                    else
-                    {
-                        commands["m_y"] = 0;
-                    }
-                    break;
-			    }
-                case roll_pitch:{
-                    if(abs(axisValue[4]) > joystickDeadZone)
-                    {
-                        commands["pitch"] = axisValue[4]*int_max;
-                    }
-                    else
-                    {
-                        commands["pitch"] = 0;
-                    }
-                    if(abs(axisValue[3]) > joystickDeadZone)
-                    {
-                        commands["roll"] = axisValue[3]*int_max;
-                    }
-                    else
-                    {
-                        commands["roll"] = 0;
-                    }
-                    break;
-                }
-                case yaw:{
-                    if(abs(axisValue[3]) > joystickDeadZone)
-                    {
-                        commands["yaw"] = axisValue[3]*int_max;
-                    }
-                    else
-                    {
-                        commands["yaw"] = 0;
-                    }
-                    break;
-                }
-                case level:{
-                    if(abs(axisValue[4]) > joystickDeadZone)
-                    {
-                        commands["m_z"] = axisValue[4]*int_max;
-                    }
-                    else
-                    {
-                        commands["m_z"] = 0;
-                    }
-			        break;
-                }
-			    default: break;
+				if(m == shift)
+				{
+					if(std::abs(axisValue[4]) > joystickDeadZone)
+					{
+						commands[6] = axisValue[4]*int_max;
+					}
+					else
+					{
+						commands[6] = 0;
+					}
+					if(std::abs(axisValue[3]) > joystickDeadZone)
+					{
+						commands[7] = axisValue[3]*int_max;
+					}
+					else
+					{
+						commands[7] = 0;
+					}
+				}
+				else if(m == roll_pitch)
+				{
+					if(std::abs(axisValue[4]) > joystickDeadZone)
+					{
+						commands[4] = axisValue[4]*int_max;
+					}
+					else
+					{
+						commands[4] = 0;
+					}
+					if(std::abs(axisValue[3]) > joystickDeadZone)
+					{
+						commands[5] = axisValue[3]*int_max;
+					}
+					else
+					{
+						commands[5] = 0;
+					}
+				}
+				else if(m == yaw)
+				{
+					if(std::abs(axisValue[3]) > joystickDeadZone)
+					{
+						commands[3] = axisValue[3]*int_max;
+					}
+					else
+					{
+						commands[3] = 0;
+					}
+				}
+				else if(m == level)
+				{
+					if(std::abs(axisValue[4]) > joystickDeadZone)
+					{
+						commands[8] = axisValue[4]*int_max;
+					}
+					else
+					{
+						commands[8] = 0;
+					}
+				}
 			}
-	
+
 			//RT&LT
-			if(abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
+			if(std::abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
 			{
-				commands["w_y"] = ((axisValue[2]-axisValue[5])*int_max)/2;
+				commands[2] = ((axisValue[2]-axisValue[5])*int_max)/2;
 				//Im Uhrzeigersinn drehen --> positiv
 			}
 			else
 			{
-				commands["w_y"] = 0;
+				commands[2] = 0;
 			}
-
-
 
 			//Dig. Joystick
 			if(axisValue[7] > 0)
@@ -254,7 +247,7 @@ int main(int argc, char **argv)
 			{
 				macro = DEFAULT_MACRO;
 			}
-			
+
 			//Button A
 			if(buttonsValue[0] == 1)
 			{
@@ -308,57 +301,57 @@ int main(int argc, char **argv)
 			{
 				macro = shutdown;
 			}
-			
+
 		}
 
 		//Befehle im Arbeitsmodus
 		else if(mode == work)
 		{
 			//LINKER JOYSTICK
-			if(abs(axisValue[1]) > joystickDeadZone)
+			if(std::abs(axisValue[1]) > joystickDeadZone)
 			{
-				commands["m_x"] = axisValue[1]*int_max;
-			}		
-			else
-			{
-				commands["m_x"] = 0;
-			}		
-			if(abs(axisValue[0]) > joystickDeadZone)
-			{
-				commands["m_y"] = axisValue[0]*int_max*(-1);
+				commands[6] = axisValue[1]*int_max;
 			}
 			else
 			{
-				commands["m_y"] = 0;
+				commands[6] = 0;
+			}
+			if(std::abs(axisValue[0]) > joystickDeadZone)
+			{
+				commands[7] = axisValue[0]*int_max*(-1);
+			}
+			else
+			{
+				commands[7] = 0;
 			}
 
 			//RECHTER JOYSTICK
-			if(abs(axisValue[4]) > joystickDeadZone)
-			{			
-				commands["pitch"] = axisValue[4]*int_max;
+			if(std::abs(axisValue[4]) > joystickDeadZone)
+			{
+				commands[4] = axisValue[4]*int_max;
 			}
 			else
 			{
-				commands["pitch"] = 0;
+				commands[4] = 0;
 			}
-			if(abs(axisValue[3]) > joystickDeadZone)
-			{			
-				commands["roll"] = axisValue[3]*int_max*(-1);
+			if(std::abs(axisValue[3]) > joystickDeadZone)
+			{
+				commands[5] = axisValue[3]*int_max*(-1);
 			}
 			else
 			{
-				commands["roll"] = 0;
+				commands[5] = 0;
 			}
 
 			//RT&LT
-			if(abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
+			if(std::abs(axisValue[2] - axisValue[5]) > joystickDeadZone)
 			{
-				commands["yaw"] = ((axisValue[2]-axisValue[5])*int_max)/2;
+				commands[3] = ((axisValue[2]-axisValue[5])*int_max)/2;
 				//Im Uhrzeigersinn --> positiv
 			}
 			else
 			{
-				commands["yaw"] = 0;
+				commands[3] = 0;
 			}
 
 			//DIGITALER JOYSTICK
@@ -377,7 +370,7 @@ int main(int argc, char **argv)
 			//NOTHING TO DO HERE
 
 			//BUTTON LB&RB
-			commands["m_z"] = ((buttonsValue[5]-buttonsValue[4])*int_max);
+			commands[8] = ((buttonsValue[5]-buttonsValue[4])*int_max);
 
 			//Button START
 			if(buttonsValue[7] == 1)
@@ -390,7 +383,7 @@ int main(int argc, char **argv)
 			{
 				mode = static_cast<Mode>((mode + 1) % 2);
 			}
-			
+
 			//BUTTON LOGITECH
 			//NOTHING TO DO HERE
 
@@ -400,7 +393,7 @@ int main(int argc, char **argv)
 				macro = shutdown;
 			}
 		}
-		
+
 		//Buttons auf gedrückt halten überprüfen
 		for(int i = 0; i < 11; i++)
 		{
@@ -412,7 +405,7 @@ int main(int argc, char **argv)
 			{
 				buttonsPressed[i] = 0;
 			}
-		} 
+		}
 
 		//Orientate-Macros
 		if(buttonsPressed[0] >= 15)
@@ -422,7 +415,7 @@ int main(int argc, char **argv)
 			{
 				buttonsPressed[0] = 0;
 				macro = DEFAULT_MACRO;
-			}		
+			}
 		}
 		else if(buttonsPressed[1] >= 15)
 		{
@@ -431,7 +424,7 @@ int main(int argc, char **argv)
 			{
 				buttonsPressed[1] = 0;
 				macro = DEFAULT_MACRO;
-			}		
+			}
 		}
 		else if(buttonsPressed[2] >= 15)
 		{
@@ -453,31 +446,31 @@ int main(int argc, char **argv)
 		}
 
 		//Commands auf die Message posten
-		cout << "commands:{" << endl;
-		for(auto& KeyValuePair: commands)
-        {
-  		     msg.commands.push_back((int)KeyValuePair.second);
-  		     cout << KeyValuePair.second << endl;
-        }
-		cout << "}" << endl;
+		std::cout << "commands:{" << std::endl;
+		for(int i = 0; i < 9; i++)
+		{
+			msg.commands.push_back((int)commands[i]);
+			std::cout << commands[i] << std::endl;
+		}
+		std::cout << "}" << std::endl;
 
 		//Walkingmode auf die Message posten
 		switch(wmode)
 		{
 			case tripod:
 				msg.walking_mode = "tripod";
-				cout << "tripod" << endl;
+				std::cout << "tripod" << std::endl;
 				break;
 			case wave:
 				msg.walking_mode = "wave";
-				cout << "wave" << endl;
+				std::cout << "wave" << std::endl;
 				break;
 			case ripple:
 				msg.walking_mode = "ripple";
-				cout << "ripple" << endl;
+				std::cout << "ripple" << std::endl;
 				break;
 		}
-		
+
 		//Macro auf die Message posten
 		switch(macro)
 		{
@@ -508,9 +501,9 @@ int main(int argc, char **argv)
 		}
 
 		//publish + repeat
-      movPub.publish(msg);	
+      movPub.publish(msg);
       ros::spinOnce();
 	   loop_rate.sleep();
    }
    return 0;
-}}}
+}
