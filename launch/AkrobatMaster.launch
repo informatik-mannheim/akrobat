@@ -30,7 +30,7 @@
   </node>
 
   <!-- start translationNode -->
-  <node name="translateJoypad" pkg="akrobat" output="screen" type="translateJoypad"></node>
+  <node name="translateJoypad" pkg="akrobat" type="translateJoypad"></node>
 
 
   <!-- start rviz-->
