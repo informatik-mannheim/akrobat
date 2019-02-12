@@ -74,29 +74,26 @@ class Listener
 		controller_type = ct;
 	}
 
+    /** Listens to the messages of the joy_node and sets the respective values of buttons and axes.
+    *
+    *   More info about the ros package can be found here: http://wiki.ros.org/joy
+    *
+    *   @param msg the message of the joy_node.cpp
+    *
+    *   @return Void.
+    */
 	void readJoypadCallback(const sensor_msgs::Joy::ConstPtr& msg)
 	{
 		amountAxis = msg->axes.size();
-   	amountButtons = msg->buttons.size();
-		std::cout << "Anzahl Achsen: " << amountAxis << "\n Anzahl Buttons:" << amountButtons << std::endl;
-		if(amountAxis == 8 && amountButtons == 11)
-		{
-			/*
-				Achsennummern:								Buttonnummern:
-				0: Joystick links, rechts<->links	0: A
-				1: Joystick links, oben<->unten		1: B
-				2: Joystick rechts, rechts<->links	2: X
-				3: Joystick rechts, oben<->unten		3: Y
-				4: LT											4: LB
-				5: RT											5: RB
-				6:	Dig. Joystick, rechts<->links		6: BACK
-				7: Dig. Joystick, oben<->unten		7: START
-																8: LOGITECH
-																9: LJoystick (drücken)
-																10: RJoystick (drücken)
-			*/
-			setControllerType("Logitech Gamepad F710");
-		}
+    	amountButtons = msg->buttons.size();
+
+        if(amountButtons == 11 && amountAxis == 8)	{
+                setControllerType("Microsoft Xbox 360 Wired Controller");
+        }else if(amountButtons == 12 && amountAxis == 6){
+                setControllerType("Logitech Gamepad F710");
+
+        }
+
 		setAxisValue(msg->axes);
 		setButtonsValue(msg->buttons);
 	}
@@ -104,7 +101,7 @@ class Listener
 	protected:
 	std::vector<float> axis;
 	std::vector<int> buttons;
-	std::string controller_type = "DEFAULT!";
+	std::string controller_type = "DEFAULT";
 	int amountAxis = -1;
 	int amountButtons = -1;
 };
@@ -128,12 +125,13 @@ int main(int argc, char **argv)
 		std::vector<float> axisValue = l.getAxisValue();
 		std::vector<int> buttonsValue = l.getButtonsValue();
 		std::string ct = l.getControllerType();
-      akrobat::movement msg;
+        akrobat::movement msg;
+
 
 		//Überprüfen, ob der richtige Controller angeschlossen ist
-		if(ct != "Logitech Gamepad F710")
+		if(ct != "Logitech Gamepad F710" && ct != "Microsoft Xbox 360 Wired Controller")
 		{
-			std::cout << "Falscher Controller!!!" << std::endl;
+			std::cout << "Warte auf passenden Controller" << std::endl;
 			ros::spinOnce();
 			loop_rate.sleep();
 			continue;
