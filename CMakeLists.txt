@@ -5,6 +5,8 @@ project(akrobat)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  controller_manager
+  hardware_interface
   dynamixel_controllers
   dynamixel_driver
   dynamixel_msgs
@@ -14,11 +16,13 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   tf
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -50,11 +54,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   movement.msg
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -71,10 +74,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   dynamixel_msgs#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   #dynamixel_msgs#   
+   std_msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -88,7 +92,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES $(PROJECT_NAME)
-   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf
+   CATKIN_DEPENDS dynamixel_controllers dynamixel_driver dynamixel_msgs dynamixel_tutorials joy roscpp rospy std_msgs tf controller_manager hardware_interface message_runtime
 #  DEPENDS system_lib
 )
 
@@ -107,10 +111,14 @@ include_directories(
 #//--------------------AKROBAT------------------------// 
 #add_library(akrobat_init src/akrobat/akrobat_init.cpp) 
 #add_executable(commander src/akrobat/commander.cpp) 
-add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/Akrobat.cpp src/akrobat/CoordinateSystem.cpp src/akrobat/FloatJoint.cpp src/akrobat/Leg.cpp src/akrobat/LegSetting.cpp src/akrobat/MotorState.cpp src/akrobat/RumblePad2.cpp src/akrobat/Trajectory.cpp) 
+add_executable(akrobat src/akrobat/akrobat_main.cpp src/akrobat/Akrobat.cpp src/akrobat/CoordinateSystem.cpp src/akrobat/FloatJoint.cpp src/akrobat/Leg.cpp src/akrobat/LegSetting.cpp src/akrobat/RumblePad2.cpp src/akrobat/Trajectory.cpp src/akrobat/TrajectorySettings.cpp) 
+add_executable(jointstate_to_dynamixel src/akrobat/JointStateToDynamixel.cpp)
+add_executable(akrobat_controller src/akrobat/Controller.cpp src/akrobat/HardwareInterface.cpp)
 #target_link_libraries(akrobat akrobat_init)
 #target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})
+target_link_libraries(jointstate_to_dynamixel ${catkin_LIBRARIES})
+target_link_libraries(akrobat_controller ${catkin_LIBRARIES})
 
 ## Declare a cpp library
 # add_library(akrobat
@@ -176,3 +184,6 @@ install(PROGRAMS
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+add_executable(translateJoypad src/akrobat/TranslateJoypad.cpp)
+target_link_libraries(translateJoypad ${catkin_LIBRARIES})
+add_dependencies(translateJoypad akrobat_generate_messages_cpp)
