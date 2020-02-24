@@ -1,8 +1,8 @@
 <!-- -*- mode: XML -*- -->
 <launch>
   <!-- configuration -->
-  <arg name="gui" default="true" />
-  <arg name="sim" default="true" />
+  <arg name="gui" default="false" />
+  <arg name="sim" default="false" />
   <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
 
   <!-- configuration end -->
@@ -35,4 +35,7 @@
 
   <!-- start rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
+  
+  <!-- start state machine -->
+  <node ns="akrobat" name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node>
 </launch>
