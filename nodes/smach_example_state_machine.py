@@ -6,8 +6,7 @@ import smach
 import smach_ros
 import time
 from sensor_msgs.msg import Joy
-
-
+from akrobat.msg import movement
 
 ############################################################
 # define state NeutralRG
@@ -27,6 +26,26 @@ class NeutralRG(smach.State):
 #execution of the state
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralRG')
+	rospy.loginfo('hereeeeeee')
+
+	backPublisher = rospy.Publisher('/movements', movement)
+
+	msg = movement()
+	msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+	msg.walking_mode = 'wave'
+	msg.macro = 'start'
+
+	backPublisher.publish(msg)
+
+	rospy.loginfo('Done')
+
+	#rostopic pub /movements akrobat/movement "
+#commands: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+#walking_mode: \"wave\"
+#macro: \"start\"
+
+
+
 	#sleep functions while no action is taken or to prevent bouncing of the button
 	while self.buttons[5]==1 and self.bounce_control==0:
 	 time.sleep(0.05)
@@ -123,7 +142,7 @@ class RG(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state RG')
-        #if Joystick not neutral
+       #if Joystick not neutral
 	while self.axes[0] != 0.0 or self.axes[1] != 0.0: 
 	 time.sleep(0.05)
         return 'outcome1'
