@@ -37,5 +37,5 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
   
   <!-- start state machine -->
-  <node ns="akrobat" name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node>
+  <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node>
 </launch>
