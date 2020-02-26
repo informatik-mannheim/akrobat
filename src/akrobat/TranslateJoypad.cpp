@@ -20,9 +20,9 @@ enum Mode_right_joystick
 };
 enum Walking_Mode
 {
-	tripod,
-	wave,
-	ripple,
+	tripod, //rechter stick 
+	wave, //lb 
+	ripple, //
 	reset
 };
 enum Mode
@@ -274,7 +274,7 @@ int main(int argc, char **argv)
 			//Button LB
 			if(buttonsValue[4] == 1)
 			{
-				wmode = static_cast<Walking_Mode>((wmode + 1) % 3);
+				wmode = static_cast<Walking_Mode>((wmode + 1) % 4);
 			}
 
 			//Button RB
