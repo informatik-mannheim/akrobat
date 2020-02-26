@@ -28,19 +28,6 @@ class NeutralRG(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralRG')
         
-        time.sleep(2)
-        
-        backPublisher = rospy.Publisher('/movements', movement)
-
-        msg = movement()
-        msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        msg.walking_mode = 'reset'
-        msg.macro = 'feet'
-
-        backPublisher.publish(msg)
-
-        rospy.loginfo('Done')
-        
 	#sleep functions while no action is taken or to prevent bouncing of the button
 	while self.buttons[5]==1 and self.bounce_control==0:
 	 time.sleep(0.05)
@@ -109,6 +96,16 @@ class NeutralWG(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralWG')
+        time.sleep(2)
+        
+        backPublisher = rospy.Publisher('/movements', movement)
+
+        msg = movement()
+        msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        msg.walking_mode = 'reset'
+        msg.macro = 'feet'
+
+        backPublisher.publish(msg)
 	#sleep functions while no action is taken or to prevent bouncing of the button
 	while self.buttons[5]==1 and self.bounce_control==0:
 	 time.sleep(0.05)
