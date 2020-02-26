@@ -69,6 +69,11 @@ class Listener
 	{
 		return controller_type;
 	}
+	
+	std::string getWmode()
+	{
+		return wmode;
+	}
 
 	void setControllerType(std::string ct)
 	{
@@ -101,10 +106,7 @@ class Listener
 	
 	void readMovementCallback(const akrobat::movement::ConstPtr& msg)
 	{
-		if(msg->walking_mode == "reset") {
-			wmode = reset;
-		}
-    	
+		wmode = msg->walking_mode;
 	}
 
 	protected:
@@ -113,6 +115,7 @@ class Listener
 	std::string controller_type = "DEFAULT";
 	int amountAxis = -1;
 	int amountButtons = -1;
+	std::string wmode = "";
 };
 
 int main(int argc, char **argv)
@@ -131,7 +134,11 @@ int main(int argc, char **argv)
 	std::vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
    while(ros::ok())
-   {		 
+   {
+		if(l.getWmode() == "reset") {
+			wmode = reset;
+		}
+		 
 		std::vector<float> axisValue = l.getAxisValue();
 		std::vector<int> buttonsValue = l.getButtonsValue();
 		std::string ct = l.getControllerType();
