@@ -44,13 +44,13 @@ class NeutralRG(smach.State):
     while self.axes[0] == 0.0 and self.axes[1] == 0.0 and self.buttons[5]==0:
      time.sleep(0.05)
      self.bounce_control=1
-    #if the Moveprofile button is pressed
-       	if self.buttons[5]==1:
-     self.bounce_control=0
-       	 return 'outcome1'
+     #if the Moveprofile button is pressed
+     if self.buttons[5]==1:
+      self.bounce_control=0
+      return 'outcome1'
     #if Joystick is not in neutral position
-    elif self.axes[0] != 0.0 or self.axes[1] != 0.0:
-       	 return 'outcome2'
+     elif self.axes[0] != 0.0 or self.axes[1] != 0.0:
+      return 'outcome2'
 
 	 
 	 
