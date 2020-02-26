@@ -26,38 +26,30 @@ class NeutralRG(smach.State):
 #execution of the state
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralRG')
-	rospy.loginfo('hereeeeeee')
 
-	backPublisher = rospy.Publisher('/movements', movement)
+        backPublisher = rospy.Publisher('/movements', movement)
 
-	msg = movement()
-	msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-	msg.walking_mode = 'wave'
-	msg.macro = 'start'
+        msg = movement()
+        msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        msg.walking_mode = 'wave'
+        msg.macro = 'reset'
 
-	backPublisher.publish(msg)
+        backPublisher.publish(msg)
 
-	rospy.loginfo('Done')
+        rospy.loginfo('Done')
 
-	#rostopic pub /movements akrobat/movement "
-#commands: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-#walking_mode: \"wave\"
-#macro: \"start\"
-
-
-
-	#sleep functions while no action is taken or to prevent bouncing of the button
-	while self.buttons[5]==1 and self.bounce_control==0:
-	 time.sleep(0.05)
-	while self.axes[0] == 0.0 and self.axes[1] == 0.0 and self.buttons[5]==0:
-	 time.sleep(0.05)
-	 self.bounce_control=1
-	#if the Moveprofile button is pressed
+    #sleep functions while no action is taken or to prevent bouncing of the button
+    while self.buttons[5]==1 and self.bounce_control==0:
+     time.sleep(0.05)
+    while self.axes[0] == 0.0 and self.axes[1] == 0.0 and self.buttons[5]==0:
+     time.sleep(0.05)
+     self.bounce_control=1
+    #if the Moveprofile button is pressed
        	if self.buttons[5]==1:
-	 self.bounce_control=0
+     self.bounce_control=0
        	 return 'outcome1'
-	#if Joystick is not in neutral position
-	elif self.axes[0] != 0.0 or self.axes[1] != 0.0:
+    #if Joystick is not in neutral position
+    elif self.axes[0] != 0.0 or self.axes[1] != 0.0:
        	 return 'outcome2'
 
 	 
