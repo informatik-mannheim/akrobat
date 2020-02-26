@@ -469,6 +469,8 @@ int main(int argc, char **argv)
 				std::cout << "ripple" << std::endl;
 				break;
 			case reset:
+				wmode = "reset"
+			
 				msg.walking_mode = "reset";
 				std::cout << "reset" << std::endl;
 				break;
