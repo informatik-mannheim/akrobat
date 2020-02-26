@@ -97,6 +97,8 @@ class NeutralWG(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralWG')
         time.sleep(2)
+
+        #TODO: Add reset to state machine instead of just putting the code here.
         
         backPublisher = rospy.Publisher('/movements', movement)
 
