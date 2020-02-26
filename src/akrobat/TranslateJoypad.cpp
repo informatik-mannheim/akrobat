@@ -22,7 +22,8 @@ enum Walking_Mode
 {
 	tripod,
 	wave,
-	ripple
+	ripple,
+	reset
 };
 enum Mode
 {
@@ -121,7 +122,7 @@ int main(int argc, char **argv)
 	std::vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
    while(ros::ok())
-   {
+   {		 
 		std::vector<float> axisValue = l.getAxisValue();
 		std::vector<int> buttonsValue = l.getButtonsValue();
 		std::string ct = l.getControllerType();
@@ -466,6 +467,10 @@ int main(int argc, char **argv)
 			case ripple:
 				msg.walking_mode = "ripple";
 				std::cout << "ripple" << std::endl;
+				break;
+			case reset:
+				msg.walking_mode = "reset";
+				std::cout << "reset" << std::endl;
 				break;
 		}
 

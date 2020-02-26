@@ -28,12 +28,14 @@ class NeutralRG(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NeutralRG')
         
+        time.sleep(2)
+        
         backPublisher = rospy.Publisher('/movements', movement)
 
         msg = movement()
         msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         msg.walking_mode = 'reset'
-        msg.macro = ''
+        msg.macro = 'feet'
 
         backPublisher.publish(msg)
 
