@@ -70,7 +70,8 @@ public:
 	{
 		TRIPOD = 0,
 		WAVE = 1,
-		RIPPLE = 2
+		RIPPLE = 2,
+		RESET = 3
 	};
 
 	static const int numberOfWalkingPattern = 3;
