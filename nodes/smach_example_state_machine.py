@@ -32,8 +32,8 @@ class NeutralRG(smach.State):
 
         msg = movement()
         msg.commands = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        msg.walking_mode = 'wave'
-        msg.macro = 'reset'
+        msg.walking_mode = 'reset'
+        msg.macro = ''
 
         backPublisher.publish(msg)
 
