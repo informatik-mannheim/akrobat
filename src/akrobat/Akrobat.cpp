@@ -588,6 +588,8 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
 				Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 			}
+			
+			jointPub.publish(jointState);
 		}
 		else if (mov->walking_mode != gaitToString)
 		{
