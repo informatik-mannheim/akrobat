@@ -489,6 +489,9 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 		case WAVE:
 			gaitToString = "wave";
 			break;
+		case RESET:
+			gaitToString = "reset";
+			break;
 		default:
 			break;
 	}
@@ -555,42 +558,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 
 			jointPub.publish(jointState);
 		}
-		else if (mov->macro == "reset") {
-			jointState.header.stamp = ros::Time::now();
-				
-			legSettings[LEFT_FRONT].jointInitA = 160.0;
-			legSettings[LEFT_FRONT].jointInitB = 10.0;
-			legSettings[LEFT_FRONT].jointInitC = -90.0;
-			
-			legSettings[RIGHT_FRONT].jointInitA = 20.0;
-			legSettings[RIGHT_FRONT].jointInitB = 10.0;
-			legSettings[RIGHT_FRONT].jointInitC = -90.0;
-			
-			legSettings[LEFT_MIDDLE].jointInitA = 180.0;
-			legSettings[LEFT_MIDDLE].jointInitB = 10;
-			legSettings[LEFT_MIDDLE].jointInitC = -90.0;
-			
-			legSettings[RIGHT_MIDDLE].jointInitA = 0.0;
-			legSettings[RIGHT_MIDDLE].jointInitB = 10.0;
-			legSettings[RIGHT_MIDDLE].jointInitC = -90.0;
-			
-			legSettings[LEFT_REAR].jointInitA = -160.0;
-			legSettings[LEFT_REAR].jointInitB = 10.0;
-			legSettings[LEFT_REAR].jointInitC = -90.0;
-			
-			legSettings[RIGHT_REAR].jointInitA = -20.0;
-			legSettings[RIGHT_REAR].jointInitB = 10.0;
-			legSettings[RIGHT_REAR].jointInitC = -90.0;
-			
-			for (int legNum = 0; legNum < numberOfLegs; legNum++)
-			{
-				Akrobat::coordinateTransformation(legNum);
-				Akrobat::inverseKinematics(LegCoordinateSystem.leg[legNum].footPresPos.x(), LegCoordinateSystem.leg[legNum].footPresPos.y(), LegCoordinateSystem.leg[legNum].footPresPos.z(), legNum);
-				Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
-			}
-			
-			jointPub.publish(jointState);
-		}
 		else if (mov->walking_mode != gaitToString)
 		{
 			std:string mv = mov->walking_mode;
@@ -605,6 +572,9 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			else if(mv == "ripple")
 			{
 				gait = RIPPLE;
+			}
+			else if(mv == "reset") {
+				gait = RESET;
 			}
 
 			switch (gait)
@@ -652,6 +622,11 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 					traData.initAmpY = trajectorySettings[RIPPLE].ampWidth;
 					traData.initAmpZ = trajectorySettings[RIPPLE].ampHight;
 					traData.tick = 0;
+					break;
+				}
+				case RESET:
+				{
+					cout << "[  GAIT   ]: Reset" << endl;
 					break;
 				}
 				default:
