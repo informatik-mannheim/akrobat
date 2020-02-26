@@ -98,6 +98,14 @@ class Listener
 		setAxisValue(msg->axes);
 		setButtonsValue(msg->buttons);
 	}
+	
+	void readMovementCallback(const akrobat::movement::ConstPtr& msg)
+	{
+		if(msg->walking_mode == "reset") {
+			wmode = reset;
+		}
+    	
+	}
 
 	protected:
 	std::vector<float> axis;
@@ -113,6 +121,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
 	Listener l;
    ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
+	 ros::Subscriber movSub = n.subscribe<akrobat::movement>("movements", 1000, &Listener::readMovementCallback, &l);
    ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
    ros::Rate loop_rate(5);
 	Mode mode = navigate;
@@ -469,8 +478,6 @@ int main(int argc, char **argv)
 				std::cout << "ripple" << std::endl;
 				break;
 			case reset:
-				wmode = reset;
-			
 				msg.walking_mode = "reset";
 				std::cout << "reset" << std::endl;
 				break;
