@@ -628,11 +628,11 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				{
 					cout << "[  GAIT   ]: Reset" << endl;
 					
-					Akrobat::moveLeg(160.0, 10.0, -90, LEFT_FRONT);
+					Akrobat::moveLeg(65.0, 10.0, -90, LEFT_FRONT);
 					Akrobat::moveLeg(20.0, 10.0, -90, RIGHT_FRONT);
-					Akrobat::moveLeg(180.0, 10.0, -90, LEFT_MIDDLE);
+					Akrobat::moveLeg(48.0, 10.0, -90, LEFT_MIDDLE);
 					Akrobat::moveLeg(0.0, 10.0, -90, RIGHT_MIDDLE);
-					Akrobat::moveLeg(-160.0, 10.0, -90, LEFT_REAR);
+					Akrobat::moveLeg(-71.0, 10.0, -90, LEFT_REAR);
 					Akrobat::moveLeg(-20.0, 10.0, -90, RIGHT_REAR);
 					
 					break;
