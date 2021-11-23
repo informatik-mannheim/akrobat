@@ -25,7 +25,7 @@ import roslib; roslib.load_manifest('akrobat')
 import rospy
 
 from sensor_msgs.msg import JointState as JointStatePR2
-from dynamixel_msgs.msg import JointState as JointStateDynamixel
+from dynamixel_workbench_msgs.msg import RX as JointStateDynamixel
 
 class JointStateMessage():
     def __init__(self, name, position, velocity, effort):
@@ -59,7 +59,7 @@ class JointStatePublisher():
         [rospy.Subscriber(c + '/state', JointStateDynamixel, self.controller_state_handler) for c in self.controllers]
 
         # Start publisher
-        self.joint_states_pub = rospy.Publisher('/joint_states', JointStatePR2)
+        self.joint_states_pub = rospy.Publisher('/joint_states', JointStatePR2,queue_size=10)
 
         rospy.loginfo("Starting Dynamixel Joint State Publisher at " + str(rate) + "Hz")
 

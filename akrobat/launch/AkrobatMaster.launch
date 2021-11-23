@@ -15,9 +15,11 @@
   <node respawn="true" pkg="joy" type="joy_node" name="akrobatJoy">
     <param name="dev" type="string" value="/dev/input/js0" />
   </node>
+  
 
+  
   <!-- start robot state publisher -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
     <param name="publish_frequency" value="20.0" />
   </node>
 
@@ -36,6 +38,7 @@
   <!-- start rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
   
-  <!-- start state machine -->
-  <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node>
+ 
+<!-- start state machine 
+  <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node> -->
 </launch>

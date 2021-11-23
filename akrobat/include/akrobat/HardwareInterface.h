@@ -5,7 +5,7 @@
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
-#include <dynamixel_msgs/JointState.h>
+#include <dynamixel_workbench_msgs/RX.h>
 
 namespace Akrobat
 {
@@ -16,7 +16,7 @@ namespace Akrobat
 
 		ros::Time getTime() const { return ros::Time::now(); }
 		ros::Duration getPeriod() const { return ros::Duration(0.01); }
-		void readAsync(int motorArrayPosition, const dynamixel_msgs::JointStateConstPtr& motorState);
+		void readAsync(int motorArrayPosition, const dynamixel_workbench_msgs::RXConstPtr& motorState);
 		void write();
 		
 	private:
