@@ -9,10 +9,6 @@ based on ROS.
 
 - Working installation of ros-noetic (follow the installation instructions on [the official ROS website](http://wiki.ros.org/noetic/Installation/Ubuntu) )
 
-- Install the ROS Noetic joystick 
-
-```sudo apt-get ros-noetic-desktop-full```
-
 - Add your user to the dialout group (you need this because the Akrobat is controlled via the USB interface)
 
 ```sudo add <youruser> dialout``` 
