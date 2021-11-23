@@ -93,7 +93,7 @@ class DynamixelController
   bool get_info();
   bool motor_initialize();
   bool controler_initialize();
-  bool get_positions();
+  bool sub_positions();
   void position(const sensor_msgs::JointState::ConstPtr& msg);
 
  

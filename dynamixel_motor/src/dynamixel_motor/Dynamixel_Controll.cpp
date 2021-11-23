@@ -1,52 +1,38 @@
-/*
- * read_write.cpp
+/** @file Dynamixel_Controlle.cpp
+ *  @brief Akrobat main file with ROS loop.
  *
- *  Created on: 2016. 2. 21.
- *      Author: leon
+ *  @author Author
  */
 
 
+
 // Code from Tutorial SDK CPP Sync Write Protocol 1.0
-
 // URL https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/sample_code/cpp_sync_write_protocol_1_0/#cpp-sync-write-protocol-10
-
-
-
-//
-// *********     Read and Write Example      *********
-//
-//
-// Available DXL model on this example : All models using Protocol 1.0
-// This example is designed for using a Dynamixel MX-28, and an USB2DYNAMIXEL.
-// To use another Dynamixel model, such as X series, see their details in E-Manual(support.robotis.com) and edit below "#define"d variables yourself.
-// Be sure that Dynamixel MX properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 1000000 [1M])
-//
 
 #include "dynamixel_motor/Dynamixel_Controll.h"
 
-                                  // Uses DYNAMIXEL SDK library
+// Uses DYNAMIXEL SDK library
+// Controll table: https://emanual.robotis.com/docs/en/dxl/rx/rx-64/#control-table
 
 // Control table address
-#define ADDR_MX_TORQUE_ENABLE		24                  // Control table address is different in Dynamixel model
-
-#define ADDR_RX_Moving_Speed		32
-
-#define ADDR_MX_GOAL_POSITION		30
-#define ADDR_MX_PRESENT_POSITION	36
-#define ADDR_RX_Delay_Time		5 
+#define ADDR_RX_TORQUE_ENABLE			24                  // Control table address is different in Dynamixel model
+#define ADDR_RX_Moving_Speed			32
+#define ADDR_RX_GOAL_POSITION			30
+#define ADDR_RX_PRESENT_POSITION		36
+#define ADDR_RX_Delay_Time				5 
 
 // Data Byte Length
-#define LEN_RX_Moving_Speed          	2
-#define LEN_RX_Delay_Time		1
-#define LEN_RX_GOAL_POSITION		2
-#define LEN_RX_PRESENT_POSITION	2
+#define LEN_RX_Moving_Speed         	2
+#define LEN_RX_Delay_Time				1
+#define LEN_RX_GOAL_POSITION			2
+#define LEN_RX_PRESENT_POSITION			2
 
 // Protocol version
-#define PROTOCOL_VERSION		1.0                 // See which protocol version is used in the Dynamixel
+#define PROTOCOL_VERSION				1.0                 // See which protocol version is used in the Dynamixel
 
 // Default setting
-#define BAUDRATE			1000000
-#define DEVICENAME			"/dev/ttyUSB0"      // Check which port is being used on your controller
+#define BAUDRATE						1000000
+#define DEVICENAME						"/dev/ttyUSB0"      // Check which port is being used on your controller
                                                             // ex) Windows: "COM1"   Linux: "/dev/ttyUSB0"
 
 #define TORQUE_ENABLE                   1                   // Value for enabling the torque
@@ -57,6 +43,13 @@
 
 
 using namespace std;
+
+
+
+/** Get Info from the ROS parameters.
+ * 
+* @return bool
+*/
 
 bool DynamixelController::get_info()
 {
@@ -80,7 +73,10 @@ bool DynamixelController::get_info()
 	return true;
 }
 
-
+/** Initzialize the Dynamixel controller.
+ * 
+* @return bool
+*/
 bool DynamixelController::controler_initialize()
 {
 	// Initialize PortHandler instance
@@ -92,10 +88,6 @@ bool DynamixelController::controler_initialize()
 	// Set the protocol version
 	// Get methods and members of Protocol1PacketHandler or Protocol2PacketHandler
 	packetHandler = dynamixel::PacketHandler::getPacketHandler(PROTOCOL_VERSION);
-	  
-	
-
-
 
 	// Open port
 	if (portHandler->openPort())
@@ -125,6 +117,10 @@ bool DynamixelController::controler_initialize()
 	return true;
 }
 
+/** Initzialize Dynamixel motors
+ * 
+* @return bool
+*/
 
 bool DynamixelController::motor_initialize()
 {
@@ -141,7 +137,7 @@ bool DynamixelController::motor_initialize()
 		ID = motor_info.second.id;
 	    	
 		//Motor Initzialisierung
-		dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
+		dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, ID, ADDR_RX_TORQUE_ENABLE, TORQUE_ENABLE, &dxl_error);
 	    
 		if (dxl_comm_result != COMM_SUCCESS)
 		{
@@ -200,8 +196,13 @@ bool DynamixelController::motor_initialize()
 	return true; 
 }
 
+/** Subscriber for the goal position from Akrobat
+ * 
+* @return bool
+*/
 
-bool DynamixelController::get_positions()
+
+bool DynamixelController::sub_positions()
 {
 	node_handle_.param<std::string>("goalNodeName", goalNodeName, "/goal_joint_states");
 	goal_joint_states = node_handle_.subscribe(goalNodeName,1,&DynamixelController::position,this);
@@ -210,10 +211,15 @@ bool DynamixelController::get_positions()
 }
 
 
+/** Sync write goal position to Dynamixel Motors
+ * 
+* @return void
+*/
+
 void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 {
 	// Initialize GroupSyncWrite instance
-	dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, ADDR_MX_GOAL_POSITION, LEN_RX_GOAL_POSITION);
+	dynamixel::GroupSyncWrite groupSyncWrite(portHandler, packetHandler, ADDR_RX_GOAL_POSITION, LEN_RX_GOAL_POSITION);
 	
 	// reading position from Akrobat and ID from config
 	for (int i = 0; i < msg->name.size(); i++)
@@ -229,13 +235,14 @@ void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 		param_goal_position[1] = DXL_HIBYTE(pos_end);
 			
 		dxl_addparam_result = groupSyncWrite.addParam(ID, param_goal_position);
-		//ROS_INFO("ID:%d Pos:%f",ID, pos);
 		
 		if (dxl_addparam_result != true)
 		{
 			ROS_ERROR("[ID:%d] groupSyncWrite addparam failed", ID);	
 		}	
 	}
+
+	// Catch Error
 	dxl_comm_result = groupSyncWrite.txPacket();
 	if (dxl_comm_result != COMM_SUCCESS)
 	{
@@ -247,58 +254,47 @@ void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 
 
 
+/** Main
+ * 
+* @return int
+*/
 
 int main(int argc, char *argv[])
 {
-  
-  bool result = false;
-  
+	DynamixelController dynamixel_controller;
+	
+	ros::init(argc, argv, "Dynamixel");
+	ros::NodeHandle n;
 
-  
-  ros::init(argc, argv, "Dynamixel");
-  ros::NodeHandle n; 
-  int publish_frequency = 10;
+	int publish_frequency = 10;
+	bool result = false;
 
-  DynamixelController dynamixel_controller;
- 	
-  ros::Rate spinRate(publish_frequency);
-  std::string config;	
-  n.getParam("dynamixel_info" , config);
+	ros::Rate spinRate(publish_frequency);
+	
+	std::string config;
+	n.getParam("dynamixel_info" , config);
   
-  
-  
-  
-  result = dynamixel_controller.get_info(); 
-  if (result == false)
-   ROS_ERROR("Config Data not found");
-  
-  result = dynamixel_controller.controler_initialize();
-  if (result == false)
-   ROS_ERROR("Initalize Controller failed");
-   
-  result = dynamixel_controller.motor_initialize();
-  if (result == false)
-   ROS_ERROR("Initalize Motor failed");
-  
-  result = dynamixel_controller.get_positions();
-  if (result == false)
-   ROS_ERROR("No Subscriber");
-  
-  
+	// Get Info from Parameter File
+	result = dynamixel_controller.get_info(); 
+	if (result == false)
+		ROS_ERROR("Config Data not found");
 
- 
+	// Initzialize Dynamixel Controller
+	result = dynamixel_controller.controler_initialize();
+	if (result == false)
+		ROS_ERROR("Initalize Controller failed");
+	
+	// Initzialize Dynamixel Motor
+	result = dynamixel_controller.motor_initialize();
+	if (result == false)
+		ROS_ERROR("Initalize Motor failed");
 
-
-
-
- 
-
+	// Subscriber for Position Data and write position to Motor
+	result = dynamixel_controller.sub_positions();
+	if (result == false)
+		ROS_ERROR("No Subscriber");
   
-
-  // Enable Dynamixel#1 Torque
-  
-  
-  // ros main loop
+	// ROS main loop
 	while (ros::ok())
 	{
 		ros::spinOnce();
