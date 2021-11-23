@@ -30,10 +30,10 @@ based on ROS.
 
 3. roslaunch the project with your desired running options
 
-Launch Akrobat as simulation:
+Launch Akrobat:
 ```roslaunch akrobat AkrobatMaster.launch```
 
-Launch Akrobat robot and the simulation as well:
+Launch Akrobat gui and the simulation as well:
 ```roslaunch akrobat AkrobatMaster.launch gui:=true sim:=true```
 
 Troubleshooting:
