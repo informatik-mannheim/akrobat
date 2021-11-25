@@ -1,5 +1,5 @@
 /** @file Dynamixel_Controlle.cpp
- *  @brief Akrobat main file with ROS loop.
+ *  @brief Dynamixel Controller and Writer with ROS loop.
  *
  *  @author Author
  */
@@ -15,7 +15,7 @@
 // Controll table: https://emanual.robotis.com/docs/en/dxl/rx/rx-64/#control-table
 
 // Control table address
-#define ADDR_RX_TORQUE_ENABLE			24                  // Control table address is different in Dynamixel model
+#define ADDR_RX_TORQUE_ENABLE			24                  
 #define ADDR_RX_Moving_Speed			32
 #define ADDR_RX_GOAL_POSITION			30
 #define ADDR_RX_PRESENT_POSITION		36
