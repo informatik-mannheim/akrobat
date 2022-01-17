@@ -12,6 +12,9 @@ based on ROS.
 - Add your user to the dialout group (you need this because the Akrobat is controlled via the USB interface)
 
 ```sudo adduser <youruser> dialout``` 
+- Packages must be installed:
+- ```sudo apt-get install ros-noetic-dynamixel-sdk```
+- ```sudo apt-get install ros-noetic-joy```
  
 
 #### Steps to get the simulation running
