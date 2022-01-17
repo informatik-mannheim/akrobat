@@ -20,7 +20,7 @@ based on ROS.
 
 - ```cd ~/catkin_ws/src/```
 
-- ```git clone -b <yourbranchname> github.com/informatik-mannheim/akrobat```
+- ```git clone -b <yourbranchname> https://github.com/informatik-mannheim/akrobat.git```
 
 2. catkin_make your workspace
 
