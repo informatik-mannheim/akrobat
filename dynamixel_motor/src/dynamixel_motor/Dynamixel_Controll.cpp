@@ -1,4 +1,4 @@
-/** @file Dynamixel_Controlle.cpp
+/* @file Dynamixel_Controlle.cpp
  *  @brief Dynamixel Controller and Writer with ROS loop.
  *
  *  @author Author
@@ -261,10 +261,12 @@ void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 
 int main(int argc, char *argv[])
 {
-	DynamixelController dynamixel_controller;
+	
 	
 	ros::init(argc, argv, "Dynamixel");
 	ros::NodeHandle n;
+
+	DynamixelController dynamixel_controller;
 
 	int publish_frequency = 10;
 	bool result = false;

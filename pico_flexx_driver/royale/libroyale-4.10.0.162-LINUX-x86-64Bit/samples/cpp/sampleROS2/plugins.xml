@@ -1,0 +1,9 @@
+<library path="royale_panel">
+  <class name="royale_in_ros2/RoyaleControl"
+         type="royale_in_ros2::RoyaleControl"
+         base_class_type="rviz_common::Panel">
+    <description>
+      A panel widget to show the info of royale camera.
+    </description>
+  </class>
+</library>
