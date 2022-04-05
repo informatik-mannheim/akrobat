@@ -19,6 +19,7 @@
 #define ADDR_RX_Moving_Speed			32
 #define ADDR_RX_GOAL_POSITION			30
 #define ADDR_RX_PRESENT_POSITION		36
+#define ADDR_RX_PRESENT_Load			40
 #define ADDR_RX_Delay_Time				5 
 
 // Data Byte Length
@@ -26,6 +27,7 @@
 #define LEN_RX_Delay_Time				1
 #define LEN_RX_GOAL_POSITION			2
 #define LEN_RX_PRESENT_POSITION			2
+#define LEN_RX_PRESENT_Load				2
 
 // Protocol version
 #define PROTOCOL_VERSION				1.0                 // See which protocol version is used in the Dynamixel
@@ -44,7 +46,7 @@
 
 using namespace std;
 
-
+ros::Publisher dynamixel_status; 
 
 /** Get Info from the ROS parameters.
  * 
@@ -201,11 +203,22 @@ bool DynamixelController::motor_initialize()
 * @return bool
 */
 
+bool DynamixelController::sub_status()
+{
+	dyn_status = node_handle_.subscribe("/dynamixel_status",10,&DynamixelController::chatterCallback,this);
+
+	return true;
+}
+
+void DynamixelController::chatterCallback(const dynamixel_motor::dynamixel & msg)
+{
+
+}
 
 bool DynamixelController::sub_positions()
 {
 	node_handle_.param<std::string>("goalNodeName", goalNodeName, "/goal_joint_states");
-	goal_joint_states = node_handle_.subscribe(goalNodeName,1,&DynamixelController::position,this);
+	goal_joint_states = node_handle_.subscribe(goalNodeName,10,&DynamixelController::position,this);
 
 	return true;
 }
@@ -242,6 +255,8 @@ void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 		}	
 	}
 
+	
+	
 	// Catch Error
 	dxl_comm_result = groupSyncWrite.txPacket();
 	if (dxl_comm_result != COMM_SUCCESS)
@@ -250,8 +265,102 @@ void DynamixelController::position(const sensor_msgs::JointState::ConstPtr& msg)
 	}
 	// Clear syncwrite parameter storage
 	groupSyncWrite.clearParam();
+
+	DynamixelController::cur_position();
+	
 }
 
+bool DynamixelController::cur_position()	
+{
+	
+	
+	
+
+	dynamixel_msg.name.resize(18);
+	dynamixel_msg.position.resize(18);
+	dynamixel_msg.velocity.resize(18);
+	dynamixel_msg.effort.resize(18);
+	dynamixel_msg.load.resize(18);
+
+	
+	node_handle_.getParam("/akrobat_config/motoren",motor);
+	
+	int i;
+
+	for (i=0;i<motor.size();i++)
+	{
+		std::string name;
+		name = motor[i];
+		node_handle_.getParam("/akrobat_config/"+name+"/ID", id);
+
+		// // Get Dynamixel present position valuestring dyn_name = ;
+		dxl_read_result = packetHandler->read2ByteTxRx(portHandler, id, ADDR_RX_PRESENT_POSITION, &dxl1_present_position, &dxl_error);
+		if (dxl_read_result != COMM_SUCCESS)
+		{
+			printf("%s\n", packetHandler->getTxRxResult(dxl_read_result));
+		}
+		else if (dxl_error != 0)
+		{
+			printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+		}
+
+		// Getiing Dynamixel present load
+		dxl_read_result = packetHandler->read2ByteTxRx(portHandler, id, ADDR_RX_PRESENT_Load, &dxl1_present_load, &dxl_error);
+		if (dxl_read_result != COMM_SUCCESS)
+		{
+			printf("%s\n", packetHandler->getTxRxResult(dxl_read_result));
+		}
+		else if (dxl_error != 0)
+		{
+			printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+		}
+		
+	
+		dynamixel_msg.name[i] = "m"+to_string(id);
+		dynamixel_msg.velocity[i] = 0.0;
+		dynamixel_msg.effort[i] = 0.0;
+		dynamixel_msg.load[i] = dxl1_present_load;
+		dynamixel_msg.position[i]= dxl1_present_position;
+		dynamixel_msg.header.stamp = ros::Time::now();
+		
+		
+	}
+	dynamixel_status.publish(dynamixel_msg);
+	
+	
+	return true;
+	
+}
+
+
+bool DynamixelController::torqueoff()
+{	
+	
+	node_handle_.getParam("/akrobat_config/motoren",motor);
+	
+	int i;
+
+	for (i=0;i<motor.size();i++)
+	{	
+		std::string name;
+		name = motor[i];
+		node_handle_.getParam("/akrobat_config/"+name+"/ID", id);
+
+		dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, id, ADDR_RX_TORQUE_ENABLE, TORQUE_DISABLE, &dxl_error);
+		if (dxl_read_result != COMM_SUCCESS)
+		{
+			printf("%s\n ", packetHandler->getTxRxResult(dxl_read_result));
+		}
+		else if (dxl_error != 0)
+		{
+			printf("%s\n", packetHandler->getRxPacketError(dxl_error));
+		}
+
+		// Close port
+		//portHandler->closePort();
+	}
+	return true;
+}
 
 
 /** Main
@@ -265,7 +374,7 @@ int main(int argc, char *argv[])
 	
 	ros::init(argc, argv, "Dynamixel");
 	ros::NodeHandle n;
-
+	dynamixel_status = n.advertise<dynamixel_motor::dynamixel>("/dynamixel_status", 1);
 	DynamixelController dynamixel_controller;
 
 	int publish_frequency = 10;
@@ -295,15 +404,19 @@ int main(int argc, char *argv[])
 	result = dynamixel_controller.sub_positions();
 	if (result == false)
 		ROS_ERROR("No Subscriber");
-  
+    
+	
+
 	// ROS main loop
 	while (ros::ok())
 	{
 		ros::spinOnce();
 		
 		spinRate.sleep();
+		result = dynamixel_controller.torqueoff();
 	}
 	
-
+	
+	
 
  }

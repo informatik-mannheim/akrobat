@@ -1,57 +1,49 @@
 <!-- -*- mode: XML -*- -->
 <launch>
-   <!-- configuration -->
-  
+<arg name="pi/2" value="1.5707963267948966" />
+<arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+<node pkg="tf" type="static_transform_publisher" name="camera_base_link"
+     args="$(arg optical_rotate) base_link stereo_camera 100" />  
 
-   <!-- configuration end -->
+<!-- Run the ROS package stereo_image_proc -->
+<group ns="/stereo_node" >
+    <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc"/>
 
-   <!-- start cam0 from stereo pi -->
-   <arg name="enable_raw" default="false"/>
-   <arg name="enable_imv" default="false"/>
-   <arg name="camera_id" default="0"/>
-   <arg name="camera_frame_id" default="raspicam"/>
-   <arg name="camera_name" default="camerav1_1280x720"/>
+    <!-- Odometry -->
+    <node pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry" output="screen">
+        <remap from="left/image_rect"       to="left/image_rect"/>
+        <remap from="right/image_rect"      to="right/image_rect"/>
+        <remap from="left/camera_info"      to="left/camera_info"/>
+        <remap from="right/camera_info"     to="right/camera_info"/>
 
-   <node type="raspicam_node" pkg="raspicam_node" name="raspicam_node0" output="s$
-    <param name="private_topics" value="true"/>
+        <param name="frame_id" type="string" value="base_link"/>
+        <param name="odom_frame_id" type="string" value="odom"/>
+        <param name="approx_sync"   type="bool" value="false"/>
+        <param name="queue_size"    type="int" value="5"/>
 
-    <param name="camera_frame_id" value="$(arg camera_frame_id)"/>
-    <param name="enable_raw" value="$(arg enable_raw)"/>
-    <param name="enable_imv" value="$(arg enable_imv)"/>
-    <param name="camera_id" value="$(arg camera_id)"/>
+        <param name="Odom/MinInliers" type="string" value="12"/>
+        <param name="Odom/RoiRatios"  type="string" value="0.03 0.03 0.04 0.04"/>
+    </node>     
+</group>
 
-    <param name="camera_info_url" value="package://raspicam_node/camera_info/ca$
-    <param name="camera_name" value="$(arg camera_name)"/>
-    <param name="width" value="1280"/>
-    <param name="height" value="720"/>
+<group ns="rtabmap">   
+  <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+     <param name="frame_id" type="string" value="base_link"/>
+     <param name="subscribe_stereo" type="bool" value="true"/>
+     <param name="subscribe_depth"  type="bool" value="false"/>
+     <param name="approx_sync"      type="bool" value="false"/>
 
-    <!-- We are running at 90fps to reduce motion blur -->
-    <param name="framerate" value="90"/>
-   </node>
+     <remap from="left/image_rect"   to="/stereo_camera/left/image_rect_color"/>
+     <remap from="right/image_rect"  to="/stereo_camera/right/image_rect"/>
+     <remap from="left/camera_info"  to="/stereo_camera/left/camera_info"/>
+     <remap from="right/camera_info" to="/stereo_camera/right/camera_info"/>
 
-   <!-- start cam1 from stereo pi -->
-   <arg name="enable_raw" default="false"/>
-   <arg name="enable_imv" default="false"/>
-   <arg name="camera_id" default="1"/>
-   <arg name="camera_frame_id" default="raspicam"/>
-   <arg name="camera_name" default="camerav1_1280x720"/>
+     <remap from="odom" to="/stereo_node/odom"/>
 
-   <node type="raspicam_node" pkg="raspicam_node" name="raspicam_node1" output="s$
-    <param name="private_topics" value="true"/>
+     <param name="queue_size" type="int" value="30"/>
 
-    <param name="camera_frame_id" value="$(arg camera_frame_id)"/>
-    <param name="enable_raw" value="$(arg enable_raw)"/>
-    <param name="enable_imv" value="$(arg enable_imv)"/>
-    <param name="camera_id" value="$(arg camera_id)"/>
-
-    <param name="camera_info_url" value="package://raspicam_node/camera_info/ca$
-    <param name="camera_name" value="$(arg camera_name)"/>
-    <param name="width" value="1280"/>
-    <param name="height" value="720"/>
-
-    <!-- We are running at 90fps to reduce motion blur -->
-    <param name="framerate" value="90"/>
-   </node>
-
-
+     <!-- RTAB-Map's parameters -->
+     <param name="Vis/MinInliers" type="string" value="12"/>
+  </node>
+ </group>
 </launch>
