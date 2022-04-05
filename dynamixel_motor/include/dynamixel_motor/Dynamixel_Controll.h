@@ -8,7 +8,7 @@
 #include <trajectory_msgs/JointTrajectory.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
 #include <dynamixel_motor/dynamixel.h>
-//#include "akrobat/movement.h"
+#include "akrobat/movement.h"
 
 #ifdef __linux__
 #include <unistd.h>
@@ -52,6 +52,7 @@ class DynamixelController
   // ROS Topic Subscriber
   ros::Subscriber goal_joint_states;
   ros::Subscriber dyn_status;
+  ros::Subscriber mov_status;
 
 
   string goalNodeName;
@@ -99,8 +100,8 @@ class DynamixelController
   void chatterCallback(const dynamixel_motor::dynamixel & msg);
   bool cur_position();
   void position(const sensor_msgs::JointState::ConstPtr& msg);
-  //bool sub_mov();
-  bool torqueoff();
+  bool sub_down();
+  void torqueoff(const akrobat::movement::ConstPtr& msg);
 };
 
 #endif //DYNAMIXEL_WORKBENCH_CONTROLLERS_H

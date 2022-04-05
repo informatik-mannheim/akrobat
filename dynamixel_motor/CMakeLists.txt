@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   dynamixel_sdk
-  
+  akrobat
   message_generation
   
 )

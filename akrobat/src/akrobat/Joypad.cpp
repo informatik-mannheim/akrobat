@@ -34,7 +34,8 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 
 	if (mov->macro == "shutdown")
 	{
-		cout << "SHUTTING DOWN!" << endl;
+		cout << "SHUTTING DOWN! in 5 sek" << endl;
+		sleep(5);
 		ros::shutdown();
 	}
 	else

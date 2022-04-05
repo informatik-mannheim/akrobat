@@ -210,6 +210,12 @@ bool DynamixelController::sub_status()
 	return true;
 }
 
+/** Subscriber for shutdown from Akrobat
+ * 
+* @return bool
+*/
+
+
 void DynamixelController::chatterCallback(const dynamixel_motor::dynamixel & msg)
 {
 
@@ -332,10 +338,19 @@ bool DynamixelController::cur_position()
 	
 }
 
-
-bool DynamixelController::torqueoff()
+bool DynamixelController::sub_down()
 {	
-	
+	printf("ok");
+	mov_status = node_handle_.subscribe("/movements",10,&DynamixelController::torqueoff,this);
+
+	return true;
+}
+
+void DynamixelController::torqueoff(const akrobat::movement::ConstPtr& msg)
+{	
+	printf("%s/n", msg->walking_mode);
+if (msg->walking_mode == "shutdown");
+
 	node_handle_.getParam("/akrobat_config/motoren",motor);
 	
 	int i;
@@ -357,9 +372,9 @@ bool DynamixelController::torqueoff()
 		}
 
 		// Close port
-		//portHandler->closePort();
+		portHandler->closePort();
 	}
-	return true;
+	
 }
 
 
@@ -405,6 +420,7 @@ int main(int argc, char *argv[])
 	if (result == false)
 		ROS_ERROR("No Subscriber");
     
+	result = dynamixel_controller.sub_down();
 	
 
 	// ROS main loop
@@ -413,7 +429,7 @@ int main(int argc, char *argv[])
 		ros::spinOnce();
 		
 		spinRate.sleep();
-		result = dynamixel_controller.torqueoff();
+		//result = dynamixel_controller.torqueoff();
 	}
 	
 	
