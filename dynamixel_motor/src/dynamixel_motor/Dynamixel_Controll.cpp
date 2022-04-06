@@ -340,39 +340,35 @@ bool DynamixelController::cur_position()
 
 bool DynamixelController::sub_down()
 {	
-	printf("ok");
-	mov_status = node_handle_.subscribe("/movements",10,&DynamixelController::torqueoff,this);
+	
+	mov_status = node_handle_.subscribe("/movements",1,&DynamixelController::torqueoff,this);
 
 	return true;
 }
 
 void DynamixelController::torqueoff(const akrobat::movement::ConstPtr& msg)
 {	
-	printf("%s/n", msg->walking_mode);
-if (msg->walking_mode == "shutdown");
-
-	node_handle_.getParam("/akrobat_config/motoren",motor);
 	
-	int i;
-
-	for (i=0;i<motor.size();i++)
+if (msg->macro == "shutdown")
 	{	
-		std::string name;
-		name = motor[i];
-		node_handle_.getParam("/akrobat_config/"+name+"/ID", id);
+		ROS_ERROR("Shutdown");
+		node_handle_.getParam("/akrobat_config/motoren",motor);
+		
+		int i;
 
-		dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, id, ADDR_RX_TORQUE_ENABLE, TORQUE_DISABLE, &dxl_error);
-		if (dxl_read_result != COMM_SUCCESS)
-		{
-			printf("%s\n ", packetHandler->getTxRxResult(dxl_read_result));
-		}
-		else if (dxl_error != 0)
-		{
-			printf("%s\n", packetHandler->getRxPacketError(dxl_error));
-		}
+		for (i=0;i<motor.size();i++)
+		{	
+			std::string name;
+			name = motor[i];
+			node_handle_.getParam("/akrobat_config/"+name+"/ID", id);
 
+			dxl_comm_result = packetHandler->write1ByteTxRx(portHandler, id, ADDR_RX_TORQUE_ENABLE, TORQUE_DISABLE, &dxl_error);
+
+			
+		}
 		// Close port
 		portHandler->closePort();
+		
 	}
 	
 }
@@ -418,9 +414,11 @@ int main(int argc, char *argv[])
 	// Subscriber for Position Data and write position to Motor
 	result = dynamixel_controller.sub_positions();
 	if (result == false)
-		ROS_ERROR("No Subscriber");
-    
+		ROS_ERROR("Subscriber Error");
+    //Subscriber for Shutdown
 	result = dynamixel_controller.sub_down();
+	if (result == false)
+		ROS_ERROR("Shutdown Error");
 	
 
 	// ROS main loop
@@ -429,7 +427,7 @@ int main(int argc, char *argv[])
 		ros::spinOnce();
 		
 		spinRate.sleep();
-		//result = dynamixel_controller.torqueoff();
+		
 	}
 	
 	
