@@ -8,10 +8,7 @@
   <maintainer email="t.ihme@hs-mannheim.de">Thomas Ihme</maintainer>
 
   <license>Good Boy License</license>
-  <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>dynamixel_workbench_controllers</build_depend>
-  <build_depend>dynamixel_workbench_toolbox</build_depend>
-  <build_depend>dynamixel_workbench_msgs</build_depend>
+  <buildtool_depend>catkin</buildtool_depend> 
   <build_depend>dynamixel_sdk</build_depend>
   <build_depend>joy</build_depend>
   <build_depend>roscpp</build_depend>
@@ -31,9 +28,6 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>message_runtime</exec_depend>
-  <exec_depend>dynamixel_workbench_controllers</exec_depend>
-  <exec_depend>dynamixel_workbench_toolbox</exec_depend>
-  <exec_depend>dynamixel_workbench_msgs</exec_depend>
   <exec_depend>dynamixel_sdk</exec_depend>
   <exec_depend>joy</exec_depend>
   <exec_depend>tf</exec_depend>

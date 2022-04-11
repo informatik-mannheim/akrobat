@@ -12,7 +12,7 @@
   <param name="use_gui" value="$(arg gui)" />
 
   <!-- start joystick -->
-  <node respawn="true" pkg="joy" type="joy_node" name="akrobatJoy">
+  <node respawn="true" pkg="joy" type="joy_node" name="Joystick_Controller">
     <param name="dev" type="string" value="/dev/input/js0" />
   </node>
   
@@ -32,7 +32,7 @@
   </node>
 
   <!-- start translationNode -->
-  <node name="translateJoypad" pkg="akrobat" type="translateJoypad"></node>
+  <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node>
 
 
   <!-- start rviz-->

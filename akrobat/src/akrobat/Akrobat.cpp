@@ -23,6 +23,8 @@
 
 #include <akrobat/Trajectory.h>
 #include <akrobat/movement.h>
+#include <akrobat/Joint_position.h>
+
 
 
 
@@ -49,24 +51,32 @@ Akrobat::Akrobat() :
 	scaleFacRot(10)
 {
 	//float rollOv, rotOfCoxa, bdConstX, bdConstY, bdConstZ, jointInitA, jointInitB, jointInitC, minCoxa, minFemur, minTibia, maxCoxa, maxFemur, maxTibia
-	legSettings[LEFT_FRONT] = LegSetting(0.0, -160.0, -51.0, 217.0, 0.0, 160.0, 10.0, -90.0, -26.0, -99.0, -135.0, 65.0, 96.0, 135.0);
-	legSettings[RIGHT_FRONT] = LegSetting(0.0, -20.0, 51.0, 217.0, 0.0, 20.0, 10.0, -90.0, -71.0, -99.0, -135.0, 28.0, 96.0, 135.0);
-	legSettings[LEFT_MIDDLE] = LegSetting(0.0, 180.0, -51.0, 0.0, 0.0, 180.0, 10.0, -90.0, -51.0, -99.0, -135.0, 48.0, 96.0, 135.0);
-	legSettings[RIGHT_MIDDLE] = LegSetting(0.0, 0.0, 51.0, 0.0, 0.0, 0.0, 10.0, -90.0, -51.0, -99.0, -135.0, 48.0, 96.0, 135.0);
-	legSettings[LEFT_REAR] = LegSetting(0.0, 160.0, -51.0, -217.0, 0.0, -160.0, 10.0, -90.0, -71.0, -99.0, -135.0, 30.0, 96.0, 135.0);
-	legSettings[RIGHT_REAR] = LegSetting(0.0, 20.0, 51.0, -217.0, 0.0, -20.0, 10.0, -90.0, -23.0, -107.0, -135.0, 75.0, 96.0, 135.0);
+	legSettings[LEFT_FRONT] = LegSetting(	0.0,	180.0,	-51.0,	217.0,	0.0,	160.0,	10.0,	-90.0,	-36.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_FRONT] = LegSetting(	0.0,	0.0,	51.0,	217.0,	0.0,	20.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	36.0, 96.0, 135.0);
+	legSettings[LEFT_MIDDLE] = LegSetting(	0.0,	180.0,	-51.0,	0.0,	0.0,	180.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_MIDDLE] = LegSetting(	0.0,	0.0,	51.0,	0.0,	0.0,	0.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[LEFT_REAR] = LegSetting(	0.0,	180.0,	-51.0,	-217.0,	0.0,	-160.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_REAR] = LegSetting(	0.0,	0.0,	51.0,	-217.0,	0.0,	-20.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0, 50.0, 96.0, 135.0);
 
+
+
+	//Trajectory Settings (ampWidth, ampHigh, numTick)
 	trajectorySettings[TRIPOD] = TrajectorySettings(40, 40, 15);
 	trajectorySettings[WAVE] = TrajectorySettings(40, 40, 15);
 	trajectorySettings[RIPPLE] = TrajectorySettings(40, 40, 15);
 
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
+	
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 
+	
+	
 	jointState.name.resize(18);
 	jointState.position.resize(18);
 	jointState.velocity.resize(18);
 	jointState.effort.resize(18);
+
+	
 
 	for (int i = 0, j = 1, k = 1; i < 18; i++)
 	{
@@ -74,16 +84,21 @@ Akrobat::Akrobat() :
 		name += ('0' + j);
 		name += ('0' + k++);
 
+
+		
+		
 		jointState.name[i] = name;
+		
 		jointState.velocity[i] = 0.0;
 		jointState.effort[i] = 0.0;
-
+		
 		if (k > 3)
 		{
 			j++;
 			k = 1;
 		}
 	}
+	
 }
 
 /** Initialize the leg position of for each leg.
@@ -131,6 +146,8 @@ void Akrobat::initAkrobat()
 		Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 		
 		jointPub.publish(jointState);
+		
+		
 	}
 }
 
@@ -166,9 +183,11 @@ void Akrobat::coordinateTransformation(int legNum)
 	Transform T; // [TRANSFORMATION DATA TYP] -- create a transform
 
 	T = Akrobat::transformCS(Vector3(0, 0, 0), LegCoordinateSystem.leg[legNum].footInitPos);
+
 	LegCoordinateSystem.leg[legNum].footPresPos = T * FootCoordinateSystem.leg[legNum].trajectoryPresPos;
 
 	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(legSettings[legNum].bdConstX, legSettings[legNum].bdConstY, legSettings[legNum].bdConstZ));
+
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * LegCoordinateSystem.leg[legNum].footPresPos;
 
 	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(0, 0, 0));
@@ -197,7 +216,9 @@ void Akrobat::coordinateTransformation(int legNum)
 void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 {
 	float R, L, ALPHA, BETA1, BETA2, BETA, GAMMA;
-
+	cout << "Leg" << legNum <<" x: " << x <<endl;
+	cout << "Leg" << legNum <<" y: " << y <<endl;
+	
 	R = sqrt(pow(y, 2) + pow(x, 2));
 	ALPHA = atan2(y, x);
 	L = sqrt(pow(R - LENGTH_COXA, 2) + pow(z, 2));

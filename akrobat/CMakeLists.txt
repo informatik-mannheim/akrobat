@@ -57,11 +57,11 @@ catkin_python_setup()
  )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+   FILES
+   Joint_position.srv
+   
+ )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -91,7 +91,7 @@ catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES $(PROJECT_NAME)
 
-   CATKIN_DEPENDS dynamixel_workbench_toolbox dynamixel_workbench_controllers dynamixel_workbench_msgs dynamixel_sdk joy roscpp rospy std_msgs tf controller_manager hardware_interface message_runtime 
+   CATKIN_DEPENDS dynamixel_sdk joy roscpp rospy std_msgs tf controller_manager hardware_interface message_runtime 
 #  DEPENDS system_lib
 )
 

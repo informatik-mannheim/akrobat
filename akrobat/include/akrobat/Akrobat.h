@@ -15,7 +15,7 @@
 #include <akrobat/LegSetting.h>
 #include <akrobat/TrajectorySettings.h>
 #include <akrobat/movement.h>
-
+#include <akrobat/Joint_position.h>
 #include <akrobat/Settings.h>
 
 
@@ -81,7 +81,7 @@ public:
 	int mode; // [   MODE   ] -- normal(0)/translation(1)/rotation(2)
 	int gait; // [   gait   ] -- tripod(1)/wave(2)/ripple(3)
 	int rotBody; // [ rotBody  ] -- angle of body rotation (0/180)
-	int rollOver; // [ rollOver ] -- if body roll over (0/1)
+	int rollOver; // [ rollOver ] -position- if body roll over (0/1)
 
 	int LENGTH_COXA;
 	int LENGTH_FEMUR;
@@ -101,6 +101,8 @@ public:
 	TrajectorySettings trajectorySettings[numberOfWalkingPattern]; // 3 = number of walking modes
 	CoordinateSystem MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState jointState;
+	
+	
 
 	// constructor
 	Akrobat();
@@ -148,6 +150,7 @@ private:
 	ros::NodeHandle n;
 	ros::Subscriber subMov; // subscriber of joy topic
 	ros::Publisher jointPub; // publisher (rviz)
+	
 };
 
 #endif

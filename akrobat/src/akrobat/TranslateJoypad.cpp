@@ -120,7 +120,7 @@ class Listener
 
 int main(int argc, char **argv)
 {
-   ros::init(argc, argv, "translateJoypad");
+   ros::init(argc, argv, "Joystick_Transllation");
    ros::NodeHandle n;
 	Listener l;
    ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
@@ -158,7 +158,9 @@ int main(int argc, char **argv)
 
 		//Befehle im Navigationsmodus
 		if(mode == navigate)
-		{
+		{	
+			std::cout<<"Navigationsmodus"<<std::endl;
+
 			//LINKER JOYSTICK
 			if(std::abs(axisValue[1]) > joystickDeadZone)
 			{
@@ -208,8 +210,7 @@ int main(int argc, char **argv)
 					else
 					{
 						commands[4] = 0;
-					}
-					if(std::abs(axisValue[3]) > joystickDeadZone)
+					}if(std::abs(axisValue[3]) > joystickDeadZone)
 					{
 						commands[5] = axisValue[3]*int_max;
 					}
@@ -322,6 +323,7 @@ int main(int argc, char **argv)
 		//Befehle im Arbeitsmodus
 		else if(mode == work)
 		{
+			std::cout<<"Arbeitsmodus"<<std::endl;
 			//LINKER JOYSTICK
 			if(std::abs(axisValue[1]) > joystickDeadZone)
 			{

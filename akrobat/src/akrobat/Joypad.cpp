@@ -48,12 +48,12 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			{
 				rollOver = 1;
 				rotBody = 180;
-				legSettings[LEFT_FRONT].rotOfCoxa = 160; // rotation of leg coordinate system (Leg 1)
-				legSettings[RIGHT_FRONT].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 2)
-				legSettings[LEFT_MIDDLE].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 3)
-				legSettings[RIGHT_MIDDLE].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 4)
-				legSettings[LEFT_REAR].rotOfCoxa = -160; // rotation of leg coordinate system (Leg 5)
-				legSettings[RIGHT_REAR].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 6)
+				legSettings[LEFT_FRONT].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 1)
+				legSettings[RIGHT_FRONT].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 2)
+				legSettings[LEFT_MIDDLE].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 3)
+				legSettings[RIGHT_MIDDLE].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 4)
+				legSettings[LEFT_REAR].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 2 * legSettings[LEFT_FRONT].bdConstY; // translation offset for leg coordinate system (Leg 1)
 				legSettings[RIGHT_FRONT].rollOv = 2 * legSettings[RIGHT_FRONT].bdConstY;// translation offset for leg coordinate system (Leg 2)
 				legSettings[LEFT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 3)
@@ -72,12 +72,12 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			{
 				rollOver = 0;
 				rotBody = 0;
-				legSettings[LEFT_FRONT].rotOfCoxa = -160; // rotation of leg coordinate system (Leg 1)
-				legSettings[RIGHT_FRONT].rotOfCoxa = -20; // rotation of leg coordinate system (Leg 2)
+				legSettings[LEFT_FRONT].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 1)
+				legSettings[RIGHT_FRONT].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 2)
 				legSettings[LEFT_MIDDLE].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 3)
 				legSettings[RIGHT_MIDDLE].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 4)
-				legSettings[LEFT_REAR].rotOfCoxa = 160; // rotation of leg coordinate system (Leg 5)
-				legSettings[RIGHT_REAR].rotOfCoxa = 20; // rotation of leg coordinate system (Leg 6)
+				legSettings[LEFT_REAR].rotOfCoxa = 180; // rotation of leg coordinate system (Leg 5)
+				legSettings[RIGHT_REAR].rotOfCoxa = 0; // rotation of leg coordinate system (Leg 6)
 				legSettings[LEFT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 1)
 				legSettings[RIGHT_FRONT].rollOv = 0; // translation offset for leg coordinate system (Leg 2)
 				legSettings[LEFT_MIDDLE].rollOv = 0; // translation offset for leg coordinate system (Leg 3)
@@ -184,10 +184,14 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			pad.bdT.setX((mov->commands[7] * scaleFacTrans) / 32767); // body translation X
 			pad.bdT.setY((mov->commands[6] * scaleFacTrans) / 32767); // body translation Y
 			pad.bdT.setZ((mov->commands[8] * scaleFacTrans) / 32767); // body translation Z
+			
 			//Walking
 			if(mov->commands[1] != 0)
 			{
-				pad.speed.setX(-(mov->commands[1] / abs(mov->commands[1])));
+				pad.speed.setX((mov->commands[1] / abs(mov->commands[1])));
+				cout << "PadSpeed abs x :"<<abs(mov->commands[1])<< endl;
+				cout << "PadSpeed  x :"<<mov->commands[1]<< endl;
+			
 			}
 			else
 			{
@@ -195,7 +199,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			}
 			if(mov->commands[0] != 0)
 			{
-				pad.speed.setY(-(mov->commands[0] / abs(mov->commands[0])));
+				pad.speed.setY((mov->commands[0] / abs(mov->commands[0])));
 			}
 			else
 			{
@@ -216,7 +220,8 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			pad.bdR.setZ((mov->commands[3] * scaleFacRot) / 32767); // body rotation Z
 		
 			if (abs(pad.speed.x()) < abs(pad.speed.y()))
-			{
+			{	
+				
 				// LEG 1 amplitude					     // LEG 2 amplitude
 				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();
 				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
@@ -240,7 +245,8 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.y();
 			}
 			else if (abs(pad.speed.x()) > abs(pad.speed.y()))
-			{
+			{	
+				
 				// LEG 1 amplitude					     // LEG 2 amplitude
 				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();
 				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
