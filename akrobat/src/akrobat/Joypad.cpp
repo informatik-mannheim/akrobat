@@ -222,75 +222,99 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			if (abs(pad.speed.x()) < abs(pad.speed.y()))
 			{	
 				
-				// LEG 1 amplitude					     // LEG 2 amplitude
-				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();
+				// LEG 1 amplitude					    
+				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();			
+				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();			
+				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.y();			
+
+				// LEG 2 amplitude
 				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();
 				traData.ampY[RIGHT_FRONT] = traData.initAmpY * pad.speed.y();
-				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.y();
 				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.y();
-				// LEG 3 amplitude					     // LEG 4 amplitude
-				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * pad.speed.x();
-				traData.ampX[RIGHT_MIDDLE] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * pad.speed.y();
-				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * pad.speed.y();
+
+				// LEG 3 amplitude					     
+				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * pad.speed.x();			
+				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * pad.speed.y();			
 				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.y();
+				
+				// LEG 4 amplitude
+				traData.ampX[RIGHT_MIDDLE] = traData.initAmpX * pad.speed.x();
+				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * pad.speed.y();
 				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * pad.speed.y();
-				// LEG 5 amplitude				      	     // LEG 6 amplitude
-				traData.ampX[LEFT_REAR] = traData.initAmpX * pad.speed.x();
-				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_REAR] = traData.initAmpY * pad.speed.y();
-				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.y();
+
+				// LEG 5 amplitude				      	     
+				traData.ampX[LEFT_REAR] = traData.initAmpX * pad.speed.x();				
+				traData.ampY[LEFT_REAR] = traData.initAmpY * pad.speed.y();				
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.y();
+				
+				// LEG 6 amplitude
+				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.x();
+				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.y();
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.y();
 			}
 			else if (abs(pad.speed.x()) > abs(pad.speed.y()))
 			{	
 				
-				// LEG 1 amplitude					     // LEG 2 amplitude
-				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();
-				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();
-				traData.ampY[RIGHT_FRONT] = traData.initAmpY * pad.speed.y();
+				// LEG 1 amplitude					     
+				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();				
+				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();				
 				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.x();
+				
+				// LEG 2 amplitude
+				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
+				traData.ampY[RIGHT_FRONT] = traData.initAmpY * pad.speed.y();
 				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.x();
-				// LEG 3 amplitude					     // LEG 4 amplitude
-				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * pad.speed.x();
+
+				// LEG 3 amplitude					     
+				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * pad.speed.x();				
+				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * pad.speed.y();				
+				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.x();				
+
+				// LEG 4 amplitude
 				traData.ampX[RIGHT_MIDDLE] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * pad.speed.y();
 				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * pad.speed.y();
-				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.x();
 				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * pad.speed.x();
-				// LEG 5 amplitude				      	     // LEG 6 amplitude
-				traData.ampX[LEFT_REAR] = traData.initAmpX * pad.speed.x();
-				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.x();
-				traData.ampY[LEFT_REAR] = traData.initAmpY * pad.speed.y();
-				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.y();
+
+				// LEG 5 amplitude				      	     
+				traData.ampX[LEFT_REAR] = traData.initAmpX * pad.speed.x();			
+				traData.ampY[LEFT_REAR] = traData.initAmpY * pad.speed.y();			
 				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.x();
+				
+				// LEG 6 amplitude
+				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.x();
+				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.y();
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.x();
 			}
 			else if ((pad.speed.x() == 0) && (pad.speed.y() == 0) && ((pad.speed.z() >= 0) || (pad.speed.z() <= 0)))
 			{
-				// LEG 1 amplitude					      // LEG 2 amplitude
-				traData.ampX[LEFT_FRONT] = -traData.initAmpX * pad.speed.z();
-				traData.ampX[RIGHT_FRONT] = -traData.initAmpX * pad.speed.z();
+				// LEG 0 amplitude					      
+				traData.ampX[LEFT_FRONT] = -traData.initAmpX * pad.speed.z();				
 				traData.ampY[LEFT_FRONT] = -traData.initAmpY * pad.speed.z();
+				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.z();	
+				
+				// LEG 1 amplitude
+				traData.ampX[RIGHT_FRONT] = -traData.initAmpX * pad.speed.z();
 				traData.ampY[RIGHT_FRONT] = traData.initAmpY * pad.speed.z();
-				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.z();
 				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.z();
-				// LEG 3 amplitude					      // LEG 4 amplitude
+
+				// LEG 2 amplitude					      
 				traData.ampX[LEFT_MIDDLE] = 0;
-				traData.ampX[RIGHT_MIDDLE] = 0;
 				traData.ampY[LEFT_MIDDLE] = -traData.initAmpY * pad.speed.z();
+				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.z();				
+
+				// LEG 3 amplitude
+				traData.ampX[RIGHT_MIDDLE] = 0;
 				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * pad.speed.z();
-				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.z();
 				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * pad.speed.z();
-				// LEG 5 amplitude				      	     // LEG 6 amplitude
+
+				// LEG 4 amplitude				      	     
 				traData.ampX[LEFT_REAR] = traData.initAmpX * pad.speed.z();
-				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.z();
 				traData.ampY[LEFT_REAR] = -traData.initAmpY * pad.speed.z();
+				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.z();				
+
+				// LEG 5 amplitude
+				traData.ampX[RIGHT_REAR] = traData.initAmpX * pad.speed.z();
 				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.z();
-				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.z();
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.z();
 		}
 	}
