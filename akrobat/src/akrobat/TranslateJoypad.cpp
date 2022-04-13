@@ -9,7 +9,7 @@
 #include "sensor_msgs/Joy.h"
 
 float int_max = 32767.0f;
-float joystickDeadZone = 0.2f;
+float joystickDeadZone = 0.1f;
 enum Mode_right_joystick
 {
 	DEFAULT_MODE,

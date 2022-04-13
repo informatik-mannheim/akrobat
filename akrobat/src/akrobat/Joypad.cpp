@@ -1,7 +1,7 @@
 
 #include <akrobat/Akrobat.h>
 
-
+#define PI 3.14159265
 using namespace std;
 
 
@@ -185,13 +185,14 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			pad.bdT.setY((mov->commands[6] * scaleFacTrans) / 32767); // body translation Y
 			pad.bdT.setZ((mov->commands[8] * scaleFacTrans) / 32767); // body translation Z
 			
+
+			float a;
+			a = 32767;
 			//Walking
 			if(mov->commands[1] != 0)
 			{
-				pad.speed.setX((mov->commands[1] / abs(mov->commands[1])));
-				cout << "PadSpeed abs x :"<<abs(mov->commands[1])<< endl;
-				cout << "PadSpeed  x :"<<mov->commands[1]<< endl;
-			
+				
+				pad.speed.setX((mov->commands[1] / a));	
 			}
 			else
 			{
@@ -199,7 +200,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			}
 			if(mov->commands[0] != 0)
 			{
-				pad.speed.setY((mov->commands[0] / abs(mov->commands[0])));
+				pad.speed.setY((mov->commands[0] / a));
 			}
 			else
 			{
@@ -207,19 +208,32 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			}
 			if(mov->commands[2] != 0)
 			{
-				pad.speed.setZ(-(mov->commands[2] / abs(mov->commands[2])));
+				
+				pad.speed.setZ(-(mov->commands[2] / a));
 			}
 			else
 			{
 				pad.speed.setZ(0);
 			}
+		
+			//Verdrehung um Z-Achse in Grad
+			float maxtwist = 30;
+			float twist;
+			if(mov->commands[2] != 0)
+			{
+				
+				twist=(mov->commands[2] / a)*maxtwist;
+				cout<<twist<<endl;
+			}
+
+
 
 			//Rotation
 			pad.bdR.setX((mov->commands[4] * scaleFacRot) / 32767); // body rotation X
 			pad.bdR.setY((mov->commands[5] * scaleFacRot) / 32767); // body rotation Y
 			pad.bdR.setZ((mov->commands[3] * scaleFacRot) / 32767); // body rotation Z
 		
-			if (abs(pad.speed.x()) < abs(pad.speed.y()))
+			if (abs(pad.speed.x()) < abs(pad.speed.y())&& ((pad.speed.z() == 0) || (pad.speed.z() == 0)))
 			{	
 				
 				// LEG 1 amplitude					    
@@ -317,5 +331,42 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				traData.ampY[RIGHT_REAR] = traData.initAmpY * pad.speed.z();
 				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.z();
 		}
+
+		//Drehung in Bewegung
+		else if (abs(pad.speed.x()) < abs(pad.speed.y()) && ((pad.speed.z() >= 0) || (pad.speed.z() <= 0)))
+			{	
+				
+				// LEG 0 amplitude					      
+				traData.ampX[LEFT_FRONT] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;				
+				traData.ampY[LEFT_FRONT] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.y();	
+				
+				// LEG 1 aabs(pad.speed.x()) > abs(pad.speed.y())mplitude
+				traData.ampX[RIGHT_FRONT] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
+				traData.ampY[RIGHT_FRONT] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.y();
+
+				// LEG 2 amplitude					      
+				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
+				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.y();				
+
+				// LEG 3 amplitude
+				traData.ampX[RIGHT_MIDDLE] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
+				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * pad.speed.y();
+
+				// LEG 4 amplitude				      	     
+				traData.ampX[LEFT_REAR] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
+				traData.ampY[LEFT_REAR] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.y();				
+
+				// LEG 5 amplitude
+				traData.ampX[RIGHT_REAR] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
+				traData.ampY[RIGHT_REAR] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
+				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.y();
+		}
+		
+		
 	}
 }

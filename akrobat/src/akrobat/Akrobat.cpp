@@ -51,8 +51,8 @@ Akrobat::Akrobat() :
 	scaleFacRot(10)
 {
 	//float rollOv, rotOfCoxa, bdConstX, bdConstY, bdConstZ, jointInitA, jointInitB, jointInitC, minCoxa, minFemur, minTibia, maxCoxa, maxFemur, maxTibia
-	legSettings[LEFT_FRONT] = LegSetting(	0.0,	180.0,	-51.0,	217.0,	0.0,	160.0,	10.0,	-90.0,	-36.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
-	legSettings[RIGHT_FRONT] = LegSetting(	0.0,	0.0,	51.0,	217.0,	0.0,	20.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	36.0, 96.0, 135.0);
+	legSettings[LEFT_FRONT] = LegSetting(	0.0,	180.0,	-51.0,	217.0,	0.0,	160.0,	10.0,	-90.0,	-37.5,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_FRONT] = LegSetting(	0.0,	0.0,	51.0,	217.0,	0.0,	20.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	37.5, 96.0, 135.0);
 	legSettings[LEFT_MIDDLE] = LegSetting(	0.0,	180.0,	-51.0,	0.0,	0.0,	180.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
 	legSettings[RIGHT_MIDDLE] = LegSetting(	0.0,	0.0,	51.0,	0.0,	0.0,	0.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
 	legSettings[LEFT_REAR] = LegSetting(	0.0,	180.0,	-51.0,	-217.0,	0.0,	-160.0,	10.0,	-90.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
@@ -216,8 +216,6 @@ void Akrobat::coordinateTransformation(int legNum)
 void Akrobat::inverseKinematics(double x, double y, double z, int legNum)
 {
 	float R, L, ALPHA, BETA1, BETA2, BETA, GAMMA;
-	cout << "Leg" << legNum <<" x: " << x <<endl;
-	cout << "Leg" << legNum <<" y: " << y <<endl;
 	
 	R = sqrt(pow(y, 2) + pow(x, 2));
 	ALPHA = atan2(y, x);
