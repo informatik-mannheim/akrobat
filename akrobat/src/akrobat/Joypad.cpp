@@ -335,40 +335,40 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				//cout<<"y: "<< pad.speed.y()<<" z: "<<pad.speed.z()<<endl;
 				// LEG 0 amplitude
 				//Akrobat::twist_mov(legSettings[LEFT_FRONT].bdConstX,legSettings[LEFT_FRONT].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);	
-				traData.ampX[LEFT_FRONT] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());				
+				traData.ampX[LEFT_FRONT] = -(traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());				
 				traData.ampY[LEFT_FRONT] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
-				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * (pad.speed.y());
+				traData.ampZ[LEFT_FRONT] = traData.initAmpZ *2 * (pad.speed.y());
 				
 				// LEG 1 amplitude
 				//Akrobat::twist_mov(legSettings[RIGHT_FRONT].bdConstX,legSettings[RIGHT_FRONT].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
 				traData.ampX[RIGHT_FRONT] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
 				traData.ampY[RIGHT_FRONT] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
-				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * (pad.speed.y());
+				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ*2 * (pad.speed.y());
 
 
 				// LEG 2 amplitude
 				//Akrobat::twist_mov(legSettings[LEFT_MIDDLE].bdConstX,legSettings[LEFT_MIDDLE].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);					      
-				traData.ampX[LEFT_MIDDLE] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampX[LEFT_MIDDLE] = -(traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());
 				traData.ampY[LEFT_MIDDLE] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
-				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * (pad.speed.y());							
+				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ*2 * (pad.speed.y());							
 
 				// LEG 3 amplitude
 				//Akrobat::twist_mov(legSettings[RIGHT_MIDDLE].bdConstX,legSettings[RIGHT_MIDDLE].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
-				traData.ampX[RIGHT_MIDDLE] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampX[RIGHT_MIDDLE] = (traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
 				traData.ampY[RIGHT_MIDDLE] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
-				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * (pad.speed.y());
+				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ*2 * (pad.speed.y());
 
 				// LEG 4 amplitude
 				//Akrobat::twist_mov(legSettings[LEFT_REAR].bdConstX,legSettings[LEFT_REAR].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);				      	     
 				traData.ampX[LEFT_REAR] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());
 				traData.ampY[LEFT_REAR] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
-				traData.ampZ[LEFT_REAR] = traData.initAmpZ * (pad.speed.y());				
+				traData.ampZ[LEFT_REAR] = traData.initAmpZ*2 * (pad.speed.y());				
 
 				// LEG 5 amplitude
 				//Akrobat::twist_mov(legSettings[RIGHT_REAR].bdConstX,legSettings[RIGHT_REAR].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
-				traData.ampX[RIGHT_REAR] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampX[RIGHT_REAR] = (traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
 				traData.ampY[RIGHT_REAR] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
-				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * (pad.speed.y());
+				traData.ampZ[RIGHT_REAR] = traData.initAmpZ*2 * (pad.speed.y());
 			}		
 		
 		
