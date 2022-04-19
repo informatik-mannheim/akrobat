@@ -145,6 +145,14 @@ public:
 	// call the motor state list back
 	void callRumblePad2Back(const akrobat::movement::ConstPtr& mov);
 
+	float alpha;
+	double c;
+	float twist_movment_x;
+	float twist_movment_y;
+	float twist_movment_z;
+
+	void twist_mov(double Leg_x,double Leg_y,float twist,float amp, double speed, float &twist_movment_x, float &twist_movment_y, float &twist_movment_z);
+	
 
 private:
 	ros::NodeHandle n;

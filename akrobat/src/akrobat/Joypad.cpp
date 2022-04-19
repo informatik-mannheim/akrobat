@@ -217,13 +217,13 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			}
 		
 			//Verdrehung um Z-Achse in Grad
-			float maxtwist = 30;
+			float maxtwist = 10*(PI/180);
 			float twist;
 			if(mov->commands[2] != 0)
 			{
 				
 				twist=(mov->commands[2] / a)*maxtwist;
-				cout<<twist<<endl;
+				//cout<<twist*(180/PI)<<endl;
 			}
 
 
@@ -240,9 +240,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();			
 				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();			
 				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.y();			
-
-				// LEG 2 amplitude
-				traData.ampX[RIGHT_FRONT] = traData.initAmpX * pad.speed.x();
 				traData.ampY[RIGHT_FRONT] = traData.initAmpY * pad.speed.y();
 				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.y();
 
@@ -269,7 +266,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			else if (abs(pad.speed.x()) > abs(pad.speed.y()))
 			{	
 				
-				// LEG 1 amplitude					     
+				// LEG 1 amplitude					     RIGHT_REAR
 				traData.ampX[LEFT_FRONT] = traData.initAmpX * pad.speed.x();				
 				traData.ampY[LEFT_FRONT] = traData.initAmpY * pad.speed.y();				
 				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.x();
@@ -333,40 +330,137 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 		}
 
 		//Drehung in Bewegung
-		else if (abs(pad.speed.x()) < abs(pad.speed.y()) && ((pad.speed.z() >= 0) || (pad.speed.z() <= 0)))
+		else if (abs(pad.speed.x()) < abs(pad.speed.y()) && ((pad.speed.z() > 0) || (pad.speed.z() < 0)))
 			{	
+				//cout<<"y: "<< pad.speed.y()<<" z: "<<pad.speed.z()<<endl;
+				// LEG 0 amplitude
+				//Akrobat::twist_mov(legSettings[LEFT_FRONT].bdConstX,legSettings[LEFT_FRONT].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);	
+				traData.ampX[LEFT_FRONT] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());				
+				traData.ampY[LEFT_FRONT] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * (pad.speed.y());
 				
-				// LEG 0 amplitude					      
-				traData.ampX[LEFT_FRONT] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;				
-				traData.ampY[LEFT_FRONT] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[LEFT_FRONT] = traData.initAmpZ * pad.speed.y();	
-				
-				// LEG 1 aabs(pad.speed.x()) > abs(pad.speed.y())mplitude
-				traData.ampX[RIGHT_FRONT] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
-				traData.ampY[RIGHT_FRONT] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * pad.speed.y();
+				// LEG 1 amplitude
+				//Akrobat::twist_mov(legSettings[RIGHT_FRONT].bdConstX,legSettings[RIGHT_FRONT].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
+				traData.ampX[RIGHT_FRONT] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampY[RIGHT_FRONT] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampZ[RIGHT_FRONT] = traData.initAmpZ * (pad.speed.y());
 
-				// LEG 2 amplitude					      
-				traData.ampX[LEFT_MIDDLE] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
-				traData.ampY[LEFT_MIDDLE] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * pad.speed.y();				
+
+				// LEG 2 amplitude
+				//Akrobat::twist_mov(legSettings[LEFT_MIDDLE].bdConstX,legSettings[LEFT_MIDDLE].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);					      
+				traData.ampX[LEFT_MIDDLE] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampY[LEFT_MIDDLE] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampZ[LEFT_MIDDLE] = traData.initAmpZ * (pad.speed.y());							
 
 				// LEG 3 amplitude
-				traData.ampX[RIGHT_MIDDLE] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
-				traData.ampY[RIGHT_MIDDLE] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * pad.speed.y();
+				//Akrobat::twist_mov(legSettings[RIGHT_MIDDLE].bdConstX,legSettings[RIGHT_MIDDLE].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
+				traData.ampX[RIGHT_MIDDLE] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampY[RIGHT_MIDDLE] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampZ[RIGHT_MIDDLE] = traData.initAmpZ * (pad.speed.y());
 
-				// LEG 4 amplitude				      	     
-				traData.ampX[LEFT_REAR] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
-				traData.ampY[LEFT_REAR] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[LEFT_REAR] = traData.initAmpZ * pad.speed.y();				
+				// LEG 4 amplitude
+				//Akrobat::twist_mov(legSettings[LEFT_REAR].bdConstX,legSettings[LEFT_REAR].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);				      	     
+				traData.ampX[LEFT_REAR] = (traData.initAmpX/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampY[LEFT_REAR] = (traData.initAmpY/2) * (pad.speed.y()-pad.speed.z());
+				traData.ampZ[LEFT_REAR] = traData.initAmpZ * (pad.speed.y());				
 
 				// LEG 5 amplitude
-				traData.ampX[RIGHT_REAR] = traData.initAmpX * (pad.speed.y()/sin(twist*PI/180))/2;
-				traData.ampY[RIGHT_REAR] = traData.initAmpY * (pad.speed.y()/cos(twist*PI/180))/2;
-				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * pad.speed.y();
-		}
+				//Akrobat::twist_mov(legSettings[RIGHT_REAR].bdConstX,legSettings[RIGHT_REAR].bdConstY,twist,traData.initAmpX,pad.speed.y(),twist_movment_x,twist_movment_y,twist_movment_z);
+				traData.ampX[RIGHT_REAR] = -(traData.initAmpX/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampY[RIGHT_REAR] = (traData.initAmpY/2) * (pad.speed.y()+pad.speed.z());
+				traData.ampZ[RIGHT_REAR] = traData.initAmpZ * (pad.speed.y());
+			}		
 		
 		
 	}
+}
+
+void Akrobat::twist_mov(double Leg_x,double Leg_y,float twist,float amp, double speed, float &twist_movment_x, float &twist_movment_y, float &twist_movment_z)
+{
+float x_n;
+float y_n;
+
+alpha = abs(atan(Leg_y/Leg_x));
+c = sqrt((Leg_y*Leg_y)+(Leg_x*Leg_x));
+cout << "alpha: " << alpha << " c: " << c <<endl;
+
+//Leg 0
+if (Leg_x < 0 && Leg_y >0)
+{
+
+	x_n = Leg_x + cos(alpha+twist)*c;
+	y_n = sin(alpha+twist)*c - Leg_y;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n )* speed)/4;
+	twist_movment_z = amp * speed;
+}
+//Leg1
+else if (Leg_x > 0 && Leg_y > 0 )
+{
+
+	x_n=cos(alpha-twist)*c - Leg_x;
+	y_n=sin(alpha-twist)*c - Leg_y;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n)* speed)/4;
+	twist_movment_z = amp * speed;
+}
+//Leg2
+else if (Leg_x < 0 && Leg_y == 0 )
+{
+
+	x_n=Leg_x + cos(alpha+twist)*c ;
+	y_n=sin(alpha+twist)*c - Leg_y;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n)* speed)/4;
+	twist_movment_z = amp * speed;
+}
+//Leg3
+else if (Leg_x > 0 && Leg_y == 0 )
+{
+
+	x_n= cos(alpha-twist)*c - Leg_x;
+	y_n=sin(alpha-twist)*c - Leg_y;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n)* speed)/4;
+	twist_movment_z = amp * speed;
+}
+//Leg 4
+if (Leg_x < 0 && Leg_y < 0)
+{
+	cout << Leg_x <<endl;
+	
+	x_n = Leg_x + cos(alpha-twist)*c ;
+	y_n = Leg_y + sin(alpha-twist)*c;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n )* speed)/4;
+	twist_movment_z = amp * speed;
+}
+//Leg5
+else if (Leg_x > 0 && Leg_y < 0 )
+{
+
+	x_n=cos(alpha+twist)*c - Leg_x;
+	y_n=sin(alpha+twist)*c + Leg_y;
+
+	cout << "x_N: "<< x_n << " y_n: " << y_n << endl;
+
+	twist_movment_x = ((amp/cos(twist)+ x_n)* speed)/4;
+	twist_movment_y = ((amp/sin(twist)+ y_n)* speed)/4;
+	twist_movment_z = amp * speed;
+}
 }
