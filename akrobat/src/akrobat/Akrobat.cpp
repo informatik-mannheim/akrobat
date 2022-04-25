@@ -106,7 +106,8 @@ Akrobat::Akrobat() :
 *   @return Void.
 */
 void Akrobat::initAkrobat()
-{
+{	
+	
 	for (int legNum = 0; legNum < numberOfLegs; legNum++)
 	{
 		// ROS_INFO("%d", legNum);
@@ -149,6 +150,7 @@ void Akrobat::initAkrobat()
 		
 		
 	}
+	
 }
 
 /** Transform source coordinate system to target coordinate system.

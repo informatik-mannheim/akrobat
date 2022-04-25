@@ -38,6 +38,7 @@ enum Macro
 	orientate_yaw,
 	orientate_level,
 	orientate_roll_pitch,
+	roll,
 	start,
 	shutdown
 };
@@ -130,7 +131,7 @@ int main(int argc, char **argv)
 	Mode mode = navigate;
 	Walking_Mode wmode = tripod;
 	Mode_right_joystick m = DEFAULT_MODE;
-	Macro macro = start;
+	Macro macro;
 	std::vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
    while(ros::ok())
@@ -300,7 +301,7 @@ int main(int argc, char **argv)
 			//Button START
 			if(buttonsValue[7] == 1)
 			{
-				macro = start;
+				macro = roll;
 			}
 
 			//Button BACK
@@ -310,7 +311,11 @@ int main(int argc, char **argv)
 			}
 
 			//Button Logitech
-			//NOTHING TO DO HERE
+			if(buttonsValue[8] == 1 )
+			{	
+				std::cout<<"Button 8"<<std::endl;
+				macro = start;
+			}
 
 			//Button LJoystick && Button RJoystick
 			if(buttonsValue[9] == 1 && buttonsValue[10] == 1)
