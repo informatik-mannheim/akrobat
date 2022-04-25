@@ -345,7 +345,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 		//Drehung in Bewegung
 			else if (abs(pad.speed.x()) < abs(pad.speed.y()) && (pad.speed.z() > 0 || pad.speed.z() < 0) )
 				{	
-				cout<<"y: "<< pad.speed.y()<<" z: "<<pad.speed.z()<<endl;
+				//cout<<"y: "<< pad.speed.y()<<" z: "<<pad.speed.z()<<endl;
 				speed_z = abs(pad.speed.z());
 				speed_y = abs(pad.speed.y());
 				richtung = pad.speed.y()/speed_y;
