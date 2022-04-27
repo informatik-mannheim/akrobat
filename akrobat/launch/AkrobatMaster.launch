@@ -7,6 +7,10 @@
 
   <!-- configuration end -->
 
+<!-- Batterie Überwachung starten-->
+  <param name="rshunt" value="3.3">
+  <node name="Batterie Überwachung" pkg="power_ina219" type="ina219_node">
+
 
   <param name="robot_description" textfile="$(arg model)" />
   <param name="use_gui" value="$(arg gui)" />
