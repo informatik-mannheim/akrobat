@@ -27,5 +27,6 @@
   </node>
 
   <include file="$(find akrobat_cam)/launch/Map.launch" />
+<include file="$(find akrobat_imu)/launch/bricks_v2.launch" />
 
 </launch>

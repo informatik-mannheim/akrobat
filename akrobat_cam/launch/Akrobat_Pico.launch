@@ -1,0 +1,31 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+
+<include file="$(find pico_flexx_driver)/launch/pico_flexx_driver.launch" />
+
+<node pkg="rtabmap_ros" type="icp_odometry" name="icp_odometry" output="screen">
+   <remap from="scan_cloud"         to="/pico_flexx/points"/>
+   <param name="frame_id"           type="string" value="pico_flexx_optical_frame"/>
+   <param name="Icp/VoxelSize"      type="string" value="0.05"/>
+   <param name="Icp/PointToPlane"   type="string" value="true"/>
+</node>
+
+
+<group ns="rtabmap">   
+  <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+     <param name="frame_id" type="string" value="pico_flexx_optical_frame"/>
+     <param name="subscribe_stereo" type="bool" value="false"/>
+     <param name="subscribe_depth"  type="bool" value="true"/>
+     <param name="approx_sync"      type="bool" value="false"/>
+
+     <remap from="odom" to="/odom"/>
+     <remap from="depth/image"     to="/pico_flexx/image_depth"/>
+     <remap from="rgb/image"	to="/pico_flexx/image_mono8"/>
+     <remap from="rgb/camera_info"	to="/pico_flexx/camera_info"/>
+     <param name="queue_size" type="int" value="30"/>
+
+     <!-- RTAB-Map's parameters -->
+     <param name="Vis/MinInliers" type="string" value="12"/>
+  </node>
+ </group>
+</launch>
