@@ -42,6 +42,9 @@
 
   <!-- start rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
+
+  <!-- include robot_localization -->
+  <include file="$(find akrobat)/launch/robot_localization.launch" />
   
  
 <!-- start state machine 
