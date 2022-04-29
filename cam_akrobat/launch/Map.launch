@@ -1,0 +1,62 @@
+<!-- -*- mode: XML -*- -->
+
+<launch>
+
+<arg name="pi/2" value="1.5707963267948966" />
+<arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+<node pkg="tf" type="static_transform_publisher" name="camera_base_link"
+     args="$(arg optical_rotate) base_link left 100" />  
+
+
+<!-- Run the ROS package stereo_image_proc -->
+<group ns="/akrobat_stereo" >
+    <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
+	<remap from="left/image_raw"   to="/akrobat_stereopi/left/image_raw"/>
+	<remap from="right/image_raw"  to="/akrobat_stereopi/right/image_raw"/>
+	<remap from="left/camera_info"  to="/akrobat_stereopi/left/camera_info"/>
+	<remap from="right/camera_info" to="/akrobat_stereopi/right/camera_info"/>	
+	</node>
+    <!-- Odometry -->
+    <node pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry" output="screen">
+
+        <remap from="left/image_rect"       to="left/image_rect"/>
+      	<remap from="right/image_rect"      to="right/image_rect"/>
+      	<remap from="left/camera_info"      to="/akrobat_stereopi/left/camera_info"/>
+      	<remap from="right/camera_info"     to="/akrobat_stereopi/right/camera_info"/>
+      	<remap from="odom"                  to="/stereo_odometry"/>
+
+        <param name="frame_id" type="string" value="base_link"/>
+        <param name="odom_frame_id" type="string" value="odom"/>
+        <param name="approx_sync"   type="bool" value="true"/>
+        <param name="queue_size"    type="int" value="5"/>
+
+        <param name="Odom/MinInliers" type="string" value="12"/>
+        <param name="Odom/RoiRatios"  type="string" value="0.03 0.03 0.04 0.04"/>
+    </node>     
+</group>
+
+<group ns="rtabmap">   
+  <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+     <param name="frame_id" type="string" value="base_link"/>
+     <param name="subscribe_stereo" type="bool" value="true"/>
+      <param name="subscribe_depth"  type="bool" value="true"/>
+     <param name="approx_sync"      type="bool" value="true"/>
+
+     <remap from="left/image_rect"   to="/akrobat_stereo/left/image_rect"/>
+     <remap from="right/image_rect"  to="/akrobat_stereo/right/image_rect"/>
+     <remap from="left/camera_info"  to="/akrobat_stereopi/left/camera_info"/>
+     <remap from="right/camera_info" to="/akrobat_stereopi/right/camera_info"/>
+
+     <remap from="depth/image"     to="/pico_flexx/image_depth"/>
+     <remap from="rgb/image"	to="/pico_flexx/image_mono8"/>
+     <remap from="rgb/camera_info"	to="/pico_flexx/camera_info"/>
+
+     <remap from="odom" to="/stereo_odometry"/>
+
+     <param name="queue_size" type="int" value="30"/>
+
+     <!-- RTAB-Map's parameters -->
+     <param name="Vis/MinInliers" type="string" value="12"/>
+  </node>
+ </group>
+</launch>
