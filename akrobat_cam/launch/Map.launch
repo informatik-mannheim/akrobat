@@ -51,7 +51,7 @@
      <remap from="rgb/image"	to="/pico_flexx/image_mono8"/>
      <remap from="rgb/camera_info"	to="/pico_flexx/camera_info"/>
 
-     <remap from="odom" to="/stereo_odometry"/>
+     <remap from="odom" to="/localizations_odometry"/>
 
      <param name="queue_size" type="int" value="30"/>
 
