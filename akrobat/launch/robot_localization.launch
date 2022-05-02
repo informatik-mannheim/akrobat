@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization" clear_params="true">
     <rosparam command="load" file="$(find akrobat)/config/localization_param.yaml" />
 
    <!--  Placeholder for output topic remapping-->
