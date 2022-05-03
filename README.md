@@ -7,14 +7,15 @@ based on ROS.
 
 #### Prerequisites
 
-- Working installation of ros-noetic (follow the installation instructions on [the official ROS website](http://wiki.ros.org/noetic/Installation/Ubuntu) )
+- Working installation of ros-melodic (follow the installation instructions on [the official ROS website](http://wiki.ros.org/kinetic/Installation/Ubuntu) )
+
+- Install the ROS Kinetic joystick 
+
+```sudo apt-get install ros-kinetic-joy```
 
 - Add your user to the dialout group (you need this because the Akrobat is controlled via the USB interface)
 
-```sudo adduser <youruser> dialout``` 
-- Packages must be installed:
-- ```sudo apt-get install ros-noetic-dynamixel-sdk```
-- ```sudo apt-get install ros-noetic-joy```
+```sudo add <youruser> dialout``` 
  
 
 #### Steps to get the simulation running
@@ -23,7 +24,7 @@ based on ROS.
 
 - ```cd ~/catkin_ws/src/```
 
-- ```git clone -b <yourbranchname> https://github.com/informatik-mannheim/akrobat.git```
+- ```git clone -b <yourbranchname> github.com/informatik-mannheim/akrobat```
 
 2. catkin_make your workspace
 
@@ -33,11 +34,11 @@ based on ROS.
 
 3. roslaunch the project with your desired running options
 
-Launch Akrobat:
+Launch Akrobat as simulation:
 ```roslaunch akrobat AkrobatMaster.launch```
 
-Launch Akrobat gui and the simulation as well:
-```roslaunch akrobat AkrobatMaster.launch gui:=true sim:=true```
+Launch Akrobat robot and the simulation as well:
+```roslaunch akrobat AkrobatMaster.launch gui:=true```
 
 Troubleshooting:
 
