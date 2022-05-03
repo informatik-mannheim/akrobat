@@ -1,4 +1,0 @@
-string[] motor_id
-float64[] joint_pos
----
-bool finish
