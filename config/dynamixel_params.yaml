@@ -1,0 +1,77 @@
+motoren: [m11,m12,m13,m21,m22,m23,m31,m32,m33,m41,m42,m43,m51,m52,m53,m61,m62,m63]
+
+
+
+m11:
+  ID: 11
+  Moving_Speed: 70
+  Return_Delay_Time: 2
+m12:
+  ID: 12
+  Moving_Speed: 70
+  Return_Delay_Time: 2    
+m13:
+  ID: 13
+  Moving_Speed: 70
+  Return_Delay_Time: 2    
+m21:
+  ID: 21
+  Moving_Speed: 70
+  Return_Delay_Time: 2    
+m22:
+  ID: 22
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m23:
+  ID: 23
+  Moving_Speed: 70
+  Return_Delay_Time: 2
+m31:
+  ID: 31
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m32:
+  ID: 32
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m33:
+  ID: 33
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m41:
+  ID: 41
+  Moving_Speed: 70
+  Return_Delay_Time: 2       
+m42:
+  ID: 42
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m43:
+  ID: 43
+  Moving_Speed: 70
+  Return_Delay_Time: 2  
+m51:
+  ID: 51
+  Moving_Speed: 70
+  Return_Delay_Time: 2 
+m52:
+  ID: 52
+  Moving_Speed: 70
+  Return_Delay_Time: 2  
+m53:
+  ID: 53
+  Moving_Speed: 70
+  Return_Delay_Time: 2   
+m61:
+  ID: 61
+  Moving_Speed: 70
+  Return_Delay_Time: 2  
+m62:
+  ID: 62
+  Moving_Speed: 70
+  Return_Delay_Time: 2  
+m63:
+  ID: 63
+  Moving_Speed: 70
+  Return_Delay_Time: 2    
+      

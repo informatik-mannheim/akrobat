@@ -1,0 +1,19 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="dynamixel_namespace" value="dynamixel_controller" />
+  <arg name="namespace"               default="dynamixel_workbench"/>
+
+  <!-- Load controller configuration to parameter server -->
+  <rosparam ns = "akrobat_config" file="$(find akrobat)/config/dynamixel_params.yaml" command="load" /> 
+
+
+  <arg name="usb_port"                default="/dev/ttyUSB0"/>
+  <arg name="dxl_baud_rate"           default="1000000"/>
+
+  
+  <node name= "Dynamixel_Controll" pkg= "dynamixel_akrobat" type= "Dynamixel_Controll" output="screen" required="true" args="$(arg usb_port) $(arg dxl_baud_rate)"> 
+  </node>
+  
+
+
+</launch>

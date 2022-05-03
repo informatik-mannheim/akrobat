@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization" clear_params="true">
+    <rosparam command="load" file="$(find akrobat)/config/localization_param.yaml" />
+
+   <!--  Placeholder for output topic remapping-->
+    <remap from="odometry/filtered" to="localizations_odometry"/>
+    
+    
+
+  </node>
+</launch>
