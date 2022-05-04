@@ -6,5 +6,5 @@ inflation_radius: 0.55
 
 observation_sources: point_cloud_sensor
 
-point_cloud_sensor: {sensor_frame: frame_name, data_type: PointCloud, topic: topic_name, marking: true, clearing: true}
+point_cloud_sensor: {sensor_frame: base_link, data_type: PointCloud2, topic: /akrobat_stereo/points2, marking: true, clearing: true}
 
