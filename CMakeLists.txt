@@ -124,8 +124,12 @@ src/akrobat/Trajectory.cpp
 src/akrobat/TrajectorySettings.cpp
 src/akrobat/Joypad.cpp
 src/akrobat/motion_planning.cpp
-) 
 
+) 
+add_executable(
+translateNavigation
+src/akrobat/move_base_to_akrobat.cpp  
+)
 add_executable(
 translateJoypad 
 src/akrobat/TranslateJoypad.cpp
@@ -135,6 +139,8 @@ src/akrobat/TranslateJoypad.cpp
 #target_link_libraries(commander ${catkin_LIBRARIES})
 target_link_libraries(akrobat ${catkin_LIBRARIES})
 target_link_libraries(translateJoypad ${catkin_LIBRARIES})
+target_link_libraries(translateNavigation ${catkin_LIBRARIES})
+
 
 ## Declare a cpp library
 # add_library(akrobat

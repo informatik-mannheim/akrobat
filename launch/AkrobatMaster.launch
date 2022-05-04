@@ -37,6 +37,7 @@
 
   <!-- start translationNode -->
   <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node>
+  <node name="Navigation_Transllation" pkg="akrobat" type="move_base_to_akrobat"></node>
 
 
   <!-- start rviz-->
@@ -44,7 +45,9 @@
 
   <!-- include robot_localization -->
   <include file="$(find akrobat)/launch/robot_localization.launch" />
-  
+
+  <!-- include navigation stack-->
+  <include file="$(find akrobat)/launch/akrobat_navigation.launch" />
  
 <!-- start state machine 
   <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node> -->
