@@ -37,7 +37,7 @@
 
   <!-- start translationNode -->
   <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node>
-  <node name="Navigation_Transllation" pkg="akrobat" type="move_base_to_akrobat"></node>
+  <node name="Navigation_Transllation" pkg="akrobat" type="translateNavigation"></node>
 
 
   <!-- start rviz-->
