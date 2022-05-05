@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
    while (ros::ok())
 	{
-		spinOnce();
+		ros::spinOnce();
 		loop_rate.sleep();
 	}
 }	
