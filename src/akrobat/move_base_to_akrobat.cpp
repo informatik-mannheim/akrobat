@@ -22,7 +22,7 @@ class Translater
 
 int main(int argc, char **argv)
 {
-   ros::init(argc, argv, "move_base_to_akrobat");
+   ros::init(argc, argv, "Navigation_Transllation");
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, &Translater::translate_linear, &t);
