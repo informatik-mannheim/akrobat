@@ -61,9 +61,9 @@ Akrobat::Akrobat() :
 
 
 	//Trajectory Settings (ampWidth, ampHigh, numTick)
-	trajectorySettings[TRIPOD] = TrajectorySettings(40, 40, 15);
-	trajectorySettings[WAVE] = TrajectorySettings(40, 40, 15);
-	trajectorySettings[RIPPLE] = TrajectorySettings(40, 40, 15);
+	trajectorySettings[TRIPOD] = TrajectorySettings(40, 50, 15);
+	trajectorySettings[WAVE] = TrajectorySettings(40, 50, 15);
+	trajectorySettings[RIPPLE] = TrajectorySettings(40, 50, 15);
 
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
 	
