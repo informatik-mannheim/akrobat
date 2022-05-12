@@ -1,4 +1,7 @@
 <launch>
+  <node pkg="tf" type="static_transform_publisher" name="pico_base_link"
+     args="0 0 0 0 0 0 base_link imu_link 100" /> 
+
   <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization" clear_params="true">
     <rosparam command="load" file="$(find akrobat)/config/localization_param.yaml" />
 
