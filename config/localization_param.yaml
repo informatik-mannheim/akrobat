@@ -67,7 +67,7 @@ publish_acceleration: false
 map_frame: map              # Defaults to "map" if unspecified
 odom_frame: odom            # Defaults to "odom" if unspecified
 base_link_frame: base_link  # Defaults to "base_link" if unspecified
-world_frame: map           # Defaults to the value of odom_frame if unspecified
+world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
 # The filter accepts an arbitrary number of inputs from each input message type (nav_msgs/Odometry,
 # geometry_msgs/PoseWithCovarianceStamped, geometry_msgs/TwistWithCovarianceStamped,
@@ -86,7 +86,7 @@ odom0: /stereo_odometry
 odom0_config: [true,  true,  false,
                false, false, false,
                false, false, false,
-               false, false, true,
+               false, false, false,
                false, false, false]
 
 # If you have high-frequency data or are running with a low frequency parameter value, then you may want to increase
