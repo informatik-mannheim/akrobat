@@ -6,7 +6,7 @@
     <rosparam command="load" file="$(find akrobat)/config/localization_param.yaml" />
 
    <!--  Placeholder for output topic remapping-->
-    <remap from="odometry/filtered" to="/odom"/>
+    <remap from="odometry/filtered" to="/test_odom"/>
     
     
 
