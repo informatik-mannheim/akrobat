@@ -3,6 +3,12 @@
     <!-- Run the map server --> 
     <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/>
 
+
+    <include file="$(find pointcloud-to-laserscan)/launch/sample_pointcloud_to_laserscan_launch.py"
+
+    <!--- Run AMCL --> 
+    <include file="$(find amcl)/examples/amcl_omni.launch" />
+
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <rosparam file="$(find akrobat)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
         <rosparam file="$(find akrobat)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
