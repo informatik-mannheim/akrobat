@@ -7,7 +7,7 @@
     <!-- run pointcloud_to_laserscan node -->
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
 
-        <remap from="cloud_in" to="/pico_flexx/points/">
+        <remap from="cloud_in" to="/pico_flexx/points/"/>
         <!-- <remap from="scan" to="$(arg camera)/scan"/> -->
         <rosparam>
             target_frame: base_link # Leave disabled to output scan in pointc>
