@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Run the map server --> 
-    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/>  -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/>
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
         <rosparam file="$(find akrobat)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
