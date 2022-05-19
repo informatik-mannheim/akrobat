@@ -4,7 +4,7 @@
     <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/>
 
 
-    <include file="$(find pointcloud-to-laserscan)/launch/sample_pointcloud_to_laserscan_launch.py"
+    <include file="$(find pointcloud-to-laserscan)/launch/sample_pointcloud_to_laserscan_launch.py"/>
 
     <!--- Run AMCL --> 
     <include file="$(find amcl)/examples/amcl_omni.launch" />
