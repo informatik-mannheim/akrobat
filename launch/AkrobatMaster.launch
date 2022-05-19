@@ -23,9 +23,9 @@
   
 
   <!-- start robot state publisher -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
     <param name="publish_frequency" value="20.0" />
-  </node>
+  </node> -->
 
   <!-- include dynamixel unless we are just simulating -->
   <include file="$(find akrobat)/launch/dynamixel.launch" unless="$(arg sim)" />
