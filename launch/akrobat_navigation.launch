@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/>
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find akrobat)/map/carto-neu.pgm 0.050000"/> -->
 
 
     <!-- run pointcloud_to_laserscan node -->
