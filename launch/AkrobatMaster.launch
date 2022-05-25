@@ -45,6 +45,8 @@
 
   <!-- include robot_localization -->
   <!-- <include file="$(find akrobat)/launch/robot_localization.launch" /> -->
+  <!-- include rtabmap stack-->
+  <include file="$(find akrobat)/launch/akrobat_map.launch" />
 
   <!-- include navigation stack-->
   <include file="$(find akrobat)/launch/akrobat_navigation.launch" />
