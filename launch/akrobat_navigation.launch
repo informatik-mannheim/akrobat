@@ -49,6 +49,7 @@
     <rosparam file="$(find akrobat)/config/dwa_local_planner_params.yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
+    <remap from="nav_msgs/GetMap" to="nav_msgs/OccupancyGrid"/>
     <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
   </node>
 </launch>
