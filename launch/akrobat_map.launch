@@ -4,13 +4,13 @@
 
 
 <node ns="/akrobat_stereo" pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
-    <remap from="left/image_raw"   to="/akrobat_stereo/camera/left/image_raw"/>
-    <remap from="right/image_raw"  to="/akrobat_stereo/camera/right/image_raw"/>
-    <remap from="left/camera_info"  to="/akrobat_stereo/camera/left/camera_info"/>
-    <remap from="right/camera_info" to="/akrobat_stereo/camera/right/camera_info"/>	
+    <remap from="left/image_raw"   to="camera/left/image_raw"/>
+    <remap from="right/image_raw"  to="camera/right/image_raw"/>
+    <remap from="left/camera_info"  to="camera/left/camera_info"/>
+    <remap from="right/camera_info" to="camera/right/camera_info"/>	
 	</node>
     <!-- Odometry -->
-    <node pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry" output="screen">
+    <node ns="/akrobat_stereo" pkg="rtabmap_ros" type="stereo_odometry" name="stereo_odometry" output="screen">
 
         <remap from="left/image_rect"       to="left/image_rect"/>
       	<remap from="right/image_rect"      to="right/image_rect"/>
