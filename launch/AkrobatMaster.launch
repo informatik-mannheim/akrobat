@@ -3,6 +3,7 @@
   <!-- configuration -->
   <arg name="gui" default="false" />
   <arg name="sim" default="false" />
+  <arg name="loc" default="false" />
   <arg name="model" default="$(find akrobat)/urdf/hexapod.urdf" />
 
   <!-- configuration end -->
@@ -48,17 +49,18 @@
   <!-- include rtabmap stack-->
   <include file="$(find akrobat)/launch/akrobat_map.launch" >
   <arg name="database_path"     default="rtabmap.db"/>
-  <arg name="rtabmapviz"        default="false"/>
-  <arg name="localization"      default="false"/>
-  <arg name="simulation"        default="false"/>
+  <arg if="$(arg loc)" name="localization"      default="true"/>
+  <arg unless="$(arg loc)" name="localization"      default="false"/>
+  <arg if="$(arg sim)" name="simulation"        default="true"/>
+  <arg unless="$(arg sim)" name="simulation"        default="false"/>
   <arg name="sw_registered"     default="false"/>
-  <arg     if="$(arg localization)" name="localiz"  default=""/>
-  <arg unless="$(arg localization)" name="localiz"  default="--delete_db_on_start"/>
+  <arg     if="$(arg loc)" name="localiz"  default=""/>
+  <arg unless="$(arg loc)" name="localiz"  default="--delete_db_on_start"/>
 
-  <arg     if="$(arg simulation)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
-  <arg unless="$(arg simulation)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
-  <arg     if="$(arg simulation)" name="depth_topic" default="/pico_flexx/image_depth"/>
-  <arg unless="$(arg simulation)" name="depth_topic" default="/pico_flexx/image_depth"/>
+  <arg     if="$(arg sim)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
+  <arg unless="$(arg sim)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
+  <arg     if="$(arg sim)" name="depth_topic" default="/pico_flexx/image_depth"/>
+  <arg unless="$(arg sim)" name="depth_topic" default="/pico_flexx/image_depth"/>
   <arg name="camera_info_topic" default="/pico_flexx/camera_info"/>
     
   <arg name="wait_for_transform"  default="0.3"/> 
