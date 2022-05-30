@@ -42,8 +42,8 @@
 <arg name="localization"      default="false"/>
 <arg name="simulation"        default="false"/>
 <arg name="sw_registered"     default="false"/>
-<arg     if="$(arg localization)" name="localiz"  default="--delete_db_on_start"/>
-<arg unless="$(arg localization)" name="localiz"  default=""/>
+<arg     if="$(arg localization)" name="localiz"  default=""/>
+<arg unless="$(arg localization)" name="localiz"  default="--delete_db_on_start"/>
 
 <arg     if="$(arg simulation)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
 <arg unless="$(arg simulation)" name="rgb_topic"   default="/pico_flexx/image_mono8"/>
