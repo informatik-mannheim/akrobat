@@ -6,5 +6,5 @@ inflation_radius: 0.5
 
 observation_sources: point_cloud_sensor
 
-point_cloud_sensor: {sensor_frame: base_link, data_type: PointCloud2, topic: /pico_flexx/points, marking: true, clearing: true}
+point_cloud_sensor: {sensor_frame: pico_flexx_optical_frame, data_type: PointCloud2, topic: /pico_flexx/points, marking: true, clearing: true}
 
