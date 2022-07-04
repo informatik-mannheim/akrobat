@@ -31,7 +31,7 @@
     <param name="subscribe_depth"     type="bool"   value="true"/>
 	<param name="subscribe_scan"      type="bool"   value="true"/>
     <param name="map_always_update" type="bool" value="true"/>
-
+	<remap from="/rtabmap/goal" to="/move_base_simple/goal"/>
     <!-- When sending goals on /rtabmap/goal topic, use actionlib to communicate with move_base --> 
 	<param name="use_action_for_goal" type="bool" value="true"/>
     <remap from="move_base"            to="/move_base"/>
