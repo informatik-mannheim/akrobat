@@ -20,7 +20,7 @@
   <arg unless="$(arg simulation)" name="depth_topic" default="/pico_flexx/image_depth"/>
   <arg name="camera_info_topic" default="/pico_flexx/camera_info"/>
     
-  <arg name="wait_for_transform"  default="0.3"/> 
+  <arg name="wait_for_transform"  default="0.8"/> 
 
 <!-- <node pkg="tf" type="static_transform_publisher" name="odom_base_link"
      args="0 0 0 0 0 0  odom base_link 100" />    -->
