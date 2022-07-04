@@ -34,7 +34,7 @@
 	<remap from="/move_base_simple/goal" to="/rtabmap/goal"/>
     <!-- When sending goals on /rtabmap/goal topic, use actionlib to communicate with move_base --> 
 	<param name="use_action_for_goal" type="bool" value="true"/>
-    <remap from="move_base"            to="/move_base"/>
+    <remap from="move_base"            to="/move_base/goal"/>
 
     <!-- RTAB-Map's parameters -->
     
