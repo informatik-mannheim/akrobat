@@ -3,7 +3,7 @@
 <launch>
 <arg name="database_path"     default="rtabmap.db"/>
   <arg name="rtabmapviz"        default="false"/>
-  <arg name="localization"      default="false"/>
+  <arg name="localization"      default="true"/>
   <arg name="simulation"        default="false"/>
   <arg name="sw_registered"     default="false"/>
   <arg     if="$(arg localization)" name="localiz"  default=""/>
