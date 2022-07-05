@@ -24,7 +24,7 @@
 
 
 <group ns="rtabmap">   
-  <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg localiz)">
+  <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" >
     <param name="database_path"       type="string" value="$(arg database_path)"/>
     <param name="frame_id" type="string" value="base_link"/>
     <param name="wait_for_transform_duration"  type="double"   value="$(arg wait_for_transform)"/>
