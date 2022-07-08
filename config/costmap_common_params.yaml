@@ -6,5 +6,5 @@ inflation_radius: 0.2
 
 observation_sources: laser_scan_sensor
 
-point_cloud_sensor: {sensor_frame: pico_flexx_optical_frame, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
+laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
