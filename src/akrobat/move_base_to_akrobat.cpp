@@ -22,13 +22,14 @@ int main(int argc, char **argv)
    ros::init(argc, argv, "Navigation_Transllation");
    ros::NodeHandle n;
    Translater t;	
-   ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, &Translater::translate_linear, &t);
+   ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, &Translater::translate_linear, this);
    //ros::Publisher movPub = n.advertise<akrobat::movement>("joy", 1000);
    ros::Rate loop_rate(5);
 
    while (ros::ok())
 	{
 		ros::spinOnce();
+        ROS_DEBUG("Translation Running");
 		loop_rate.sleep();
 	}
 }	
