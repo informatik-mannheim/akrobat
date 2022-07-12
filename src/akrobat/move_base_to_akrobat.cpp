@@ -11,12 +11,12 @@
 #include "geometry_msgs/Twist.h"
 
 
-int x;
+float x;
 void translate_linear(geometry_msgs::Twist msg)
 	{
         x = msg.linear.x;
 
-		ROS_ERROR("%d",x);
+		ROS_ERROR("%g",x);
 	}
 
 int main(int argc, char **argv)
