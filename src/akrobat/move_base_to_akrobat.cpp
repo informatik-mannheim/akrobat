@@ -14,7 +14,7 @@
 
 void translate_linear(geometry_msgs::Twist msg)
 	{
-		ROS_DEBUG("Sub Running");
+		ROS_ERROR("Sub Running");
 	}
 
 int main(int argc, char **argv)
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
    while (ros::ok())
 	{
 		ros::spinOnce();
-        ROS_DEBUG("Translation Running");
+        ROS_ERROR("Translation Running");
 		loop_rate.sleep();
 	}
 }	
