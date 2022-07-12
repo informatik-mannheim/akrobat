@@ -4,21 +4,18 @@
 #include <cmath>
 #include <vector>
 #include "akrobat/movement.h"
+#include "akrobat/Translater.h"
 #include "std_msgs/Int64.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/Joy.h"
 #include "geometry_msgs/Twist.h"
 
-class Translater
-{   
-    public:
-    void translate_linear(geometry_msgs::Twist msg)
+
+
+void Translater::translate_linear(geometry_msgs::Twist msg)
 	{
 		ROS_DEBUG("Sub Running");
 	}
-};
-
-
 
 int main(int argc, char **argv)
 {
