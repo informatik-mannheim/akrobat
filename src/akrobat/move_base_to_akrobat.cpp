@@ -12,7 +12,7 @@
 
 
 
-void Translater::translate_linear(geometry_msgs::Twist msg)
+void translate_linear(geometry_msgs::Twist msg)
 	{
 		ROS_DEBUG("Sub Running");
 	}
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
    ros::init(argc, argv, "Navigation_Transllation");
    ros::NodeHandle n;
    Translater t;	
-   ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, &Translater::translate_linear, this);
+   ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, translate_linear);
    //ros::Publisher movPub = n.advertise<akrobat::movement>("joy", 1000);
    ros::Rate loop_rate(5);
 
