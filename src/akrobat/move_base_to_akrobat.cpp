@@ -16,7 +16,7 @@ void translate_linear(geometry_msgs::Twist msg)
 	{
         x = msg.linear.x;
 
-		ROS_ERROR("%s",x);
+		ROS_ERROR("%d",x);
 	}
 
 int main(int argc, char **argv)
