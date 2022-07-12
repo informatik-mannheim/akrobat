@@ -14,7 +14,7 @@ class Translater
     public:
     void translate_linear(geometry_msgs::Twist msg)
 	{
-		ROS_DEBUG("%s", msg);
+		ROS_DEBUG("Sub Running");
 	}
 };
 
