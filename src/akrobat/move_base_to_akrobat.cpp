@@ -26,7 +26,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, &Translater::translate_linear, &t);
-   ros::Publisher movPub = n.advertise<akrobat::movement>("joy", 1000);
+   //ros::Publisher movPub = n.advertise<akrobat::movement>("joy", 1000);
    ros::Rate loop_rate(5);
 
    while (ros::ok())
