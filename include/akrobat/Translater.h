@@ -1,3 +1,5 @@
+#include "geometry_msgs/Twist.h"
+
 class Translater
 {   
     public:
