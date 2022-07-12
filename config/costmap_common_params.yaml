@@ -8,3 +8,8 @@ observation_sources: laser_scan_sensor
 
 laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
+plugins:
+  - {name: static_layer1, type: "costmap_2d:: StaticLayer"}
+  - {name: static_layer2, type: "costmap_2d:: StaticLayer"}
+  - {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+  - {name: inflater_layer, type: "costmap_2d::InflationLayer"}
