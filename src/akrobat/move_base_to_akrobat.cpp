@@ -40,7 +40,7 @@ void translate_linear(geometry_msgs::Twist msg)
          pad.axes[5]=1-z;
 
       }
-      ROS_ERROR("%g",pad.axes[1]);
+      ROS_INFO("%s", pad.axes.c_str());
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
       ros::Rate rate(5);
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, translate_linear);
-   ros::Publisher movPub = n.advertise<sensor_msgs::Joy>("joy_auto", 10);
+   movPub = n.advertise<sensor_msgs::Joy>("joy_auto", 10);
    ros::Rate loop_rate(5);
    pad.axes.resize(8);
    while (ros::ok())
