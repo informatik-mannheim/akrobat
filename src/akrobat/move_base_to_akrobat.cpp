@@ -44,7 +44,7 @@ void translate_linear(geometry_msgs::Twist msg)
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
       ros::Rate rate(5);
-      rate.sleep()
+      rate.sleep();
 
 		
 	}
