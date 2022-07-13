@@ -55,7 +55,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, translate_linear);
-   movPub = n.advertise<sensor_msgs::Joy>("joy_auto", 10);
+   movPub = n.advertise<sensor_msgs::Joy>("joy", 10);
    ros::Rate loop_rate(5);
    pad.axes.resize(8);
    while (ros::ok())
