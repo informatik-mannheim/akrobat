@@ -13,7 +13,7 @@
 
 float x;
 float y;
-float dz;
+float z;
 
 sensor_msgs::Joy pad;
 
