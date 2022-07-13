@@ -31,7 +31,7 @@ void translate_linear(geometry_msgs::Twist msg)
       {
          z = z*2;
          pad.axes[2]=1-z;
-         pad.axes[5]=1
+         pad.axes[5]=1;
 
       }
       
@@ -39,7 +39,7 @@ void translate_linear(geometry_msgs::Twist msg)
       {
          z = z*2;
          pad.axes[5]=1-z;
-         pad.axes[2]=1
+         pad.axes[2]=1;
 
       }
       ROS_ERROR("X:%g",x);
