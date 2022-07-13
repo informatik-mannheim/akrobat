@@ -37,7 +37,7 @@
   </node>
 
   <!-- start translationNode -->
-  <!-- <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node> -->
+  <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node> 
   <node name="Navigation_Transllation" pkg="akrobat" type="translateNavigation"></node>
   <remap  from="/joy_auto" to="/joy"/>
 
