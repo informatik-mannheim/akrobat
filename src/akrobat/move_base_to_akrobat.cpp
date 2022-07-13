@@ -13,10 +13,8 @@
 
 float x;
 float y;
-
-float dx;
-float dy;
 float dz;
+
 sensor_msgs::Joy pad;
 
 
@@ -26,26 +24,26 @@ void translate_linear(geometry_msgs::Twist msg)
       y = msg.linear.y;
       z = msg.angular.z;
       pad.header.stamp = ros::Time::now();
-      pad.axes[0]=x
-      pad.axes[1]=y
+      pad.axes[0]=x;
+      pad.axes[1]=y;
 
       if (z>0)
       {
-         z = z*2
-         pad.axes[2]=1-z
+         z = z*2;
+         pad.axes[2]=1-z;
 
       }
       
       if (z<0)
       {
-         z = z*2
-         pad.axes[5]=1-z
+         z = z*2;
+         pad.axes[5]=1-z;
 
       }
       
-      movePub.publish(pad)
+      movePub.publish(pad);
 
-		ROS_ERROR("%g",dz);
+		ROS_ERROR("%g",z);
 	}
 
 int main(int argc, char **argv)
