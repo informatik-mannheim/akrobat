@@ -43,7 +43,7 @@ void translate_linear(geometry_msgs::Twist msg)
       
       movPub.publish(pad);
 
-		ROS_ERROR("%g",z);
+		ROS_ERROR("%g",pad.axes[1]);
 	}
 
 int main(int argc, char **argv)
