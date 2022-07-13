@@ -16,7 +16,7 @@ float y;
 float z;
 
 sensor_msgs::Joy pad;
-
+ros::Publisher movPub;
 
 void translate_linear(geometry_msgs::Twist msg)
 	{
