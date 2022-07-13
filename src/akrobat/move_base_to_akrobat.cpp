@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 
    while (ros::ok())
 	{  
-      pad.axes.resize(8)
+      pad.axes.resize(8);
 		ros::spinOnce();
         
 		loop_rate.sleep();
