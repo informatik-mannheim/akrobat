@@ -31,6 +31,7 @@ void translate_linear(geometry_msgs::Twist msg)
       {
          z = z*2;
          pad.axes[2]=1-z;
+         pad.axes[5]=1
 
       }
       
@@ -38,9 +39,12 @@ void translate_linear(geometry_msgs::Twist msg)
       {
          z = z*2;
          pad.axes[5]=1-z;
+         pad.axes[2]=1
 
       }
-      ROS_ERROR("%g",pad.axes[1]);
+      ROS_ERROR("X:%g",x);
+      ROS_ERROR("Y:%g",y);
+      ROS_ERROR("Z:%g",z);
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
       ros::Rate rate(5);
