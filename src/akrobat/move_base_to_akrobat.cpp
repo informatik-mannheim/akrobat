@@ -18,7 +18,7 @@ float dx;
 float dy;
 float dz;
 sensor_msgs::Joy pad;
-pad.axes.resize(8)
+
 
 void translate_linear(geometry_msgs::Twist msg)
 	{
@@ -58,7 +58,8 @@ int main(int argc, char **argv)
    ros::Rate loop_rate(5);
 
    while (ros::ok())
-	{
+	{  
+      pad.axes.resize(8)
 		ros::spinOnce();
         
 		loop_rate.sleep();
