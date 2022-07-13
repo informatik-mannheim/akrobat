@@ -12,11 +12,40 @@
 
 
 float x;
+float y;
+
+float dx;
+float dy;
+float dz;
+sensor_msgs::joy pad;
+pad.axes.resize(8)
+
 void translate_linear(geometry_msgs::Twist msg)
 	{
-        x = msg.linear.x;
+      x = msg.linear.x;
+      y = msg.linear.y;
+      z = msg.angular.z;
+      pad.header.stamp = ros::Time::now();
+      pad.axes[0]=x
+      pad.axes[1]=y
 
-		ROS_ERROR("%g",x);
+      if (z>0)
+      {
+         z = z*2
+         pad.axes[2]=1-z
+
+      }
+      
+      if (z<0)
+      {
+         z = z*2
+         pad.axes[5]=1-z
+
+      }
+      
+      movePub.publish(pad)
+
+		ROS_ERROR("%g",dz);
 	}
 
 int main(int argc, char **argv)
@@ -25,7 +54,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, translate_linear);
-   //ros::Publisher movPub = n.advertise<akrobat::movement>("joy", 1000);
+   ros::Publisher movPub = n.advertise<sensor_msgs::joy>("joy", 1000);
    ros::Rate loop_rate(5);
 
    while (ros::ok())
