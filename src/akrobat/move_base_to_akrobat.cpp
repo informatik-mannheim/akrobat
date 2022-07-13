@@ -41,7 +41,7 @@ void translate_linear(geometry_msgs::Twist msg)
 
       }
       
-      movePub.publish(pad);
+      movPub.publish(pad);
 
 		ROS_ERROR("%g",z);
 	}
