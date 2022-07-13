@@ -23,7 +23,7 @@ void translate_linear(geometry_msgs::Twist msg)
       x = msg.linear.x;
       y = msg.linear.y;
       z = msg.angular.z;
-      pad.header.stamp = ros::Time::now();
+      
       pad.axes[0]=x;
       pad.axes[1]=y;
 
@@ -40,10 +40,11 @@ void translate_linear(geometry_msgs::Twist msg)
          pad.axes[5]=1-z;
 
       }
-      
+      ROS_ERROR("%g",pad.axes[1]);
+      pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
 
-		ROS_ERROR("%g",pad.axes[1]);
+		
 	}
 
 int main(int argc, char **argv)
