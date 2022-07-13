@@ -17,7 +17,7 @@ float y;
 float dx;
 float dy;
 float dz;
-sensor_msgs::joy pad;
+sensor_msgs::Joy pad;
 pad.axes.resize(8)
 
 void translate_linear(geometry_msgs::Twist msg)
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
    Translater t;	
    ros::Subscriber movSub = n.subscribe<geometry_msgs::Twist>("cmd_vel", 1000, translate_linear);
-   ros::Publisher movPub = n.advertise<sensor_msgs::joy>("joy", 1000);
+   ros::Publisher movPub = n.advertise<sensor_msgs::Joy>("joy", 1000);
    ros::Rate loop_rate(5);
 
    while (ros::ok())
