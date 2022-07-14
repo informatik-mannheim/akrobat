@@ -24,8 +24,8 @@ void translate_linear(geometry_msgs::Twist msg)
       y = msg.linear.y;
       z = msg.angular.z;
       
-      pad.axes[1]=x*5;
-      pad.axes[0]=y*5;
+      pad.axes[1]=x;
+      pad.axes[0]=y;
 
       if (z<0)
       {
