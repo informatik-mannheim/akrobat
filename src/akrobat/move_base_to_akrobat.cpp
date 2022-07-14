@@ -62,6 +62,7 @@ int main(int argc, char **argv)
    movPub = n.advertise<sensor_msgs::Joy>("joy_auto", 1000);
    ros::Rate loop_rate(5);
    pad.axes.resize(8);
+   pad.buttons.resize(11);
    while (ros::ok())
 	{  
       
