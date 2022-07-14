@@ -45,7 +45,7 @@
     <rosparam file="$(find akrobat)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find akrobat)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find akrobat)/config/global_costmap_params.yaml" command="load" /> 
-    <!-- <rosparam file="$(find akrobat)/config//move_base_params.yaml" command="load" />-->
+    <rosparam file="$(find akrobat)/config//move_base_params.yaml" command="load" />
     <rosparam file="$(find akrobat)/config/dwa_local_planner_params.yaml" command="load" />
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
