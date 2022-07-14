@@ -27,7 +27,7 @@ void translate_linear(geometry_msgs::Twist msg)
       pad.axes[1]=x*5;
       pad.axes[0]=y*5;
 
-      if (z>0)
+      if (z<0)
       {
          z = z*2;
          pad.axes[2]=1-z;
@@ -35,7 +35,7 @@ void translate_linear(geometry_msgs::Twist msg)
 
       }
       
-      if (z<0)
+      else if (z>0)
       {
          z = z*2;
          pad.axes[5]=1-z;
