@@ -26,17 +26,17 @@ void translate_linear(geometry_msgs::Twist msg)
 
       if(x>1)
       {
-         x = 1
+         x = 1;
       }
 
       if(y>1)
       {
-         y = 1
+         y = 1;
       }
-      
+
       if(z>1)
       {
-         z = 1
+         z = 1;
       }
 
       pad.axes[1]=x;
