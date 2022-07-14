@@ -125,7 +125,7 @@ int main(int argc, char **argv)
    ros::NodeHandle n;
 	Listener l;
    ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
-	 ros::Subscriber movSub = n.subscribe<akrobat::movement>("movements", 1000, &Listener::readMovementCallback, &l);
+	ros::Subscriber movSub = n.subscribe<sensor_msgs::Joy>("joy_auto", 1000, &Listener::readJoypadCallback, &l);
    ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
    ros::Rate loop_rate(5);
 	Mode mode = navigate;
