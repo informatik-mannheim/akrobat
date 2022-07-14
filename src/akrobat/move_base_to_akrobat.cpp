@@ -36,8 +36,9 @@ void translate_linear(geometry_msgs::Twist msg)
 
       if(z>1)
       {
-         z = 1;
+         z=0.5;
       }
+      
 
       pad.axes[1]=x;
       pad.axes[0]=y;
