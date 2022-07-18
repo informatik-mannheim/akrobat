@@ -40,9 +40,9 @@ void translate_linear(geometry_msgs::Twist msg)
       }
       
 
-      pad.axes[1]=x;
-      pad.axes[0]=y;
-      pad.axes[2]=z;
+      pad.axes[1]=x;       //Vorwärts
+      pad.axes[0]=y;       //Seitwärts
+      pad.axes[2]=z;       //Drehung
 
       ROS_ERROR("X:%g",x);
       ROS_ERROR("Y:%g",y);
