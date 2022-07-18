@@ -187,7 +187,7 @@ int main(int argc, char **argv)
 			}
 
 			//RECHTER JOYSTICK
-			if(m != DEFAULT_MODE)::
+			if(m != DEFAULT_MODE)
 			{
 				if(m == shift)
 				{
