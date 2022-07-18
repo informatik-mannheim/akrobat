@@ -42,22 +42,8 @@ void translate_linear(geometry_msgs::Twist msg)
 
       pad.axes[1]=x;
       pad.axes[0]=y;
+      pad.axes[2]=z;
 
-      if (z<0)
-      {
-         z = z*2;
-         pad.axes[2]=1-z;
-         pad.axes[5]=1;
-
-      }
-      
-      else if (z>0)
-      {
-         z = z*2;
-         pad.axes[5]=1-z;
-         pad.axes[2]=1;
-
-      }
       ROS_ERROR("X:%g",x);
       ROS_ERROR("Y:%g",y);
       ROS_ERROR("Z:%g",z);
