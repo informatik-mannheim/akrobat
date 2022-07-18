@@ -36,7 +36,7 @@ void translate_linear(geometry_msgs::Twist msg)
 
       if(z>1)
       {
-         z=0.5;
+         z=0.7;
       }
       
 
