@@ -54,7 +54,7 @@ class Listener
 	}
 
 	void setAxisValue(std::vector<float> av)
-	{geometry_msgs/PoseStamped.h
+	{
 		axis = av;
 	}
 
