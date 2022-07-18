@@ -314,7 +314,7 @@ int main(int argc, char **argv)
 				home.pose.orientation.x = 0;
 				home.pose.orientation.y = 0;
 				home.pose.orientation.z = 0;
-				home.pose.orientation.w = 0;
+				home.pose.orientation.w = 1;
 
 				homePub.publish(home);
 			}
