@@ -39,7 +39,7 @@
   <!-- start translationNode -->
   <node name="Joystick_Transllation" pkg="akrobat" type="translateJoypad"></node> 
   <node name="Navigation_Transllation" pkg="akrobat" type="translateNavigation"></node>
-
+  <remap from="/home" to="/move_base_simple/goal" />
 
   <!-- start rviz-->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find akrobat)/rviz/akrobat.rviz" if="$(arg gui)" />
