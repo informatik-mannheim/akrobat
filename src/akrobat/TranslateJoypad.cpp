@@ -131,7 +131,8 @@ int main(int argc, char **argv)
 	ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
 	ros::Publisher homePub = n.advertise<geometry_msgs::PoseStamped>("home",1);
 	geometry_msgs::PoseStamped home;
-	
+	home.pose.position.resize(3);
+	home.pose.orientation.resize(3);
 	ros::Rate loop_rate(5);
 	Mode mode = navigate;
 	Walking_Mode wmode = tripod;
@@ -305,8 +306,14 @@ int main(int argc, char **argv)
 			if(buttonsValue[5] == 1)
 			{	
 				home.header.stamp = ros::Time::now();
-				home.pose.position = [0,0,0];
-				home.pose.orientation = [0,0,0];
+
+				home.pose.position[0] = 0;
+				home.pose.position[1] = 0;
+				home.pose.position[2] = 0;
+
+				home.pose.orientation[0] = 0;
+				home.pose.orientation[1] = 0;
+				home.pose.orientation[2] = 0;
 				homePub.publish(home);
 			}
 			//Button START
