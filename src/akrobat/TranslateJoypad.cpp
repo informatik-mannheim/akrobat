@@ -305,6 +305,7 @@ int main(int argc, char **argv)
 			if(buttonsValue[5] == 1)
 			{	
 				home.header.stamp = ros::Time::now();
+				home.header.frame_id = "map";
 
 				home.pose.position.x = 0;
 				home.pose.position.y = 0;
