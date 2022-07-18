@@ -307,7 +307,7 @@ int main(int argc, char **argv)
 				home.header.stamp = ros::Time::now();
 				home.pose.position = [0,0,0];
 				home.pose.orientation = [0,0,0];
-				homePub.publish(home)
+				homePub.publish(home);
 			}
 			//Button START
 			if(buttonsValue[7] == 1)
