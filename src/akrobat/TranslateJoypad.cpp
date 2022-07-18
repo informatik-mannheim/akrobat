@@ -7,6 +7,8 @@
 #include "std_msgs/Int64.h"
 #include "std_msgs/String.h"
 #include "sensor_msgs/Joy.h"
+#include "geometry_msgs/PoseStamped.h"
+#include "geometry_msgs/Pose.h"
 
 float int_max = 32767.0f;
 float joystickDeadZone = 0.1f;
@@ -52,7 +54,7 @@ class Listener
 	}
 
 	void setAxisValue(std::vector<float> av)
-	{
+	{geometry_msgs/PoseStamped.h
 		axis = av;
 	}
 
@@ -121,18 +123,22 @@ class Listener
 
 int main(int argc, char **argv)
 {
-   ros::init(argc, argv, "Joystick_Transllation");
-   ros::NodeHandle n;
+	ros::init(argc, argv, "Joystick_Transllation");
+	ros::NodeHandle n;
 	Listener l;
-   ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
+	ros::Subscriber joySub = n.subscribe<sensor_msgs::Joy>("joy", 1000, &Listener::readJoypadCallback, &l);
 	ros::Subscriber movSub = n.subscribe<sensor_msgs::Joy>("joy_auto", 1000, &Listener::readJoypadCallback, &l);
-   ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
-   ros::Rate loop_rate(5);
+	ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
+	ros::Publisher homePub = n.advertise<geometry_msgs::PoseStamped>("home",1);
+	geometry_msgs::PoseStamped home;
+	
+	ros::Rate loop_rate(5);
 	Mode mode = navigate;
 	Walking_Mode wmode = tripod;
 	Mode_right_joystick m = DEFAULT_MODE;
 	Macro macro;
 	std::vector<int> buttonsPressed = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 
    while(ros::ok())
    {
@@ -181,7 +187,7 @@ int main(int argc, char **argv)
 			}
 
 			//RECHTER JOYSTICK
-			if(m != DEFAULT_MODE)
+			if(m != DEFAULT_MODE)::
 			{
 				if(m == shift)
 				{
@@ -218,7 +224,7 @@ int main(int argc, char **argv)
 					else
 					{
 						commands[5] = 0;
-					}
+					}Time
 				}
 				else if(m == yaw)
 				{
@@ -295,9 +301,14 @@ int main(int argc, char **argv)
 				wmode = static_cast<Walking_Mode>((wmode + 1) % 4);
 			}
 
-			//Button RB
-			//NOTHING TO DO HERE
-
+			//Button RB (Return to Home)
+			if(buttonsValue[5] == 1)
+			{	
+				home.header.stamp = ros::Time::now();
+				home.pose.position = [0,0,0];
+				home.pose.orientation = [0,0,0];
+				home_Pub.publish(home)
+			}
 			//Button START
 			if(buttonsValue[7] == 1)
 			{
