@@ -71,5 +71,5 @@
  
 <!-- start state machine 
   <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node> -->
-  <remap from="/home" to="/move_base_simple/goal" />
+  
 </launch>
