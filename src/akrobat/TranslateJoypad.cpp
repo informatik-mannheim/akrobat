@@ -224,7 +224,7 @@ int main(int argc, char **argv)
 					else
 					{
 						commands[5] = 0;
-					}Time
+					}
 				}
 				else if(m == yaw)
 				{
