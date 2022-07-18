@@ -22,7 +22,7 @@ void translate_linear(geometry_msgs::Twist msg)
 	{
       x = msg.linear.x*12;
       y = msg.linear.y*12;
-      z = msg.angular.z*3;
+      z = -msg.angular.z*3;
 
       if(x>1)
       {
