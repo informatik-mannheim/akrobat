@@ -107,17 +107,25 @@ Akrobat::Akrobat() :
 void Akrobat::startAkrobat()
 {	
 	ROS_INFO("Starting Akrobat");
-	
-	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_FRONT);
-	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_FRONT);
-	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_MIDDLE);
-	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_MIDDLE);
-	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_REAR);
-	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_REAR);
+
+	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_FRONT);
+	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_FRONT);
+	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_MIDDLE);
+	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_MIDDLE);
+	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_REAR);
+	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_REAR);
 
 	jointPub.publish(jointState);
 
 	ros::Duration(5).sleep();
+
+	Akrobat::moveLeg(0.0, 30.0, 30, LEFT_FRONT);
+	Akrobat::moveLeg(0.0, 30.0, 30, RIGHT_FRONT);
+	Akrobat::moveLeg(0.0, 30.0, 30, LEFT_MIDDLE);
+	Akrobat::moveLeg(0.0, 30.0, 30, RIGHT_MIDDLE);
+	Akrobat::moveLeg(0.0, 30.0, 30, LEFT_REAR);
+	Akrobat::moveLeg(0.0, 30.0, 30, RIGHT_REAR);
+
 
 
 }
