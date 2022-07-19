@@ -19,6 +19,7 @@ int main(int argc, char** argv)
 	init(argc, argv, "akrobat_main");
 
 	Akrobat akrobat;
+	ros::Duration(5).sleep();
 	akrobat.startAkrobat();
 	akrobat.initAkrobat();
 	

@@ -107,6 +107,7 @@ Akrobat::Akrobat() :
 void Akrobat::startAkrobat()
 {	
 	ROS_INFO("Starting Akrobat");
+	
 	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_FRONT);
 	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_FRONT);
 	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_MIDDLE);
