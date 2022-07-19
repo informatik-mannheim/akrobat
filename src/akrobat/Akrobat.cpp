@@ -51,12 +51,12 @@ Akrobat::Akrobat() :
 	scaleFacRot(10)
 {
 	//float rollOv, rotOfCoxa, bdConstX, bdConstY, bdConstZ, jointInitA, jointInitB, jointInitC, minCoxa, minFemur, minTibia, maxCoxa, maxFemur, maxTibia
-	legSettings[LEFT_FRONT] = LegSetting(	0.0,	180.0,	-51.0,	217.0,	0.0,	0.0,	10.0,	10,	-37.5,	-99.0,	-135.0,	50.0, 96.0, 135.0);
-	legSettings[RIGHT_FRONT] = LegSetting(	0.0,	0.0,	51.0,	217.0,	0.0,	0.0,	10.0,	10.0,	-50.0,	-99.0,	-135.0,	37.5, 96.0, 135.0);
-	legSettings[LEFT_MIDDLE] = LegSetting(	0.0,	180.0,	-51.0,	0.0,	0.0,	0.0,	10.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
-	legSettings[RIGHT_MIDDLE] = LegSetting(	0.0,	0.0,	51.0,	0.0,	0.0,	0.0,	10.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
-	legSettings[LEFT_REAR] = LegSetting(	0.0,	180.0,	-51.0,	-217.0,	0.0,	0.0,	10.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
-	legSettings[RIGHT_REAR] = LegSetting(	0.0,	0.0,	51.0,	-217.0,	0.0,	0.0,	10.0,	10.0,	-50.0,	-99.0,	-135.0, 50.0, 96.0, 135.0);
+	legSettings[LEFT_FRONT] = LegSetting(	0.0,	180.0,	-51.0,	217.0,	0.0,	0.0,	0.0,	10.0,	-37.5,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_FRONT] = LegSetting(	0.0,	0.0,	51.0,	217.0,	0.0,	0.0,	0.0,	10.0,	-50.0,	-99.0,	-135.0,	37.5, 96.0, 135.0);
+	legSettings[LEFT_MIDDLE] = LegSetting(	0.0,	180.0,	-51.0,	0.0,	0.0,	0.0,	0.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_MIDDLE] = LegSetting(	0.0,	0.0,	51.0,	0.0,	0.0,	0.0,	0.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[LEFT_REAR] = LegSetting(	0.0,	180.0,	-51.0,	-217.0,	0.0,	0.0,	0.0,	10.0,	-50.0,	-99.0,	-135.0,	50.0, 96.0, 135.0);
+	legSettings[RIGHT_REAR] = LegSetting(	0.0,	0.0,	51.0,	-217.0,	0.0,	0.0,	0.0,	10.0,	-50.0,	-99.0,	-135.0, 50.0, 96.0, 135.0);
 
 
 
