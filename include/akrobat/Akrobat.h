@@ -107,6 +107,10 @@ public:
 	// constructor
 	Akrobat();
 
+
+	// Startup Akrobat from bottom
+	void startAkrobat();
+	
 	// initialize akrobat leg position
 	void initAkrobat();
 

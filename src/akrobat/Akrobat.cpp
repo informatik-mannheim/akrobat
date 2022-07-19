@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-
+#
 #include <ros/ros.h>
 #include <angles/angles.h>
 
@@ -100,6 +100,29 @@ Akrobat::Akrobat() :
 	}
 	
 }
+/** Startup from Akrobat. To push it from the bottom.
+*
+*   @return Void.
+*/
+void Akrobat::startAkrobat()
+{
+	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_FRONT);
+	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_FRONT);
+	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_MIDDLE);
+	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_MIDDLE);
+	Akrobat::moveLeg(0.0, 0.0, 10, LEFT_REAR);
+	Akrobat::moveLeg(0.0, 0.0, 10, RIGHT_REAR);
+
+	ros::Duration(5).sleep();
+
+
+}
+
+
+
+
+
+
 
 /** Initialize the leg position of for each leg.
 *
