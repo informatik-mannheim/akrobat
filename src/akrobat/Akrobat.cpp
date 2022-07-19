@@ -117,18 +117,18 @@ void Akrobat::startAkrobat()
 
 	jointPub.publish(jointState);
 
-	ros::Duration(5).sleep();
+	ros::Duration(3).sleep();
 
-	Akrobat::moveLeg(0.0, -50.0, 70, LEFT_FRONT);
-	Akrobat::moveLeg(0.0, -50.0, 70, RIGHT_FRONT);
-	Akrobat::moveLeg(0.0, -50.0, 70, LEFT_MIDDLE);
-	Akrobat::moveLeg(0.0, -50.0, 70, RIGHT_MIDDLE);
-	Akrobat::moveLeg(0.0, -50.0, 70, LEFT_REAR);
-	Akrobat::moveLeg(0.0, -50.0, 70, RIGHT_REAR);
+	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_FRONT);
+	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_FRONT);
+	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_MIDDLE);
+	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_MIDDLE);
+	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_REAR);
+	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_REAR);
 
 	jointPub.publish(jointState);
 
-	ros::Duration(5).sleep();
+	ros::Duration(3).sleep();
 
 }
 
