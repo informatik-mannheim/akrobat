@@ -126,7 +126,7 @@ void Akrobat::startAkrobat()
 	Akrobat::moveLeg(0.0, 30.0, 30, LEFT_REAR);
 	Akrobat::moveLeg(0.0, 30.0, 30, RIGHT_REAR);
 
-
+	ros::Duration(5).sleep();
 
 }
 
