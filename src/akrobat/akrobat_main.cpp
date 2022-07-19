@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	init(argc, argv, "akrobat_main");
 
 	Akrobat akrobat;
-
+	akrobat.startAkrobat();
 	akrobat.initAkrobat();
 	
 	// needs to be called after(below) akrobat creation (requires a ros::NodeHandle)
