@@ -130,12 +130,12 @@ void Akrobat::startAkrobat()
 
 	ros::Duration(3).sleep();
 	
-	for(int l = 0; l<5 ;l++)
+	for(int l = 0; l<6 ;l++)
 	{
 		Akrobat::moveLeg(0.0, 50.0, -120, l);
 		jointPub.publish(jointState);
 
-		ros::Duration(5).sleep();
+		ros::Duration(5.5).sleep();
 
 	}
 	ros::Duration(3).sleep();
