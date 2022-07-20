@@ -129,9 +129,9 @@ void Akrobat::startAkrobat()
 	jointPub.publish(jointState);
 
 	ros::Duration(3).sleep();
-	std::list legs = [LEFT_FRONT,RIGHT_FRONT,LEFT_MIDDLE,RIGHT_MIDDLE,LEFT_REAR,RIGHT_REAR];
+	
 
-	for(l = )
+	
 
 }
 
