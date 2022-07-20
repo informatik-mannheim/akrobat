@@ -119,16 +119,19 @@ void Akrobat::startAkrobat()
 
 	ros::Duration(3).sleep();
 
-	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_FRONT);
-	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_FRONT);
-	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_MIDDLE);
-	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_MIDDLE);
-	Akrobat::moveLeg(0.0, -80.0, 120, LEFT_REAR);
-	Akrobat::moveLeg(0.0, -80.0, 120, RIGHT_REAR);
+	Akrobat::moveLeg(0.0, -80.0, 120, 0);
+	Akrobat::moveLeg(0.0, -80.0, 120, 1);
+	Akrobat::moveLeg(0.0, -80.0, 120, 2);
+	Akrobat::moveLeg(0.0, -80.0, 120, 3);
+	Akrobat::moveLeg(0.0, -80.0, 120, 4);
+	Akrobat::moveLeg(0.0, -80.0, 120, 5);
 
 	jointPub.publish(jointState);
 
 	ros::Duration(3).sleep();
+	std::list legs = [LEFT_FRONT,RIGHT_FRONT,LEFT_MIDDLE,RIGHT_MIDDLE,LEFT_REAR,RIGHT_REAR];
+
+	for(l = )
 
 }
 
