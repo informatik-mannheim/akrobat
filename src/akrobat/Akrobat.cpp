@@ -108,12 +108,12 @@ void Akrobat::startAkrobat()
 {	
 	ROS_INFO("Starting Akrobat");
 
-	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_FRONT);
-	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_FRONT);
-	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_MIDDLE);
-	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_MIDDLE);
-	Akrobat::moveLeg(0.0, 0.0, 20, LEFT_REAR);
-	Akrobat::moveLeg(0.0, 0.0, 20, RIGHT_REAR);
+	Akrobat::moveLeg(0.0, 0.0, 20, 0);
+	Akrobat::moveLeg(0.0, 0.0, 20, 1);
+	Akrobat::moveLeg(0.0, 0.0, 20, 2);
+	Akrobat::moveLeg(0.0, 0.0, 20, 3);
+	Akrobat::moveLeg(0.0, 0.0, 20, 4);
+	Akrobat::moveLeg(0.0, 0.0, 20, 5);
 
 	jointPub.publish(jointState);
 
@@ -130,8 +130,15 @@ void Akrobat::startAkrobat()
 
 	ros::Duration(3).sleep();
 	
+	for(int l = 0; l<5 ;l++)
+	{
+		Akrobat::moveLeg(0.0, 50.0, -120, l);
+		jointPub.publish(jointState);
 
-	
+		ros::Duration(1).sleep();
+
+	}
+	ros::Duration(3).sleep();
 
 }
 
