@@ -135,7 +135,7 @@ void Akrobat::startAkrobat()
 		Akrobat::moveLeg(0.0, 50.0, -120, l);
 		jointPub.publish(jointState);
 
-		ros::Duration(1).sleep();
+		ros::Duration(5).sleep();
 
 	}
 	ros::Duration(3).sleep();
