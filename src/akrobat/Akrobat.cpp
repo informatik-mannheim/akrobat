@@ -289,7 +289,7 @@ void Akrobat::coordinateTransformation(int legNum)
 
 	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(0, 0, 0));
 	MainCoordinateSystem.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
-shutdownDyn
+
 	T = Akrobat::transformCS(Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + legSettings[legNum].rollOv), pad.bdT.z())).inverse();
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 
