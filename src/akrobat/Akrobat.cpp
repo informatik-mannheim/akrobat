@@ -173,7 +173,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 			Akrobat::moveLeg(0.0, 50.0, 120, l);
 			Akrobat::moveLeg(0.0, 50.0, 120, m);
 			jointPub.publish(jointState);
-			ros::Duration(1).sleep();
+			ros::Duration(2).sleep();
 			Akrobat::moveLeg(0.0, -80.0, 120, l);
 			Akrobat::moveLeg(0.0, -80.0, 120, m);
 			jointPub.publish(jointState);
