@@ -17,6 +17,7 @@
 #include <akrobat/movement.h>
 #include <akrobat/Joint_position.h>
 #include <akrobat/Settings.h>
+#include <std_msgs/Bool.h> 
 
 
 
