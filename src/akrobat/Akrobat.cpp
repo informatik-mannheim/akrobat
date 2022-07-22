@@ -156,6 +156,26 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 	if(shutdown)
 	{
 		ROS_ERROR("Shutdown Now");
+		for(int l = 0; l<6 ;l++)
+		{
+			Akrobat::moveLeg(0.0, 50.0, -120, l);
+		}
+		jointPub.publish(jointState);
+		ros::Duration(3).sleep();
+		for(int l = 0; l<6 ;l++)
+		{
+			Akrobat::moveLeg(0.0, -80.0, 120, l);
+			jointPub.publish(jointState);
+
+			ros::Duration(5.5).sleep();
+
+		}
+		ros::Duration(3).sleep();
+		for(int l = 0; l<6 ;l++)
+		{
+			Akrobat::moveLeg(0.0, 0.0, 20, l);
+		}
+		jointPub.publish(jointState);
 	}
 }
 
