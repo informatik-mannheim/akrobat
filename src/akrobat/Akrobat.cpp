@@ -145,7 +145,7 @@ void Akrobat::startAkrobat()
 }
 
 
-/** Initialize the leg position of for each leg.
+/** Initialize Shutdown from Akrobat.
 *
 *   @return Void.
 */
@@ -153,7 +153,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 {
 	shutdown = Shutdown -> data;
 
-	if(shutdown=true)
+	if(shutdown)
 	{
 		ROS_ERROR("Shutdown Now");
 	}
