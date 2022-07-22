@@ -438,7 +438,7 @@ int main(int argc, char **argv)
 			//Button LJoystick && Button RJoystick
 			if(buttonsValue[9] == 1 && buttonsValue[10] == 1)
 			{
-				macro = shutdown;
+				
 			}
 		}
 
