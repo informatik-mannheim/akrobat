@@ -117,7 +117,7 @@ void Akrobat::startAkrobat()
 	Akrobat::moveLeg(0.0, 0.0, 20, 3);
 	Akrobat::moveLeg(0.0, 0.0, 20, 4);
 	Akrobat::moveLeg(0.0, 0.0, 20, 5);
-
+	jointState.header.stamp = ros::Time::now();
 	jointPub.publish(jointState);
 
 	ros::Duration(3).sleep();
@@ -128,7 +128,7 @@ void Akrobat::startAkrobat()
 	Akrobat::moveLeg(0.0, -80.0, 120, 3);
 	Akrobat::moveLeg(0.0, -80.0, 120, 4);
 	Akrobat::moveLeg(0.0, -80.0, 120, 5);
-
+	jointState.header.stamp = ros::Time::now();
 	jointPub.publish(jointState);
 
 	ros::Duration(3).sleep();
@@ -138,7 +138,7 @@ void Akrobat::startAkrobat()
 		int m = 5-l;
 		Akrobat::moveLeg(0.0, 50.0, -120, l);
 		Akrobat::moveLeg(0.0, 50.0, -120, m);
-
+		jointState.header.stamp = ros::Time::now();
 		jointPub.publish(jointState);
 
 		ros::Duration(5.5).sleep();
@@ -164,6 +164,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		{
 			Akrobat::moveLeg(0.0, 50.0, -120, l);
 		}
+		jointState.header.stamp = ros::Time::now();
 		jointPub.publish(jointState);
 		ros::Duration(3).sleep();
 
@@ -172,10 +173,12 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 			int m=5-l;
 			Akrobat::moveLeg(0.0, 50.0, 120, l);
 			Akrobat::moveLeg(0.0, 50.0, 120, m);
+			jointState.header.stamp = ros::Time::now();
 			jointPub.publish(jointState);
 			ros::Duration(2).sleep();
 			Akrobat::moveLeg(0.0, -80.0, 120, l);
 			Akrobat::moveLeg(0.0, -80.0, 120, m);
+			jointState.header.stamp = ros::Time::now();
 			jointPub.publish(jointState);
 
 			ros::Duration(5.5).sleep();
@@ -187,6 +190,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		{
 			Akrobat::moveLeg(0.0, 0.0, 20, l);
 		}
+		jointState.header.stamp = ros::Time::now();
 		jointPub.publish(jointState);
 		ros::Duration(3).sleep();
 		shutdownDyn.data = true;
