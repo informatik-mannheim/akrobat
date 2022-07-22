@@ -132,7 +132,7 @@ void Akrobat::startAkrobat()
 
 	ros::Duration(3).sleep();
 	
-	for(int l = 0; l<6 ;l++)
+	for(int l = 0; l<3 ;l++)
 	{	
 		int m = 5-l;
 		Akrobat::moveLeg(0.0, 50.0, -120, l);
