@@ -68,6 +68,7 @@ Akrobat::Akrobat() :
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
 	
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
+	subMov = n.subscribe<std_msgs::Bool>("shutdown", 1, &Akrobat::shutdownAkrobat, this);
 
 	
 	
@@ -143,7 +144,19 @@ void Akrobat::startAkrobat()
 }
 
 
+/** Initialize the leg position of for each leg.
+*
+*   @return Void.
+*/
+void Akrobat::shutdownAkrobat(const std_msgs::Bool Shutdown)
+{
+	shutdown = Shutdown.data
 
+	if(shutdown=true)
+	{
+		ROS_ERROR("Shutdown Now");
+	}
+}
 
 
 

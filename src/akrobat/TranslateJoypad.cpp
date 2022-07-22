@@ -130,6 +130,9 @@ int main(int argc, char **argv)
 	ros::Subscriber movSub = n.subscribe<sensor_msgs::Joy>("joy_auto", 1000, &Listener::readJoypadCallback, &l);
 	ros::Publisher movPub = n.advertise<akrobat::movement>("movements", 1000);
 	ros::Publisher homePub = n.advertise<geometry_msgs::PoseStamped>("home",1);
+	ros::Publisher shutdownPub = n.advertise<std_msgs::Bool>("/shutdown",1);
+	std_msgs::Bool shutdown;
+
 	geometry_msgs::PoseStamped home;
 
 	ros::Rate loop_rate(5);
@@ -339,7 +342,9 @@ int main(int argc, char **argv)
 
 			//Button LJoystick && Button RJoystick
 			if(buttonsValue[9] == 1 && buttonsValue[10] == 1)
-			{
+			{	
+				shutdown.data = true;
+				shutdownPub.publish(shutdown);
 				macro = shutdown;
 			}
 
