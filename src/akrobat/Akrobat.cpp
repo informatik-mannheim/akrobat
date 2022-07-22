@@ -70,7 +70,7 @@ Akrobat::Akrobat() :
 	
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 	subMov = n.subscribe<std_msgs::Bool>("shutdown", 1, &Akrobat::shutdownAkrobat, this);
-	shutdownDyn = n.advertise<std_msgs::Bool>("/shutdown_dyn",1);
+	shutdown_Dyn = n.advertise<std_msgs::Bool>("/shutdown_dyn",1);
 
 	
 	
