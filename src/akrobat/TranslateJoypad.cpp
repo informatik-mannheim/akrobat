@@ -544,9 +544,7 @@ int main(int argc, char **argv)
 			case start:
 				msg.macro = "start";
 				break;
-			case shutdown:
-				msg.macro = "shutdown";
-				break;
+			
 			case DEFAULT_MACRO:
 				msg.macro = "DEFAULT";
 				break;
