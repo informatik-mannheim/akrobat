@@ -346,7 +346,7 @@ int main(int argc, char **argv)
 			{	
 				shutdown.data = true;
 				shutdownPub.publish(shutdown);
-				macro = shutdown;
+				
 			}
 
 		}
