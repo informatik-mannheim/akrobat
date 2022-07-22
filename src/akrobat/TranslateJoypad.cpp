@@ -346,6 +346,7 @@ int main(int argc, char **argv)
 			{	
 				shutdown.data = true;
 				shutdownPub.publish(shutdown);
+				macro = Shutdown;
 				
 			}
 
@@ -438,7 +439,7 @@ int main(int argc, char **argv)
 			//Button LJoystick && Button RJoystick
 			if(buttonsValue[9] == 1 && buttonsValue[10] == 1)
 			{
-				
+				macro = Shutdown;
 			}
 		}
 
@@ -544,7 +545,9 @@ int main(int argc, char **argv)
 			case start:
 				msg.macro = "start";
 				break;
-			
+			case Shutdown:
+				msg.macro = "shutdown";
+				break;
 			case DEFAULT_MACRO:
 				msg.macro = "DEFAULT";
 				break;
