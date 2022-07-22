@@ -43,7 +43,7 @@ enum Macro
 	orientate_roll_pitch,
 	roll,
 	start,
-	shutdown
+	Shutdown
 };
 
 class Listener
