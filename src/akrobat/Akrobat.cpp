@@ -134,7 +134,7 @@ void Akrobat::startAkrobat()
 	
 	for(int l = 0; l<6 ;l++)
 	{	
-		m = 6-l;
+		int m = 6-l;
 		Akrobat::moveLeg(0.0, 50.0, -120, l);
 		Akrobat::moveLeg(0.0, 50.0, -120, m);
 
