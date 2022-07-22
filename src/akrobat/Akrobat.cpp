@@ -187,7 +187,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		
 		shutdownDyn.data = true;
 				
-		shutdownDyn.publish(shutdownDyn);
+		shutdown_Dyn.publish(shutdownDyn);
 
 
 	}

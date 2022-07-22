@@ -102,7 +102,7 @@ public:
 	TrajectorySettings trajectorySettings[numberOfWalkingPattern]; // 3 = number of walking modes
 	CoordinateSystem MainCoordinateSystem, BodyCoordinateSystem, LegCoordinateSystem, FootCoordinateSystem; // [	MainCoordinateSystem...] -- coordinate system objects
 	sensor_msgs::JointState jointState;
-	
+	std_msgs::Bool shutdownDyn;
 	
 	
 
@@ -166,7 +166,7 @@ private:
 	ros::NodeHandle n;
 	ros::Subscriber subMov; // subscriber of joy topic
 	ros::Publisher jointPub; // publisher (rviz)
-	ros::Publisher shutdownDyn;
+	ros::Publisher shutdown_Dyn;
 	
 };
 
