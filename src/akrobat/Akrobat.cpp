@@ -185,7 +185,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		}
 		jointPub.publish(jointState);
 		
-		bool Dyn_Shutdown = shutdownDyn.data = true;
+		shutdownDyn.data = true;
 				
 		shutdownDyn.publish(Dyn_Shutdown);
 
