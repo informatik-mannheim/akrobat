@@ -167,11 +167,15 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		jointPub.publish(jointState);
 		ros::Duration(3).sleep();
 
-		for(int l = 0; l<6 ;l++)
-		{
+		for(int l = 0; l<3 ;l++)
+		{	
+			int m=5-l;
 			Akrobat::moveLeg(0.0, 50.0, 120, l);
+			Akrobat::moveLeg(0.0, 50.0, 120, m);
+			jointPub.publish(jointState);
 			ros::Duration(1).sleep();
 			Akrobat::moveLeg(0.0, -80.0, 120, l);
+			Akrobat::moveLeg(0.0, -80.0, 120, m);
 			jointPub.publish(jointState);
 
 			ros::Duration(5.5).sleep();
@@ -184,7 +188,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 			Akrobat::moveLeg(0.0, 0.0, 20, l);
 		}
 		jointPub.publish(jointState);
-		
+		ros::Duration(3).sleep();
 		shutdownDyn.data = true;
 				
 		shutdown_Dyn.publish(shutdownDyn);
