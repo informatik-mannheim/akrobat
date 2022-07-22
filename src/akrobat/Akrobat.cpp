@@ -18,6 +18,7 @@
 #include <tf/transform_datatypes.h>
 
 #include <std_msgs/Float64.h>
+#include "std_msgs/Bool.h" 
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/JointState.h>
 
