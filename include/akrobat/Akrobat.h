@@ -154,7 +154,7 @@ public:
 	void callRumblePad2Back(const akrobat::movement::ConstPtr& mov);
 
 	float alpha;
-	double c;
+	double c;shutdown
 	float twist_movment_x;
 	float twist_movment_y;
 	float twist_movment_z;
