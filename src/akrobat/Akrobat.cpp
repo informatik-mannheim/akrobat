@@ -193,6 +193,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 				
 		shutdown_Dyn.publish(shutdownDyn);
 
+		ros::shutdown();
 
 	}
 }
