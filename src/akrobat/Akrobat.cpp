@@ -151,7 +151,7 @@ void Akrobat::startAkrobat()
 */
 void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 {
-	shutdown = Shutdown -> data;
+	shutdown = Shutdown->data;
 
 	if(shutdown)
 	{
