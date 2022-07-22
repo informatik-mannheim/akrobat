@@ -70,6 +70,7 @@ Akrobat::Akrobat() :
 	
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
 	subMov = n.subscribe<std_msgs::Bool>("shutdown", 1, &Akrobat::shutdownAkrobat, this);
+	shutdownDyn = n.advertise<std_msgs::Bool>("/shutdown_dyn",1);
 
 	
 	
@@ -143,7 +144,7 @@ void Akrobat::startAkrobat()
 		ros::Duration(5.5).sleep();
 
 	}
-	ros::Duration(3).sleep();
+	
 
 }
 
@@ -165,8 +166,11 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		}
 		jointPub.publish(jointState);
 		ros::Duration(3).sleep();
+
 		for(int l = 0; l<6 ;l++)
 		{
+			Akrobat::moveLeg(0.0, 50.0, 120, l);
+			ros::Duration(1).sleep();
 			Akrobat::moveLeg(0.0, -80.0, 120, l);
 			jointPub.publish(jointState);
 
@@ -174,11 +178,18 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 
 		}
 		ros::Duration(3).sleep();
+
 		for(int l = 0; l<6 ;l++)
 		{
 			Akrobat::moveLeg(0.0, 0.0, 20, l);
 		}
 		jointPub.publish(jointState);
+		
+		bool Dyn_Shutdown = shutdownDyn.data = true;
+				
+		shutdownDyn.publish(Dyn_Shutdown);
+
+
 	}
 }
 
@@ -278,7 +289,7 @@ void Akrobat::coordinateTransformation(int legNum)
 
 	T = Akrobat::transformCS(Vector3(0, 0, 0), Vector3(0, 0, 0));
 	MainCoordinateSystem.leg[legNum].footGlobPos = T * BodyCoordinateSystem.leg[legNum].footGlobPos;
-
+shutdownDyn
 	T = Akrobat::transformCS(Vector3((pad.bdR.x() + rotBody), pad.bdR.y(), pad.bdR.z()), Vector3(pad.bdT.x(), (pad.bdT.y() + legSettings[legNum].rollOv), pad.bdT.z())).inverse();
 	BodyCoordinateSystem.leg[legNum].footGlobPos = T * MainCoordinateSystem.leg[legNum].footGlobPos;
 

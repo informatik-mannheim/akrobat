@@ -165,6 +165,7 @@ private:
 	ros::NodeHandle n;
 	ros::Subscriber subMov; // subscriber of joy topic
 	ros::Publisher jointPub; // publisher (rviz)
+	ros::Publisher shutdownDyn;
 	
 };
 
