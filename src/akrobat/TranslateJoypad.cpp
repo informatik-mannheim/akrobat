@@ -9,6 +9,7 @@
 #include "sensor_msgs/Joy.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Pose.h"
+#include "std_msgs/bool.h"
 
 float int_max = 32767.0f;
 float joystickDeadZone = 0.1f;
