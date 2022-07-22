@@ -112,7 +112,7 @@ public:
 	// Startup Akrobat from bottom
 	void startAkrobat();
 
-	void shutdownAkrobat(const std_msgs::Bool Shutdown);
+	void shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown);
 	
 	// initialize akrobat leg position
 	void initAkrobat();
