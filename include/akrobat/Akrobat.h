@@ -118,7 +118,7 @@ public:
 	// initialize akrobat leg position
 	void initAkrobat();
 
-	// execute important fuction to run the hexapod
+	// execute important fuctisubShutdownon to run the hexapod
 	void runAkrobat();
 
 	// create tripod gait
@@ -139,13 +139,7 @@ public:
 	// move the leg to target position
 	int moveLeg(float alpha, float beta, float gamma, int legNum);
 
-	// transformate source coordinate system to target coordinate system
-	tf::Transform transformCS(tf::Vector3 rot, tf::Vector3 trans);
-
-	static bool IsWithinLimits(const float& value, const float& min, const float& max);
-
-	bool IsMoving() const;
-
+	// transformate source coosubShutdown
 	bool IsTranslating() const;
 
 	bool IsRotating() const;
@@ -165,6 +159,7 @@ public:
 private:
 	ros::NodeHandle n;
 	ros::Subscriber subMov; // subscriber of joy topic
+	ros::Subscriber subShutdown;
 	ros::Publisher jointPub; // publisher (rviz)
 	ros::Publisher shutdown_Dyn;
 	
