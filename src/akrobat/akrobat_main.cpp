@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
 	Akrobat akrobat;
 	ros::Duration(5).sleep();
-	akrobat.startAkrobat();
+	//akrobat.startAkrobat();
 	akrobat.initAkrobat();
 	
 	// needs to be called after(below) akrobat creation (requires a ros::NodeHandle)
