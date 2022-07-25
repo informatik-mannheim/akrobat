@@ -42,15 +42,6 @@ void Akrobat::runAkrobat()
 			Akrobat::moveLeg(LegCoordinateSystem.leg[legNum].jointAngles.alpha, LegCoordinateSystem.leg[legNum].jointAngles.beta, LegCoordinateSystem.leg[legNum].jointAngles.gamma, legNum);
 		}
 	}
-	//else
-	// {
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, LEFT_FRONT);
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, RIGHT_FRONT);
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, LEFT_MIDDLE);
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, RIGHT_MIDDLE);
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, LEFT_REAR);
-	// 	Akrobat::moveLeg(0.0, 10.0, -90, RIGHT_REAR);
-	// }
 	
 	jointPub.publish(jointState);
 	
