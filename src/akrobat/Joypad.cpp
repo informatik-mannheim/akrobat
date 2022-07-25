@@ -38,12 +38,7 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 		sleep(5);
 		ros::shutdown();
 	}
-	// else if (mov->macro == "start")
-	// {
-	// 	cout << "Starting Akrobat!" << endl;
-		
-	// 	initAkrobat();
-	// }
+	
 	else
 	{
 		if (mov->macro == "roll")

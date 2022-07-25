@@ -69,7 +69,7 @@ Akrobat::Akrobat() :
 	jointPub = n.advertise<sensor_msgs::JointState>("/goal_joint_states", 1);
 	
 	subMov = n.subscribe<akrobat::movement>("movements", 5, &Akrobat::callRumblePad2Back, this);
-	subMov = n.subscribe<std_msgs::Bool>("shutdown", 1, &Akrobat::shutdownAkrobat, this);
+	subShutdown = n.subscribe<std_msgs::Bool>("shutdown", 1, &Akrobat::shutdownAkrobat, this);
 	shutdown_Dyn = n.advertise<std_msgs::Bool>("/shutdown_dyn",1);
 
 	
