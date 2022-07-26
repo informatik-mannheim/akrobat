@@ -72,4 +72,8 @@
 <!-- start state machine 
   <node name="state_machine" pkg="akrobat" type="smach_example_state_machine.py" output="screen" respawn="true"></node> -->
   
+
+  <!--Starten von Akrobat_Vorne Bildverarbeitung-->
+  <machine name="Akrobat_Vorne" user="pi" address="10.42.0.2" default="true" env-loader="/opt/ros/noetic/env.sh"/>
+  <include file="$(find akrobat_cam)/launch/Akrobat_Master_Mapping.launch" machine="Akrobat_Vorne"/>
 </launch>
