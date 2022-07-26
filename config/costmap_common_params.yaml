@@ -5,7 +5,7 @@ footprint: [[0.217,-0.051], [0,-0.051], [-0.217,-0.051], [-0.217,0.051], [0,0.05
 inflation_radius: 0.2
 
 map_type: costmap
-bservation_sources: point_cloud_sensor
+observation_sources: laser_scan_sensor
 
-point_cloud_sensor: {sensor_frame: pico_flexx_optical_frame, data_type: PointCloud2, topic: /pico_flexx/points, marking: true, clearing: true}
+laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true}
 
