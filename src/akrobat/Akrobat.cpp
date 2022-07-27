@@ -198,7 +198,7 @@ void Akrobat::shutdownAkrobat(const std_msgs::Bool::ConstPtr& Shutdown)
 		shutdown_Dyn.publish(shutdownDyn);
 
 		system("ssh pi@10.42.0.2 ");
-		system("sudo shutdown -h 1");
+		system("sudo shutdown now");
 
 
 		ros::shutdown();
