@@ -9,6 +9,6 @@ until roslaunch akrobat_cam Akrobat_Master_Mapping.launch
 do 
     echo "Shutdown"
     sleep 2
-    sudo shutdown now
+    #sudo shutdown now
 done
  
