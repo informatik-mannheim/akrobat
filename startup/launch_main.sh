@@ -7,6 +7,7 @@ source ~/catkin_ws/devel/setup.bash
 echo "Launching Robot, please wait!"
 
 until roslaunch akrobat AkrobatMaster.launch
+
 do 
     echo "Shutdown"
     ssh pi@10.42.0.2 "sudo shutdown now"
