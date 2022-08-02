@@ -44,15 +44,11 @@ void translate_linear(geometry_msgs::Twist msg)
       pad.axes[0]=y;       //Seitwärts
       pad.axes[2]=z;       //Drehung
 
-      ROS_ERROR("X:%g",x);
-      ROS_ERROR("Y:%g",y);
-      ROS_ERROR("Z:%g",z);
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
       ros::Rate rate(5);
       rate.sleep();
 
-		
 	}
 
 int main(int argc, char **argv)
