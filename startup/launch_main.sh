@@ -10,6 +10,9 @@ do
     printf "%c" "."
 done
 
+
+gnome-terminal
+
 until roslaunch akrobat AkrobatMaster.launch
 
 do 
