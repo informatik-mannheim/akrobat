@@ -12,6 +12,6 @@ done
 
 
 gnome-terminal -e 'sh -c "~/catkin_ws/src/akrobat/startup/launch_master.sh; exec bash"'
-gnome-terminal -e 'ssh pi@10.42.0.2 "~/catkin_ws/src/akrobat_cam/launch_cam.sh"; exec bash"'
+gnome-terminal -e 'ssh pi@10.42.0.2 << EOF ~/catkin_ws/src/akrobat_cam/launch_cam.sh EOF; exec bash"'
 
 
