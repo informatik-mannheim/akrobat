@@ -40,9 +40,9 @@ void translate_linear(geometry_msgs::Twist msg)
       }
       
 
-      pad.axes[1]=x;       //Vorwärts
-      pad.axes[0]=y;       //Seitwärts
-      pad.axes[2]=z;       //Drehung
+      pad.axes[1]=x;       //forward
+      pad.axes[0]=y;       //sideward
+      pad.axes[2]=z;       //rotation
 
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
