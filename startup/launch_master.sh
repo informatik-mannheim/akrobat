@@ -2,7 +2,7 @@
 
 # Launch the robot
 source /opt/ros/noetic/setup.bash 
-source ~/catkin_ws/devel/setup.bash 
+source /home/ununtu/catkin_ws/devel/setup.bash 
 
 
 until roslaunch akrobat AkrobatMaster.launch
