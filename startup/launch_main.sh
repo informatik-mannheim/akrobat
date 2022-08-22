@@ -11,6 +11,12 @@ do
 done
 
 
-~/catkin_ws/src/akrobat/startup/launch_master.sh
+until roslaunch akrobat AkrobatMaster.launch
 
+do 
+    echo "Shutdown"
+    ssh pi@10.42.0.2 "sudo shutdown now"
+    sleep 5
+    sudo shutdown now
+done
 
