@@ -36,9 +36,10 @@ void translate_linear(geometry_msgs::Twist msg)
 
       if(z>1)
       {
-         z=0.7;
+         z=0.1;
       }
       
+      ROS_ERROR("%d",z);
 
       pad.axes[1]=x;       //forward
       pad.axes[0]=y;       //sideward
