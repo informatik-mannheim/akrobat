@@ -34,6 +34,10 @@ void translate_linear(geometry_msgs::Twist msg)
          y = 1;
       }
 
+      if(z<-1)
+      {
+         z=-0.1;
+      }
       if(z>1)
       {
          z=0.1;
