@@ -39,7 +39,7 @@ void translate_linear(geometry_msgs::Twist msg)
          z=0.1;
       }
       
-      ROS_ERROR("%d",z);
+      ROS_ERROR("%f",z);
 
       pad.axes[1]=x;       //forward
       pad.axes[0]=y;       //sideward
