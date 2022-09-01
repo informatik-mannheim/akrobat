@@ -24,7 +24,7 @@
 
 #include <akrobat/Trajectory.h>
 #include <akrobat/movement.h>
-#include <akrobat/Joint_position.h>
+//include <akrobat/Joint_position.h>
 
 
 

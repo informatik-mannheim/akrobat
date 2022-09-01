@@ -36,18 +36,22 @@ void translate_linear(geometry_msgs::Twist msg)
 
       if(z<-1)
       {
-         z=-0.1;
+         z=-0.3;
+         pad.axes[2]=z;       //rotation
+         pad.axes[5]=1;
       }
       if(z>1)
       {
-         z=0.1;
+         z=0.3;
+          pad.axes[5]=z;       //rotation
+          pad.axes[2]=1;
       }
       
       ROS_ERROR("%f",z);
 
       pad.axes[1]=x;       //forward
       pad.axes[0]=y;       //sideward
-      pad.axes[2]=z;       //rotation
+     
 
       pad.header.stamp = ros::Time::now();
       movPub.publish(pad);
