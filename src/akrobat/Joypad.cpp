@@ -192,7 +192,6 @@ void Akrobat::callRumblePad2Back(const akrobat::movement::ConstPtr& mov)
 			//Walking
 			if(mov->commands[1] != 0)
 			{
-				
 				pad.speed.setX((mov->commands[1] / a));	
 			}
 			else
